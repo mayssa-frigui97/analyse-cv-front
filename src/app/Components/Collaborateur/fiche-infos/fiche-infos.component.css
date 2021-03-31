@@ -1,0 +1,50 @@
+.content-panel h4 {
+    margin-left: 0px!important;
+}
+
+.content-panel h6 {
+    margin-left: 20px!important;
+}
+
+.right-divider{
+    text-align: left;
+}
+
+.profile-pic img{
+    width: 150px!important;
+    height: 150px!important;
+}
+
+.col-sm-4, .col-sm-8, .col-sm-3,.col-sm-2{
+    padding: 0 0 0 0!important;
+}
+
+.container-fluid {
+    margin: 30px 20px 30px 20px;
+}
+
+.nav-tabs2{
+    background-color: #48cfad;
+}
+
+.nav-tabs2>li.active>a{
+    color: #48cfad;
+}
+
+.nav-tabs2 a{
+    color: white;
+}
+
+.nav-tabs2>li>a:hover{
+    color: #48cfad;
+}
+
+.btn-theme04{
+    margin-right: 10px;
+}
+
+.row{
+  margin-right: 0px!important;
+  margin-left: 0px!important;
+}
+

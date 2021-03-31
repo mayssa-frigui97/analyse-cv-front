@@ -1,0 +1,14 @@
+.input_container {
+  position: relative; /*important*/
+}
+
+.input_icon {
+  position: absolute; /*important*/
+  left: 7px;
+  width: 50px;
+  top:5px;
+}
+
+input[type="text"]{
+  padding-left: 30px; /*Laisse de l'espace pour l'icône*/
+}
