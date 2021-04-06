@@ -7,6 +7,8 @@ export class Collaborateur {
 
     public tel: number;
 
+    public email: string;
+
     public poste: string;
 
     public salaire: number;

@@ -5,6 +5,7 @@ import { DirectiveDirective } from './js-loader/directive.directive';
 import { BaseJsComponent } from './js-loader/base-js/base-js.component';
 import { ModalJsComponent } from './js-loader/modal-js/modal-js.component';
 import { DashboardJsComponent } from './js-loader/dashboard-js/dashboard-js.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const SharedComponents = [
   DataTableJsComponent,

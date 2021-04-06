@@ -30,3 +30,8 @@ div.dataTables_length{
     background-color: #f0932b;
     border-color:#f0932b;
 }
+
+.btn-xs
+{
+  margin-right: 1px!important;
+}

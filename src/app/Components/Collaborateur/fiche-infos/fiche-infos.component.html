@@ -4,27 +4,26 @@
             <div class="col-md-4 profile-text mt mb centered">
                 <div class="right-divider hidden-sm hidden-xs">
                     <h4><i class="fa fa-calendar"></i> Date de naissance</h4>
-                    <h6>26/01/1997</h6>
+                    <h6>{{user.cv.candidat.dateNaiss | date:  'dd/MM/yyyy'}}</h6>
                     <h4><i class="fa fa-envelope"></i> Email</h4>
-                    <h6>friguimayssa97@gmail.com</h6>
+                    <h6>{{user.email}}</h6>
                     <h4><i class="fa fa-phone"></i> N° Téléphone</h4>
-                    <h6>27758975</h6>
+                    <h6>{{user.tel}}</h6>
                     <h4><i class="fa fa-map-marker"></i> Adresse</h4>
-                    <h6>Sahloul 4, Sousse</h6>
+                    <h6>{{user.cv.candidat.adresse}}</h6>
                 </div>
             </div>
             <!-- /col-md-4 -->
             <div class="col-md-4 profile-text">
-                <h3>Mayssa FRIGUI</h3>
+                <h3>{{user.cv.candidat.prenom| titlecase}} {{user.cv.candidat.nom| uppercase}}</h3>
                 <!-- <h6>Main Administrator</h6> -->
-                <p>Description :Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
-                    piece of classical Latin literature from 45 BC.</p>
+                <p>{{user.cv.description}}</p>
                 <br>
             </div>
             <!-- /col-md-4 -->
             <div class="col-md-4 centered">
                 <div class="profile-pic">
-                    <p><img src="../../../../assets/img/tof.jpg" class="img-circle"></p>
+                    <p><img src="../../../../assets/img/{{user.cv.candidat.avatar}}" class="img-circle"></p>
                 </div>
             </div>
             <!-- /col-md-4 -->
@@ -57,34 +56,13 @@
                                     <div class="detailed mt">
                                         <h4><i class="fa fa-graduation-cap"></i> Formation</h4>
                                         <div class="container-fluid">
-                                            <div class="row">
+                                            <div class="row"  *ngFor="let formation of user.cv.formations">
                                                 <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2018 à 2022 </strong>
+                                                    <p><strong><i class="fa fa-calendar"></i> {{formation.dateDebut | date:  'yyyy'}} - {{formation.dateFin | date:  'yyyy'}}</strong>
                                                     </p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <p>Cycle ingénieur en Informatiques à l'Ecole Nationale d’ingénieurs
-                                                        de Carthage</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2015 à 2018 </strong>
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p>Licence fondamentale en Sciences et Technologies de l’Information
-                                                        et des Communications à l'Institut Supérieur d’informatique et
-                                                        de Mathématiques de Monastir</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2014 à 2015 </strong>
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p>Baccalauréat en Mathématiques à Lycée Hamem sousse</p>
+                                                    <p>{{formation.niveau}} en {{formation.specialite}} à {{formation.universite}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,30 +72,16 @@
                                 <div class="row">
                                     <div class="detailed mt">
                                         <h4><i class="fa fa-briefcase"></i> Expériences professionelles</h4>
-                                        <div class="container-fluid">
-                                            <div class="row">
+                                        <div class="container-fluid" >
+                                            <div class="row" *ngFor="let experience of user.cv.experiences">
                                                 <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2018 à 2022 </strong>
+                                                    <p><strong><i class="fa fa-calendar"></i> {{experience.dateDebut | date:  'MM/yyyy'}} - {{experience.dateFin | date:  'MM/yyyy'}}</strong>
                                                     </p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <p><strong>Ingénieur informatique, Decathlon</strong></p>
-                                                    <p>Maintenance du site web en francais et mise à jour régulière
-                                                        suivant les offres promotionnelles et événements.</p>
-                                                    <p><strong>Mots clés: </strong>Angular, Spring Boot, GraphQl</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2018 à 2022 </strong>
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p><strong>Stagiaire ingénieur informatique, Auchan</strong></p>
-                                                    <p>Assister l'ingénieur senior sur la maintenance du site internet.
-                                                    </p>
-                                                    <p><strong>Mots clés: </strong>Html, CSS, JavaScript, PHP, Bootstrap
-                                                    </p>
+                                                    <p><strong>{{experience.poste}} chez {{experience.societe}}</strong></p>
+                                                    <p>{{experience.description}}</p>
+                                                    <p><strong>Mots clés :</strong>{{experience.motCles}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,28 +91,15 @@
                                 <div class="row">
                                     <div class="detailed mt">
                                         <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
-                                        <div class="container-fluid">
+                                        <div class="container-fluid" *ngFor="let activite of user.cv.activiteAssociatives">
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2018 à 2020 </strong>
+                                                    <p><strong><i class="fa fa-calendar"></i> {{activite.dateDebut | date:  'MM/yyyy'}} - {{activite.dateFin | date:  'MM/yyyy'}}</strong>
                                                     </p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <p><strong>Membre d’Amnesty International France</strong></p>
-                                                    <p>intervention sur les problématiques des droits de l’Homme dans
-                                                        les lycées en Ile-de-France</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p><strong><i class="fa fa-calendar"></i> De 2014 à 2017 </strong>
-                                                    </p>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p><strong>Président fondateur de l’association Enfants du
-                                                            Cambodge</strong></p>
-                                                    <p>activités d’alphabétisation numérique de développement rural au
-                                                        Cambodge</p>
+                                                    <p><strong>{{activite.poste}} chez {{activite.association}}</strong></p>
+                                                    <p>{{activite.description}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,77 +115,11 @@
                                         <h4><i class="fa fa-wrench"></i> Compétences</h4>
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <!-- <div class="col-sm-4">
                                                     <p><strong>Technologies Web</strong></p>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-sm-8">
-                                                    <p>Angular, Nodejs, HTML5, CSS3, JavaScript, TypeScript, PHP5
-                                                        ,Boostrap4</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Technologies mobile</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>React , Android</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Base de données</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>MySql, Oracle, TypeORM, Sequelize</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Langage de programmation</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>C, C++, Java, Python</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Big data</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>Hadoop, Spark</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Système d'exploitation</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>Linux , Windows</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Conception et méthodologie</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>UML, Scrum</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Outils de versionning</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>Git</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <p><strong>Autres compétences</strong></p>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <p>Machine Learning , Deep Learning, Data Mining , Blockchain , IOT
-                                                    </p>
+                                                    <span  *ngFor="let competence of user.cv.competences"><strong>{{competence.nom}}.</strong>{{competence.version}}, </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,18 +128,11 @@
                                 <div class="row">
                                     <div class="detailed mt">
                                         <h4><i class="fa fa-trophy"></i> Certifications</h4>
-                                        <div class="container-fluid">
+                                        <div class="container-fluid" *ngFor="let certificat of user.cv.certificats">
                                             <div class="row">
-                                                <p><strong><i class="fa fa-certificate"></i> MTA: Database
-                                                        Fundamentals</strong></p>
-                                            </div>
-                                            <div class="row">
-                                                <p><strong><i class="fa fa-certificate"></i> MTA: Introduction to
-                                                        Programming using HTML and CSS</strong></p>
-                                            </div>
-                                            <div class="row">
-                                                <p><strong><i class="fa fa-certificate"></i> CCNA Routing and Switching:
-                                                        Introduction to Networks</strong></p>
+                                                <p><i class="fa fa-certificate"></i>
+                                                  <strong>{{certificat.organisation}} </strong> obtenu le
+                                                    {{certificat.dateObtention | date:  'dd/MM/yyyy'}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -263,36 +141,12 @@
                                     <div class="detailed mt">
                                         <h4><i class="fa fa-language"></i> Langues</h4>
                                         <div class="container-fluid">
-                                            <div class="row">
+                                            <div class="row"  *ngFor="let langue of user.cv.langues">
                                                 <div class="col-sm-2">
-                                                    <p><strong>Anglais :</strong></p>
+                                                    <p><strong>{{langue.nom}}</strong></p>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <p>Courant</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-2">
-                                                    <p><strong>Français :</strong></p>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <p>Intermédiaire</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-2">
-                                                    <p><strong>Arabe :</strong></p>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <p>Langue maternelle</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-2">
-                                                    <p><strong>Chinois :</strong></p>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <p>Débutant</p>
+                                                    <p>{{langue.niveau}}</p>
                                                 </div>
                                             </div>
                                         </div>

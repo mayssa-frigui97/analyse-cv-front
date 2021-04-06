@@ -1,0 +1,28 @@
+/* @import '@angular/material/prebuilt-themes/deeppurple-amber.css'; */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+html, body { height: 100%; }
+body {
+  margin: 0;;
+  font-family: 'Ruda', sans-serif!important;
+  font-size: 13px!important;
+}
+/* .h3, .mat-typography
+{
+  font-weight: 400!important;
+  margin-top: 20px!important;
+  margin-bottom: 10px!important;
+  font: 300 13px/25px Roboto, "Ruda", sans-serif!important;
+}
+.header{
+  top: 0!important;
+}
+
+.cdk-overlay-pane{
+  top: 150!important;
+  left:280!important;
+  margin-top: 115px!important;
+}
+
+#mat-option-0 > span > ngx-mat-select-search > div{
+  margin-top: 0!important;
+} */

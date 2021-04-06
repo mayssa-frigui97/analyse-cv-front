@@ -3,19 +3,15 @@
     <!-- page start-->
     <div class="content-panel">
         <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-            <div class="col-md-11">
-                <div id="hidden-table-info_length" class="dataTables_length">
-                    <label>Rôle<br>
-                        <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
-                            <option value="" selected="selected">Collaborateur</option>
-                            <option value="">Ressources Humaines</option>
-                            <option value="">Responsable Pôle</option>
-                            <option value="">Chef d'équipe</option>
-                            <option value="">Administrateur</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
+          <div class="col-md-4 mb">
+            <ng-select [items]="roles"
+                       bindLabel="role"
+                       placeholder="Selectionner le(s) rôle(s)"
+                       appendTo="body"
+                       multiple="true"
+                       ngModel="selected">
+            </ng-select>
+          </div>
         </div>
         <br>
         <div class="adv-table" style="margin-left: 10px!important;">
@@ -23,419 +19,71 @@
                 id="hidden-table-info">
                 <thead>
                     <tr>
-                        <th>Nom et prénom</th>
-                        <th>CIN</th>
-                        <th class="hidden-phone">Nom utilisateur</th>
-                        <th class="hidden-phone">Rôle</th>
-                        <th class="hidden-phone">Email</th>
-                        <th class="hidden-phone">N° téléphone</th>
-                        <th class="hidden-phone">Action</th>
+                      <th>Nom et prénom</th>
+                      <th>Nom utilisateur</th>
+                      <th>Rôle(s)</th>
+                      <th class="hidden-phone">Date de naissance</th>
+                      <th class="hidden-phone">E-mail</th>
+                      <th class="hidden-phone">N° téléphone</th>
+                      <th class="hidden-phone">Poste</th>
+                      <th class="hidden-phone">Salaire</th>
+                      <th class="hidden-phone">date d'embauche</th>
+                      <th class="hidden-phone">évaluation</th>
+                      <th class="hidden-phone">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
+                    <tr class="gradeA" *ngFor="let user of users">
+                      <td>{{user.cv.candidat.prenom| titlecase}} {{user.cv.candidat.nom| uppercase}}</td>
+                      <td>{{user.nomUtilisateur}}</td>
+                      <td>{{user.roles}}</td>
+                      <td class="hidden-phone">{{user.cv.candidat.dateNaiss| date:  'dd/MM/yyyy'}}</td>
+                      <td class="center hidden-phone">{{user.email}}</td>
+                      <td class="center hidden-phone">{{user.tel}}</td>
+                      <td class="center hidden-phone">{{user.poste}}</td>
+                      <td class="center hidden-phone">{{user.salaire}}</td>
+                      <td class="hidden-phone">{{user.dateEmb| date:  'dd/MM/yyyy'}}</td>
+                      <td class="center hidden-phone"><app-star-rating rating={{user.evaluation}}></app-star-rating></td>
+
                         <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
+                            <a>
+                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur" [routerLink]="['cv', user.cv.candidat.id]"
+                                style="padding-left: 4px!important; padding-right: 4px!important;">
+                                    <i class="fa fa-eye"></i></button>
                             </a>
-                            <a data-toggle="modal" href="#ModalSupp">
+                            <a data-toggle="modal" href="#supp">
                                 <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
                                     <i class="fa fa-trash-o "></i></button>
                             </a>
                         </td>
                     </tr>
-                    <!-- Modal -->
-                    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="ModalSupp" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un utilisateur</h4>
-                                </div>
-                                <div class="modal-body" style="margin-bottom: 20px;">
-                                    Êtes-vous sûr de vouloir supprimer ce utilisateur?
-                                </div>
-                                <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-                                    <button class="btn btn-theme" type="button">Confirmer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- modal -->
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Mayssa FRIGUI</td>
-                        <td>12826842</td>
-                        <td class="hidden-phone">MayssaFR</td>
-                        <td class="center hidden-phone">Collaborateur</td>
-                        <td class="center hidden-phone">friguimayssa97@gmail.com</td>
-                        <td class="center hidden-phone">27758975</td>
-                        <td>
-                            <a href="">
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur">
-                                    <i class="fa fa-check"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#ModalSupp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
     <!-- page end-->
 </div>
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal fade">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un utilisateur</h4>
+          </div>
+          <div class="modal-body" style="margin-bottom: 20px;">
+              Êtes-vous sûr de vouloir supprimer cet utilisateur?
+          </div>
+          <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
+              <button class="btn btn-theme" type="button">Confirmer</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- modal -->
 
 <!--js loader-->
 <!-- <app-base-js></app-base-js> -->

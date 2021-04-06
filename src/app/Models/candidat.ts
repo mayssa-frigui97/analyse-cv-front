@@ -9,7 +9,7 @@ export class Candidat {
     public cin: number;
 
     public dateNaiss:Date;
-    
+
     public adresse: string;
 
     public tel: number;
@@ -18,3 +18,4 @@ export class Candidat {
 
     public avatar: string;
 }
+

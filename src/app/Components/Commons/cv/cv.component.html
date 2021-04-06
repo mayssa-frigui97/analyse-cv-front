@@ -1,0 +1,815 @@
+<!-- <button (click)="goBack()">go back</button> -->
+<div class="row mt">
+  <div class="col-lg-12">
+      <div class="row content-panel">
+          <div class="col-md-4 profile-text mt mb centered">
+              <div class="right-divider hidden-sm hidden-xs">
+                  <h4><i class="fa fa-calendar"></i> Date de naissance</h4>
+                  <h6>{{cv.candidat.dateNaiss | date:  'dd/MM/yyyy'}}</h6>
+                  <h4><i class="fa fa-envelope"></i> Email</h4>
+                  <h6>{{cv.candidat.email}}</h6>
+                  <h4><i class="fa fa-phone"></i> N° Téléphone</h4>
+                  <h6>{{cv.candidat.tel}}</h6>
+                  <h4><i class="fa fa-map-marker"></i> Adresse</h4>
+                  <h6>{{cv.candidat.adresse}}</h6>
+              </div>
+          </div>
+          <!-- /col-md-4 -->
+          <div class="col-md-4 profile-text">
+              <h3>{{cv.candidat.prenom| titlecase}} {{cv.candidat.nom| uppercase}}</h3>
+              <!-- <h6>Main Administrator</h6> -->
+              <p>{{cv.description}}</p>
+              <br>
+          </div>
+          <!-- /col-md-4 -->
+          <div class="col-md-4 centered">
+              <div class="profile-pic">
+                  <p><img src="../../../../assets/img/{{cv.candidat.avatar}}" class="img-circle"></p>
+              </div>
+          </div>
+          <!-- /col-md-4 -->
+      </div>
+      <!-- /row -->
+  </div>
+  <!-- /col-lg-12 -->
+  <div class="col-lg-12 mt">
+      <div class="row content-panel">
+          <div class="panel-heading">
+              <ul class="nav nav-tabs nav-justified">
+                <li class="active">
+                  <a data-toggle="tab" href="#details">Détails du CV</a>
+                </li>
+                <li>
+                  <a data-toggle="tab" href="#historique" class="contact-map">Historique</a>
+                </li>
+                <li>
+                  <a data-toggle="tab" href="#modifier">Modifier CV</a>
+                </li>
+              </ul>
+          </div>
+          <!-- /panel-heading -->
+          <div class="panel-body">
+              <div class="tab-content">
+                  <div id="details" class="tab-pane active">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="row">
+                                  <div class="detailed mt">
+                                      <h4><i class="fa fa-graduation-cap"></i> Formation</h4>
+                                      <div class="container-fluid">
+                                          <div class="row"  *ngFor="let formation of cv.formations">
+                                              <div class="col-sm-3">
+                                                  <p><strong><i class="fa fa-calendar"></i> {{formation.dateDebut | date:  'yyyy'}} - {{formation.dateFin | date:  'yyyy'}}</strong>
+                                                  </p>
+                                              </div>
+                                              <div class="col-sm-9">
+                                                  <p>{{formation.niveau}} en {{formation.specialite}} à {{formation.universite}}</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- /recent-activity -->
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="detailed mt">
+                                      <h4><i class="fa fa-briefcase"></i> Expériences professionelles</h4>
+                                      <div class="container-fluid" >
+                                          <div class="row" *ngFor="let experience of cv.experiences">
+                                              <div class="col-sm-3">
+                                                  <p><strong><i class="fa fa-calendar"></i> {{experience.dateDebut | date:  'MM/yyyy'}} - {{experience.dateFin | date:  'MM/yyyy'}}</strong>
+                                                  </p>
+                                              </div>
+                                              <div class="col-sm-9">
+                                                  <p><strong>{{experience.poste}} chez {{experience.societe}}</strong></p>
+                                                  <p>{{experience.description}}</p>
+                                                  <p><strong>Mots clés :</strong>{{experience.motCles}}</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- /recent-activity -->
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="detailed mt">
+                                      <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
+                                      <div class="container-fluid" *ngFor="let activite of cv.activiteAssociatives">
+                                          <div class="row">
+                                              <div class="col-sm-3">
+                                                  <p><strong><i class="fa fa-calendar"></i> {{activite.dateDebut | date:  'MM/yyyy'}} - {{activite.dateFin | date:  'MM/yyyy'}}</strong>
+                                                  </p>
+                                              </div>
+                                              <div class="col-sm-9">
+                                                  <p><strong>{{activite.poste}} chez {{activite.association}}</strong></p>
+                                                  <p>{{activite.description}}</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- /recent-activity -->
+                                  </div>
+                              </div>
+                              <!-- /detailed -->
+                          </div>
+                          <!-- /col-md-6 -->
+                          <div class="col-md-6">
+                              <div class="row">
+                                  <div class="detailed mt">
+                                      <h4><i class="fa fa-wrench"></i> Compétences</h4>
+                                      <div class="container-fluid">
+                                          <div class="row">
+                                              <!-- <div class="col-sm-4">
+                                                  <p><strong>Technologies Web</strong></p>
+                                              </div> -->
+                                              <div class="col-sm-8">
+                                                  <span  *ngFor="let competence of cv.competences"><strong>{{competence.nom}}.</strong>{{competence.version}}, </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="detailed mt">
+                                      <h4><i class="fa fa-trophy"></i> Certifications</h4>
+                                      <div class="container-fluid" *ngFor="let certificat of cv.certificats">
+                                          <div class="row">
+                                              <p><i class="fa fa-certificate"></i>
+                                                <strong>{{certificat.organisation}} </strong> obtenu le
+                                                  {{certificat.dateObtention | date:  'dd/MM/yyyy'}}</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="detailed mt">
+                                      <h4><i class="fa fa-language"></i> Langues</h4>
+                                      <div class="container-fluid">
+                                          <div class="row"  *ngFor="let langue of cv.langues">
+                                              <div class="col-sm-2">
+                                                  <p><strong>{{langue.nom}}</strong></p>
+                                              </div>
+                                              <div class="col-sm-3">
+                                                  <p>{{langue.niveau}}</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <!-- /row -->
+                          </div>
+                          <!-- /col-md-6 -->
+                      </div>
+                      <!-- /OVERVIEW -->
+                  </div>
+                  <!-- /tab-pane -->
+                  <div id="historique" class="tab-pane">
+                    <div class="row">
+                      <div class="chat-room mt" >
+                        <aside class="mid-side">
+                            <div class="chat-room-head">
+                                <h3><i class="fa fa-history"></i> Historique du processus de recrutement</h3>
+                                <form action="#" class="pull-right position">
+                                    <div class="input_container">
+                                        <span class="input_icon"><i class="fa fa-search"></i></span>
+                                        <input type="text" placeholder="Rechercher" class="form-control search-btn ">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="room-desk">
+                                <div class="room-box">
+                                    <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 17:30 20/02/2022</a></h5>
+                                    <p>Vous avez passé un deuxième entretien concernant l'offre de recrutement d'un ingénieur web Full Stack.</p>
+                                </div>
+                                <div class="room-box">
+                                    <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 17:30 15/01/2022</a></h5>
+                                    <p>Vous avez passé un premier entretien concernant l'offre de recrutement d'un ingénieur web Full Stack.</p>
+                                </div>
+                                <div class="room-box">
+                                    <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 10:35 05/01/2022</a></h5>
+                                    <p>Vous avez postuler dans la plateforme de recrutement de Proxym-IT concernant l'offre de recrutement d'un ingénieur web Full Stack.</p>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                    </div>
+                  </div>
+                  <!-- /tab-pane -->
+                  <div id="modifier" class="tab-pane">
+                      <div class="row mt ">
+                          <div class="col-sm-3 ">
+                              <div class="panel-heading" style="padding-top: 0px!important;">
+                                  <section class="panel">
+                                      <ul class="nav nav-pills nav-stacked mail-nav"
+                                          style="margin-top: 0px!important;">
+                                          <li class="active"><a data-toggle="tab" href="#info"> <i
+                                                      class="fa fa-address-book"></i>Informations personnelles</a>
+                                          </li>
+                                          <li><a data-toggle="tab" href="#formation"> <i
+                                                      class="fa fa-graduation-cap"></i>Formations</a></li>
+                                          <li><a data-toggle="tab" href="#experience"> <i
+                                                      class="fa fa-briefcase"></i>Expériences professionnelles</a>
+                                          </li>
+                                          <li><a data-toggle="tab" href="#competence"> <i
+                                                      class="fa fa-wrench"></i>Compétences</a></li>
+                                          <li><a data-toggle="tab" href="#certif"> <i
+                                                      class="fa fa-trophy"></i>Certifications</a></li>
+                                          <li><a data-toggle="tab" href="#activite"> <i
+                                                      class="fa fa-handshake-o"></i>Activités associatives</a></li>
+                                          <li><a data-toggle="tab" href="#langue"> <i
+                                                      class="fa fa-language"></i>Langues</a></li>
+                                      </ul>
+                                  </section>
+                              </div>
+                          </div>
+                          <div class="col-sm-9 ">
+                              <section class="panel">
+                                  <div class="panel-body minimal">
+                                      <div class="tab-content">
+                                          <div id="info" class="tab-pane active">
+                                              <form role="form" class="form-horizontal">
+                                                  <div class="form-group">
+                                                      <label class="col-lg-3 control-label">Photo de profil</label>
+                                                      <div class="col-lg-6">
+                                                          <input type="file" id="exampleInputFile" class="file-pos">
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-3 control-label">Date de naissance</label>
+                                                      <div class="col-lg-6">
+                                                          <input type="date" placeholder="Date de naissance" id=""
+                                                              class="form-control">
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-3 control-label">E-mail</label>
+                                                      <div class="col-lg-6">
+                                                          <input type="email" placeholder="exemple@gmail.com" id=""
+                                                              class="form-control">
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-3 control-label">Adresse</label>
+                                                      <div class="col-lg-6">
+                                                          <input type="text" placeholder="" id=""
+                                                              class="form-control">
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group">
+                                                      <label class="col-lg-3 control-label">N° Téléphone</label>
+                                                      <div class="col-lg-6">
+                                                          <input type="tel" placeholder="" id="" class="form-control">
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                          <div id="experience" class="tab-pane">
+                                              <div class="col-lg-12 col-lg-offset-2 detailed mt"
+                                                  style="margin-left: 40px!important;">
+                                                  <div class="row">
+                                                      <div class="col-lg-6">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text"
+                                                                          placeholder="Dates de début et de fin" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Poste</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Description</label>
+                                                                  <div class="col-lg-8">
+                                                                      <textarea rows="3" cols="20"
+                                                                          class="form-control" id=""
+                                                                          name=""></textarea>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Mots
+                                                                      clés</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-6">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text"
+                                                                          placeholder="Dates de début et de fin" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Poste</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Description</label>
+                                                                  <div class="col-lg-8">
+                                                                      <textarea rows="3" cols="20"
+                                                                          class="form-control" id=""
+                                                                          name=""></textarea>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Mots
+                                                                      clés</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div id="formation" class="tab-pane">
+                                              <div class="col-lg-12 col-lg-offset-2 detailed mt"
+                                                  style="margin-left: 40px!important;">
+                                                  <div class="row">
+                                                      <div class="col-lg-4">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder="" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Diplôme</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Université</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Spécialité</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-4">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder="" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Diplôme</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Université</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Spécialité</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-4">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder="" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Diplôme</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Université</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Spécialité</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div id="certif" class="tab-pane">
+                                              <div class="col-lg-12 col-lg-offset-2 detailed mt"
+                                                  style="margin-left: 40px!important;">
+                                                  <div class="row">
+                                                      <div class="col-lg-6">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text"
+                                                                          placeholder="Dates d'obtention /d'expiration"
+                                                                          id="" class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Certification</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Organisation</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Niveau</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-6">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text"
+                                                                          placeholder="Dates d'obtention /d'expiration"
+                                                                          id="" class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Certification</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Organisation</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Niveau</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div id="competence" class="tab-pane">
+                                              <div class="col-lg-12 col-lg-offset-2 detailed mt"
+                                                  style="margin-left: 40px!important;">
+                                              </div>
+                                          </div>
+                                          <div id="langue" class="tab-pane">
+                                              <div class="col-lg-12 col-lg-offset-2 detailed mt"
+                                                  style="margin-left: 40px!important;">
+                                                  <div class="row">
+                                                      <div class="col-lg-4">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-4 control-label">Langue</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder="" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-4 control-label">Niveau</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-4 control-label">Certification</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-4">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-4 control-label">Langue</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder="" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-4 control-label">Niveau</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-4 control-label">Certification</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-4">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-4 control-label">Langue</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder="" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-4 control-label">Niveau</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-4 control-label">Certification</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div id="activite" class="tab-pane">
+                                              <div class="col-lg-12 col-lg-offset-2 detailed mt"
+                                                  style="margin-left: 40px!important;">
+                                                  <div class="row">
+                                                      <div class="col-lg-6">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text"
+                                                                          placeholder="Dates de début et de fin" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Association</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Poste</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Description</label>
+                                                                  <div class="col-lg-8">
+                                                                      <textarea rows="3" cols="20"
+                                                                          class="form-control" id=""
+                                                                          name=""></textarea>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                      <div class="col-lg-6">
+                                                          <form role="form" class="form-horizontal">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Date</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text"
+                                                                          placeholder="Dates de début et de fin" id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Association</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Poste</label>
+                                                                  <div class="col-lg-8">
+                                                                      <input type="text" placeholder=" " id=""
+                                                                          class="form-control">
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <label
+                                                                      class="col-lg-3 control-label">Description</label>
+                                                                  <div class="col-lg-8">
+                                                                      <textarea rows="3" cols="20"
+                                                                          class="form-control" id=""
+                                                                          name=""></textarea>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                  <div class="col-lg-offset-2 col-lg-10">
+                                                                      <button class="btn btn-theme04"
+                                                                          type="button">Annuler</button>
+                                                                      <button class="btn btn-theme"
+                                                                          type="submit">Enregistrer</button>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </section>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- /tab-pane -->
+              </div>
+              <!-- /tab-content -->
+          </div>
+          <!-- /panel-body -->
+      </div>
+      <!-- /col-lg-12 -->
+  </div>
+  <!-- /row -->
+</div>
+
+<!-- Js-loader -->
+<!-- <app-base-js></app-base-js> -->
+<!-- /Js-loader -->

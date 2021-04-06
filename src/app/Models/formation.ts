@@ -3,8 +3,6 @@ export class Formation {
     public id:number;
 
     public universite:string;
-    
-    public diplome:string;
 
     public dateDebut: Date;
 

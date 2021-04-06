@@ -1,0 +1,59 @@
+<div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+  <div class="col-md-4 mb">
+    <ng-select [items]="formations"
+               bindLabel="niveau"
+               placeholder="Selectionner niveau de formation"
+               appendTo="body"
+               multiple="true"
+               ngModel="selected">
+    </ng-select>
+  </div>
+  <div class="col-md-4 mb">
+    <ng-select [items]="formations"
+               bindLabel="specialite"
+               placeholder="Selectionner spécialité de formation"
+               appendTo="body"
+               multiple="true"
+               ngModel="selected">
+    </ng-select>
+  </div>
+  <div class="col-md-4 mb">
+    <ng-select [items]="formations"
+               bindLabel="universite"
+               placeholder="Selectionner l'université"
+               appendTo="body"
+               multiple="true"
+               ngModel="selected">
+    </ng-select>
+  </div>
+</div>
+<div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+  <div class="col-md-4 mb">
+    <ng-select [items]="cvs"
+               bindLabel="poste"
+               placeholder="Selectionner les postes"
+               appendTo="body"
+               multiple="true"
+               ngModel="selected">
+    </ng-select>
+  </div>
+  <div class="col-md-4 mb">
+    <ng-select [items]="competences"
+               bindLabel="nom"
+               placeholder="Selectionner les compétences"
+               appendTo="body"
+               multiple="true"
+               ngModel="selected">
+    </ng-select>
+  </div>
+  <div class="col-md-4 mb">
+    <ng-select [items]="experiences"
+               bindLabel="annee"
+               placeholder="Selectionner l'expérience"
+               appendTo="body"
+               multiple="true"
+               ngModel="selected">
+    </ng-select>
+  </div>
+</div>
+

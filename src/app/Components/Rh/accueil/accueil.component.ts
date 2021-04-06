@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-accueil',
@@ -9,7 +10,7 @@ export class AccueilComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+
+  ngOnInit() {}
 
 }
