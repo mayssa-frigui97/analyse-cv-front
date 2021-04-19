@@ -2,7 +2,7 @@ import { Collaborateur } from './../../../Models/collaborateur';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { findCols } from '../../../shared/Collaborateur/query';
+import { findCols, findFilterColsRole } from '../../../shared/Collaborateur/query';
 import { map } from 'rxjs/operators';
 import { UserRole } from 'src/app/Enums/UserRole';
 
@@ -13,9 +13,9 @@ import { UserRole } from 'src/app/Enums/UserRole';
 })
 export class UtilisateursComponent implements OnInit {
 
-  users: Observable<Collaborateur[]>;
+  users: Collaborateur[];
   roles=[
-    {id: 1, role: UserRole.COLABORATEUR},
+    {id: 1, role: UserRole.COLLABORATEUR},
     {id: 2, role: UserRole.RH},
     {id: 3, role: UserRole.RP},
     {id: 4, role: UserRole.TEAMLEADER},
@@ -40,6 +40,19 @@ export class UtilisateursComponent implements OnInit {
       this.users = data;
     });
     console.log("cols :",this.users);
+  }
+
+  getFilterCols(selectedRoles: UserRole[]) {
+    this.apollo
+      .query<any>({
+        query: findFilterColsRole,
+        variables: { selectedRoles }
+      })
+      .subscribe(({ data }) => {
+        this.users = [];
+        this.users = data.findFilterColsRole;
+        console.log('colsFilter:', this.users);
+      });
   }
 
 }

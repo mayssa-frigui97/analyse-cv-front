@@ -1,21 +1,9 @@
-export class Candidat {
+import { Cv } from './cv';
+import { Personne } from './personne';
 
-    public id:number;
+export class Candidat extends Personne{
 
-    public nom:string;
+    public recommande: boolean;
 
-    public prenom:string;
-
-    public cin: number;
-
-    public dateNaiss:Date;
-
-    public adresse: string;
-
-    public tel: number;
-
-    public email: string;
-
-    public avatar: string;
 }
 

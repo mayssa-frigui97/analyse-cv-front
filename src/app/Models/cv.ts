@@ -5,7 +5,7 @@ import { Certificat } from './certificat';
 import { Experience } from './experience';
 import { Formation } from './formation';
 import { StatutCV } from './../Enums/StatutCV';
-import { Candidat } from './candidat';
+import { Personne } from './personne';
 export class Cv {
 
     public id:number;
@@ -14,11 +14,13 @@ export class Cv {
 
     public cmptGithub:string;
 
+    public posteAct:string;
+
     public description: string;
 
     public statutCV: StatutCV;
 
-    public candidat :Candidat;
+    public personne :Personne;
 
     public formations: Formation[];
 

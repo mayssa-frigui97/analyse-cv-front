@@ -1,55 +1,27 @@
-<header class="header black-bg">
-    <div class="sidebar-toggle-box">
-        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-    </div>
-    <!--logo start-->
-    <a [routerLink]="['accueil']" class="logo"><b>Analyse des<span> CVs</span></b></a>
-    <!--logo end-->
-    <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-            <div class="nav notify-row" id="top_menu">
-                <!--  notification start -->
-                <ul class="nav top-menu">
-                    <li id="header_notification_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="">
-                            <i class="fa fa-bell"></i>
-                            <span class="badge bg-warning">3</span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-yellow"></div>
-                            <li>
-                                <p class="yellow">You have 3 new notifications</p>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                                    Server Overloaded.
-                                    <span class="small italic">4 mins.</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                                    Memory #2 Not Responding.
-                                    <span class="small italic">30 mins.</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">See all notifications</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="header_inbox_bar" class="dropdown" style="margin-right: 50px;">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="" style="padding: 0;border: none!important;">
-                            <img src="../assets/img/tof.jpg" class="img-circle" width="26" height="29" style="border: 1px solid #666666 !important;;">
-                          </a>
-                        <ul class="dropdown-menu extended inbox">
-                          <div class="notify-arrow notify-arrow-green"></div>
-                          <li>
-                            <p class="green">Profil</p>
-                          </li>
-                          <div class="icn-main-container centered">
-                            <img src="../assets/img/tof.jpg" class="img-circle" width="70" height="80" style="border: 3px solid #eeeaea !important;;">
+<header class="header black-bg" *ngIf="user" >
+  <div class="sidebar-toggle-box">
+    <div class="fa fa-bars tooltips" data-placement="right"></div>
+  </div>
+  <!--logo start-->
+  <a [routerLink]="['accueil']" class="logo"><b>Analyse des<span> CVs</span></b></a>
+  <!--logo end-->
+  <div class="top-menu">
+    <ul class="nav pull-right top-menu">
+      <div class="nav notify-row" id="top_menu">
+        <!--  notification start -->
+        <ul class="nav top-menu">
+          <li id="header_inbox_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="padding: 0;border: none!important;">
+              <img src="../assets/img/{{user.avatar}}" class="img-circle" width="26" height="29"
+                style="border: 1px solid #666666 !important;;">
+            </a>
+            <ul class="dropdown-menu extended inbox" style="left: -5px!important; width: 800px!important;">
+              <div class="notify-arrow notify-arrow-green"></div>
+              <li>
+                <p class="green">Profil</p>
+              </li>
+              <!-- <div class="icn-main-container centered">
+                             <img src="../assets/img/tof.jpg" class="img-circle" width="70" height="80" style="border: 3px solid #eeeaea !important;;">
                           </div>
                           <p class="text-center nom-profil">Mayssa FRIGUI </p>
                           <ul class="pricing text-left" style="padding-left: 8px!important;font-size: 13px;padding-bottom: 20px;">
@@ -57,15 +29,63 @@
                             <li><strong>Nom utilisateur:</strong> MayssaFr</li>
                             <li><strong>Date de naissance:</strong> 26/01/1997</li>
                             <li><strong>E-mail:</strong> friguimayssa97@gmail.com</li>
-                          </ul>
-                        </ul>
-                      </li>
-                </ul>
-            </div>
-            <!--NOtification--end-->
-            <li><a class="logout" [routerLink]="['signout']">Se déconnecter</a></li>
+                          </ul> -->
+              <div class="icn-main-container">
+                <!-- <div class="well well-sm"> -->
+                  <div class="row">
+                    <div class="col-sm-4 col-md-4">
+                      <img src="../assets/img/{{user.avatar}}" alt="Photo de profil" class="img-rounded img-responsive img-circle"
+                        style="padding-top: 10px;" />
+                    </div>
+                    <div class="col-sm-8 col-md-8" style="padding-left: 0!important;">
+                      <h4><strong>{{user.prenom| titlecase}} {{user.nom| uppercase}}</strong></h4>
+                      <p>
+                        <small><i class="fa fa-user icone"></i>{{user.role}}</small><br />
+                        <small><i class="fa fa-briefcase icone"></i>{{user.poste}}</small><br />
+                        <small><i class="fa fa-birthday-cake icone"></i>{{user.dateNaiss | date: 'dd/MM/yyyy'}}</small><br />
+                        <small><i class="fa fa-envelope icone"></i>{{user.emailPro}}</small><br />
+                      </p>
+                    </div>
+                  </div>
+                <!-- </div> -->
+              </div>
+            </ul>
+          </li>
+          <li id="header_notification_bar" class="dropdown" style="margin-right: 65px;">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="">
+              <i class="fa fa-bell"></i>
+              <span class="badge bg-warning">3</span>
+            </a>
+            <ul class="dropdown-menu extended notification">
+              <div class="notify-arrow notify-arrow-yellow"></div>
+              <li>
+                <p class="yellow">You have 3 new notifications</p>
+              </li>
+              <li>
+                <a>
+                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                  Server Overloaded.
+                  <span class="small italic">4 mins.</span>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <span class="label label-warning"><i class="fa fa-bell"></i></span>
+                  Memory #2 Not Responding.
+                  <span class="small italic">30 mins.</span>
+                </a>
+              </li>
+              <li>
+                <a>See all notifications</a>
+              </li>
+            </ul>
+          </li>
         </ul>
-    </div>
+      </div>
+      <!--NOtification--end-->
+      <li><a class="logout" [routerLink]="['signout']">Se déconnecter</a></li>
+    </ul>
+  </div>
 </header>
 
 <!-- Js-loader -->

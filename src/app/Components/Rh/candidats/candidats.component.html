@@ -1,9 +1,46 @@
 <h3><i class="fa fa-angle-right"></i> La liste des candidats</h3>
-<div class="row mb">
+<div class="row mb" *ngIf="candidats">
     <div class="content-panel">
         <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <div class="col-md-11">
-              <app-multi-select-list></app-multi-select-list>
+              <div class="row" style="margin-right: 0px!important;margin-left: 10px!important"
+                *ngIf="nivFormation && specialites && universites && cvs && competences && experiences">
+                <div class="col-md-4 mb">
+                  <ng-select [items]="nivFormation" bindLabel="niveau" bindValue="niveau"
+                    placeholder="Selectionner niveau de formation" appendTo="body" multiple="true" [(ngModel)]="selectedNiv">
+                  </ng-select>
+                </div>
+                <div class="col-md-4 mb">
+                  <ng-select [items]="specialites" bindLabel="specialite" bindValue="specialite"
+                    placeholder="Selectionner spécialité de formation" appendTo="body" multiple="true" [(ngModel)]="selectedSpec">
+                  </ng-select>
+                </div>
+                <div class="col-md-4 mb">
+                  <ng-select [items]="universites" bindLabel="universite" bindValue="universite"
+                    placeholder="Selectionner l'université" appendTo="body" multiple="true" [(ngModel)]="selectedUniver">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+                <div class="col-md-4 mb">
+                  <ng-select [items]="cvs" bindLabel="posteAct" bindValue="posteAct" placeholder="Selectionner les postes"
+                    appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
+                  </ng-select>
+                </div>
+                <div class="col-md-4 mb">
+                  <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
+                    placeholder="Selectionner les compétences" appendTo="body" multiple="true" [(ngModel)]="selectedCompetence">
+                  </ng-select>
+                </div>
+                <div class="col-md-4 mb">
+                  <ng-select [items]="experiences" bindLabel="annee" bindValue="annee" placeholder="Selectionner l'expérience"
+                    appendTo="body" multiple="true" [(ngModel)]="selectedExp">
+                  </ng-select>
+                </div>
+                <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+                  <button (click)="getFilterCands(selectedCompetence,selectedPoste,selectedUniver,selectedSpec,selectedNiv)" class="btn btn-danger mb" style="float: right; margin-right: 60px;">Filtrer</button>
+                </div>
+              </div>
             </div>
             <div class="col-md-1">
                 <a data-toggle="modal" href="#myModal">
@@ -78,7 +115,7 @@
                                 <i class="fa fa-plus"></i></button>
                             </a>
                             <a data-toggle="modal" href="#supp">
-                              <button class="btn btn-danger btn-xs" title="supprimer candidat">
+                              <button class="btn btn-danger btn-xs" title="supprimer candidat" (click)="myUser = candidat">
                                 <i class="fa fa-trash-o "></i></button>
                             </a>
                         </td>
@@ -98,11 +135,14 @@
         <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un collaborateur</h4>
       </div>
       <div class="modal-body" style="margin-bottom: 20px;">
-        Êtes-vous sûr de vouloir supprimer ce collaborateur?
+        <h5>Êtes-vous sûr de vouloir supprimer ce collaborateur
+        <!--: {{myUser.prenom}}{{myUser.nom}} -->
+        ?
+      </h5>
       </div>
       <div class="modal-footer">
         <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-        <button class="btn btn-theme" type="button">Confirmer</button>
+        <button class="btn btn-theme" data-dismiss="modal" type="button" (click)="deleteUser(myUser.id)" >Confirmer</button>
       </div>
     </div>
   </div>

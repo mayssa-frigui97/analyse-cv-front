@@ -4,10 +4,18 @@ const findCols = gql`
   query findCols {
     findCols {
       id
-      nomUtilisateur
+      nom
+      prenom
+      cin
+      dateNaiss
+      adresse
       tel
       email
-      roles
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
       poste
       dateEmb
       salaire
@@ -16,7 +24,7 @@ const findCols = gql`
         id
         cmptGithub
         cmptLinkedin
-        poste
+        posteAct
         description
         statutCV
         formations {
@@ -30,7 +38,7 @@ const findCols = gql`
         }
         certificats {
           id
-          organisation
+          nom
           dateObtention
           dateExpiration
           niveau
@@ -64,17 +72,6 @@ const findCols = gql`
           association
           description
         }
-        candidat {
-          id
-          nom
-          prenom
-          cin
-          dateNaiss
-          adresse
-          tel
-          email
-          avatar
-        }
       }
       equipe {
         id
@@ -89,95 +86,98 @@ const findCols = gql`
 `;
 
 const findCol = gql`
-query findCol($idCol: Int!)
-{
-  findCol(idCol: $idCol)
-  {
-    id
-    nomUtilisateur
-    tel
-    email
-    roles
-    poste
-    dateEmb
-    salaire
-    evaluation
-    cv{
+  query findCol($idCol: Int!) {
+    findCol(idCol: $idCol) {
       id
-      cmptGithub
-      cmptLinkedin
-      description
+      nom
+      prenom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
       poste
-      statutCV
-      formations{
+      dateEmb
+      salaire
+      evaluation
+      cv {
         id
-        universite
-        dateDebut
-        dateFin
-        specialite
-        niveau
-        mention
-      }
-      certificats{
-        id
-        organisation
-        dateObtention
-        dateExpiration
-        niveau
-        }
-      competences{
-        id
-        nom
-        version
-        niveau}
-      langues{
-        id
-        nom
-        niveau
-        certifie}
-      experiences{
-        id
-        societe
-        poste
-        dateDebut
-        dateFin
+        cmptGithub
+        cmptLinkedin
         description
-        motCles}
-        activiteAssociatives
-        {
+        posteAct
+        statutCV
+        formations {
+          id
+          universite
+          dateDebut
+          dateFin
+          specialite
+          niveau
+          mention
+        }
+        certificats {
+          id
+          nom
+          dateObtention
+          dateExpiration
+          niveau
+        }
+        competences {
+          id
+          nom
+          version
+          niveau
+        }
+        langues {
+          id
+          nom
+          niveau
+          certifie
+        }
+        experiences {
+          id
+          societe
+          poste
+          dateDebut
+          dateFin
+          description
+          motCles
+        }
+        activiteAssociatives {
           id
           dateDebut
           dateFin
           poste
           association
-          description}
-      candidat{
+          description
+        }
+      }
+      equipe {
         id
         nom
-        prenom
-        cin
-        dateNaiss
-        adresse
-        tel
-        email
-        avatar
+        pole {
+          id
+          nom
+        }
       }
     }
-    equipe{
-      id
-      nom
-      pole{
-        id
-        nom}
-      }
   }
-}`;
+`;
 
 const findPoles = gql`
   query findPoles {
     findPoles {
       id
       nom
+      rp{
+        id
+      }
     }
   }`;
 
@@ -189,9 +189,133 @@ const findEquipes = gql`
     }
   }`;
 
+const findEquipesPole = gql`
+  query findEquipesPole ($idPoles: [Int!]!){
+    findEquipesPole(idPoles: $idPoles) {
+      id
+      nom
+    }
+  }`;
+
+const findFilterCols = gql`
+  query findFilterCols($selectedPoles: [Int!],$selectedEquipes: [Int!], $selectedComp: [String!],
+   $selectedPoste: [String!], $selectedUniver: [String!], $selectedSpec: [String!], $selectedNiv: [String!]) {
+    findFilterCols(selectedPoles: $selectedPoles, selectedEquipes: $selectedEquipes
+      selectedComp: $selectedComp, selectedPoste: $selectedPoste, selectedUniver: $selectedUniver,
+      selectedSpec: $selectedSpec, selectedNiv: $selectedNiv ) {
+      id
+      nom
+      prenom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+        }
+      }
+    }
+  }
+`;
+
+const findFilterColsRole = gql`
+  query findFilterColsRole($selectedRoles: [UserRole!]!) {
+    findFilterColsRole(selectedRoles: $selectedRoles) {
+      id
+      nom
+      prenom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+          rp {
+            id
+            nom
+            prenom
+            cin
+            dateNaiss
+            adresse
+            tel
+            email
+            avatar
+            nomUtilisateur
+            telPro
+            emailPro
+            role
+            poste
+            dateEmb
+            salaire
+            evaluation
+          }
+        }
+      }
+    }
+  }
+`;
+
+
+const updateCol = gql`
+  mutation updateCol($updateColInput: UpdateColInput!, $idCol: Int!)
+  {
+    updateCol(updateColInput: $updateColInput, idCol: $idCol){
+      id
+      nom
+      prenom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      poste
+      dateEmb
+      salaire
+      evaluation
+    }
+  }`;
+
+
 export {
   findCols,
   findCol,
   findPoles,
-  findEquipes
+  findEquipes,
+  findEquipesPole,
+  findFilterCols,
+  findFilterColsRole,
+  updateCol
 }

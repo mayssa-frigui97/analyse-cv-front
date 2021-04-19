@@ -47,4 +47,25 @@
   margin-right: 0px!important;
   margin-left: 0px!important;
 }
+/* 
+.btn-theme02{
+  border-radius: 60%;
+  padding-bottom: 6px;
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 8px;
+  background-color: rgb(170, 168, 168);
+  border-color: rgb(170, 168, 168);
+}
 
+.btn-theme02:hover{
+  background-color: grey;
+  border-color:grey;
+} */
+
+.fermer{
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 1px;
+}

@@ -1,10 +1,14 @@
-import { Cv } from "./cv";
+import { Entretien } from './entretien';
+import { Personne } from './personne';
 
 export class Candidature {
+
     public id:number;
 
     public date:Date;
 
-    public cv :Cv;
+    public personne :Personne;
+
+    public entretiens :Entretien[];
 }
 

@@ -1,13 +1,12 @@
 import { UserRole } from './../Enums/UserRole';
-import { Cv } from "./cv";
 import { Equipe } from "./equipe";
+import { Personne } from './personne';
 
-export class Collaborateur {
-    public id:number;
+export class Collaborateur extends Personne{
 
-    public tel: number;
+    public telPro: number;
 
-    public email: string;
+    public emailPro: string;
 
     public poste: string;
 
@@ -19,13 +18,11 @@ export class Collaborateur {
 
     public motDePasse: string;
 
-    public roles :UserRole[];
+    public role :UserRole;
 
     public evaluation: number;
 
     public equipe :Equipe;
 
     public notifications?: Notification[];
-
-    public cv :Cv;
 }

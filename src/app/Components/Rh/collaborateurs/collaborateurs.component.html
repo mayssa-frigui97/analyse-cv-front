@@ -1,72 +1,101 @@
 <h3><i class="fa fa-angle-right"></i> La liste des collaborateurs</h3>
-<div class="row mb">
+<div class="row mb" *ngIf="poles && equipes && projets && nivFormation && specialites && universites && cvs && competences && experiences && cols">
     <div class="content-panel">
+      <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+        <button (click)="getFilterCols(selectedPoles)" class="btn btn-danger mb" style="float: right; margin-right: 50px;">Filtrer</button>
+      </div> -->
         <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
           <div class="col-md-4 mb">
-            <ng-select [items]="poles"
-                       bindLabel="nom"
-                       placeholder="Selectionner le département"
-                       appendTo="body"
-                       multiple="true"
-                       ngModel="selected">
+            <ng-select [items]="poles" bindLabel="nom" bindValue="id" placeholder="Selectionner le département" appendTo="body"
+              multiple="true" [(ngModel)]="selectedPoles" (change)="getEquipesPoles(selectedPoles)">
             </ng-select>
           </div>
           <div class="col-md-4 mb">
-            <ng-select [items]="equipes"
-                       bindLabel="nom"
-                       placeholder="Selectionner l'équipe"
-                       appendTo="body"
-                       multiple="true"
-                       ngModel="selected">
+            <ng-select [items]="equipes" bindLabel="nom" bindValue="id" placeholder="Selectionner l'équipe" appendTo="body"
+              multiple="true" [(ngModel)]="selectedEquipes">
             </ng-select>
           </div>
           <div class="col-md-4 mb">
-            <ng-select [items]="projets"
-                       bindLabel="nom"
-                       placeholder="Selectionner les projets"
-                       appendTo="body"
-                       multiple="true"
-                       ngModel="selected">
+            <ng-select [items]="projets" bindLabel="nom" bindValue="id" placeholder="Selectionner les projets" appendTo="body"
+              multiple="true" [(ngModel)]="selectedProjets">
             </ng-select>
           </div>
         </div>
-        <app-multi-select-list></app-multi-select-list>
+        <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+          <div class="col-md-4 mb">
+            <ng-select [items]="nivFormation" bindLabel="niveau" bindValue="niveau"
+              placeholder="Selectionner niveau de formation" appendTo="body" multiple="true" [(ngModel)]="selectedNiv">
+            </ng-select>
+          </div>
+          <div class="col-md-4 mb">
+            <ng-select [items]="specialites" bindLabel="specialite" bindValue="specialite"
+              placeholder="Selectionner spécialité de formation" appendTo="body" multiple="true" [(ngModel)]="selectedSpec">
+            </ng-select>
+          </div>
+          <div class="col-md-4 mb">
+            <ng-select [items]="universites" bindLabel="universite" bindValue="universite"
+              placeholder="Selectionner l'université" appendTo="body" multiple="true" [(ngModel)]="selectedUniver">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+          <div class="col-md-4 mb">
+            <ng-select [items]="cvs" bindLabel="posteAct" bindValue="posteAct" placeholder="Selectionner les postes"
+              appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
+            </ng-select>
+          </div>
+          <div class="col-md-4 mb">
+            <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
+              placeholder="Selectionner les compétences" appendTo="body" multiple="true" [(ngModel)]="selectedCompetence">
+            </ng-select>
+          </div>
+          <div class="col-md-4 mb">
+            <ng-select [items]="experiences" bindLabel="annee" bindValue="annee" placeholder="Selectionner l'expérience"
+              appendTo="body" multiple="true" [(ngModel)]="selectedExp">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+          <button (click)="getFilterCols(selectedPoles,selectedEquipes,selectedCompetence,selectedPoste,selectedUniver,selectedSpec,selectedNiv)" class="btn btn-danger mb"
+            style="float: right; margin-right: 60px;">Filtrer</button>
+        </div>
         <br>
         <div class="adv-table" style="margin-left: 10px!important;">
-            <table cellpadding="0" cellspacing="0" class="display table table-bordered"
-                id="hidden-table-info">
+            <table datatable [dtTrigger]="dtTrigger" cellpadding="0" cellspacing="0" class="display table table-bordered"
+                id="hidden-table-info" *ngIf="cols">
                 <thead>
                     <tr>
                         <th>Nom et prénom</th>
-                        <th>Nom utilisateur</th>
-                        <th>Rôle(s)</th>
-                        <th class="hidden-phone">Date de naissance</th>
+                        <!-- <th>Rôle</th> -->
                         <th class="hidden-phone">E-mail</th>
                         <th class="hidden-phone">N° téléphone</th>
                         <th class="hidden-phone">Poste</th>
                         <th class="hidden-phone">Salaire</th>
                         <th class="hidden-phone">date d'embauche</th>
                         <th class="hidden-phone">évaluation</th>
+                        <th class="hidden-phone">Pôle</th>
+                        <th class="hidden-phone">Equipe</th>
                         <th class="hidden-phone">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="gradeA" *ngFor="let col of cols">
-                        <td>{{col.cv.candidat.prenom| titlecase}} {{col.cv.candidat.nom| uppercase}}</td>
-                        <td>{{col.nomUtilisateur}}</td>
-                        <td>{{col.roles}}</td>
-                        <td class="hidden-phone">{{col.cv.candidat.dateNaiss | date:  'dd/MM/yyyy'}}</td>
-                        <td class="center hidden-phone">{{col.email}}</td>
-                        <td class="center hidden-phone">{{col.tel}}</td>
+                <tbody *ngFor="let col of cols">
+                    <tr class="gradeA">
+                        <td>{{col.prenom| titlecase}} {{col.nom| uppercase}}</td>
+                        <td class="center hidden-phone">{{col.emailPro}}</td>
+                        <td class="center hidden-phone">{{col.telPro}}</td>
                         <td class="center hidden-phone">{{col.poste}}</td>
                         <td class="center hidden-phone">{{col.salaire}}</td>
                         <td class="center hidden-phone">{{col.dateEmb | date:  'dd/MM/yyyy'}}</td>
                         <td class="center hidden-phone">
                           <app-star-rating rating={{col.evaluation}}></app-star-rating>
-                          <!-- <span class="stars">{{col.evaluation}}</span> -->
                         </td>
+                        <td class="center hidden-phone" *ngIf="col.equipe">{{col.equipe.pole.nom}}</td>
+                        <td class="center hidden-phone" *ngIf="col.role==='RH' ||col.role==='ADMIN' && !col.equipe"> </td>
+                        <td class="center hidden-phone" *ngIf="!col.equipe && col.role === 'RP'" >{{col.id | getNom:poles}}</td>
+                        <td class="center hidden-phone" *ngIf="col.equipe">{{col.equipe.nom}}</td>
+                        <td class="center hidden-phone" *ngIf="!col.equipe"> </td>
                         <td style="padding-right: 0;">
-                            <button class="btn btn-primary btn-xs" title="voir détails collaborateur" [routerLink]="['cv', col.cv.candidat.id]"
+                            <button class="btn btn-primary btn-xs" title="voir détails collaborateur" [routerLink]="['cv', col.id]"
                             style="padding-left: 4px!important; padding-right: 4px!important;">
                             <i class="fa fa-eye"></i></button>
                             <a data-toggle="modal" href="#supp">
@@ -75,7 +104,30 @@
                                 </button>
                             </a>
                         </td>
-                    </tr>
+                    <!-- </tr>
+                    <tr class="gradeA" *ngFor="let rpPole of rpPoles">
+                      <td>{{rpPole.rp.prenom| titlecase}} {{rpPole.rp.nom| uppercase}}</td>
+                      <td class="center hidden-phone">{{rpPole.rp.emailPro}}</td>
+                      <td class="center hidden-phone">{{rpPole.rp.telPro}}</td>
+                      <td class="center hidden-phone">{{rpPole.rp.poste}}</td>
+                      <td class="center hidden-phone">{{rpPole.rp.salaire}}</td>
+                      <td class="center hidden-phone">{{rpPole.rp.dateEmb | date: 'dd/MM/yyyy'}}</td>
+                      <td class="center hidden-phone">
+                        <app-star-rating rating={{rpPole.rp.evaluation}}></app-star-rating>
+                      </td>
+                      <td class="center hidden-phone">{{rpPole.nom}}</td>
+                      <td class="center hidden-phone"> </td>
+                      <td style="padding-right: 0;">
+                        <button class="btn btn-primary btn-xs" title="voir détails collaborateur" [routerLink]="['cv', rpPole.rp.id]"
+                          style="padding-left: 4px!important; padding-right: 4px!important;">
+                          <i class="fa fa-eye"></i></button>
+                        <a data-toggle="modal" href="#supp">
+                          <button class="btn btn-danger btn-xs" title="supprimer collaborateur" [routerLink]="['supprimer', rpPole.rp.id]">
+                            <i class="fa fa-trash-o "></i>
+                          </button>
+                        </a>
+                      </td>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

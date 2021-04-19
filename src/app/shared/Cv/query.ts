@@ -1,16 +1,15 @@
 import gql from 'graphql-tag';
+import { NgModule } from '@angular/core';
 
-const findCvCandidat = gql`
-query findCvCandidat($idCand: Int!)
-{
-  findCvCandidat(idCand: $idCand)
-  {
+const findCvCol = gql`
+  query findCvCandidat($idCand: Int!) {
+    findCvCandidat(idCand: $idCand) {
       id
       cmptGithub
       cmptLinkedin
       description
       statutCV
-      formations{
+      formations {
         id
         universite
         dateDebut
@@ -19,61 +18,80 @@ query findCvCandidat($idCand: Int!)
         niveau
         mention
       }
-      certificats{
+      certificats {
         id
-        organisation
+        nom
         dateObtention
         dateExpiration
         niveau
-        }
-      competences{
+      }
+      competences {
         id
         nom
         version
-        niveau}
-      langues{
+        niveau
+      }
+      langues {
         id
         nom
         niveau
-        certifie}
-      experiences{
+        certifie
+      }
+      experiences {
         id
         societe
         poste
         dateDebut
         dateFin
         description
-        motCles}
-        activiteAssociatives
-        {
-          id
-          dateDebut
-          dateFin
-          poste
-          association
-          description}
-        candidat{
-          id
-          nom
-          prenom
-          cin
-          dateNaiss
-          adresse
-          tel
-          email
-          avatar
-        }
+        motCles
+      }
+      activiteAssociatives {
+        id
+        dateDebut
+        dateFin
+        poste
+        association
+        description
+      }
+      personne {
+        id
+        nom
+        prenom
+        cin
+        dateNaiss
+        adresse
+        tel
+        email
+        avatar
+      }
     }
+  }
+`;
+
+const findUniversites = gql`
+query findUniversites
+{
+  findUniversites
+  {
+    universite
+  }
 }`;
 
-const findFormations = gql`
-query findFormations
+const findSpecialites = gql`
+query findSpecialites
 {
-  findFormations
+  findSpecialites
   {
-    id
-    universite
     specialite
+  }
+}`;
+
+const findNivFormations = gql`
+query findNivFormations
+{
+  findNivFormations
+  {
     niveau
   }
 }`;
@@ -89,13 +107,12 @@ query findExperiencesCv($idCv: Int!)
   }
 }`;
 
-const findCvs = gql`
-query findCvs
+const findPostes = gql`
+query findPostes
 {
-  findCvs
+  findPostes
   {
-    id
-    poste
+    posteAct
   }
 }`;
 
@@ -108,11 +125,98 @@ query findCompetences
   }
 }`;
 
+const updateCertif = gql`
+  mutation updateCertif($updateCertifInput: UpdateCertifInput!, $idCertif: Int!)
+  {
+    updateCertif(updateCertifInput: $updateCertifInput, idCertif: $idCertif){
+      id
+      dateObtention
+      dateExpiration
+      nom
+      niveau
+    }
+  }`;
+
+const updateFormation = gql`
+  mutation updateFormation($updateFormationInput: UpdateFormationInput!, $idFormation: Int!)
+  {
+    updateFormation(updateFormationInput: $updateFormationInput, idFormation: $idFormation){
+      id
+      dateDebut
+      dateFin
+      universite
+      niveau
+      specialite
+      mention
+    }
+  }`;
+
+const updateAct = gql`
+  mutation updateAct($updateActAssocInput: UpdateActAssocInput!, $idAct: Int!) {
+    updateAct(updateActAssocInput: $updateActAssocInput, idAct: $idAct) {
+      id
+      dateDebut
+      dateFin
+      poste
+      association
+      description
+    }
+  }
+`;
+
+const updateLangue = gql`
+  mutation updateLangue($updateLangueInput: UpdateLangueInput!, $idLangue: Int!)
+  {
+    updateLangue(updateLangueInput: $updateLangueInput, idLangue: $idLangue){
+      id
+      nom
+      niveau
+      certifie
+    }
+  }`;
+
+const updateExperience = gql`
+  mutation updateExperience($updateExperienceInput: UpdateExperienceInput!, $idExperience: Int!)
+  {
+    updateExperience(updateExperienceInput: $updateExperienceInput, idExperience: $idExperience){
+      id
+      societe
+      poste
+      dateDebut
+      dateFin
+      description
+      motCles
+    }
+  }`;
+
+
+const updateCompetence = gql`
+  mutation updateCompetence($updateCompetenceInput: UpdateCompetenceInput!, $idCompetence: Int!)
+  {
+    updateCompetence(updateCompetenceInput: $updateCompetenceInput, idCompetence: $idCompetence){
+      id
+      nom
+      niveau
+      version
+    }
+  }`;
+
+
+
+
 
 export {
-  findCvCandidat,
-  findFormations,
+  findCvCol,
+  findUniversites,
+  findSpecialites,
+  findNivFormations,
   findExperiencesCv,
-  findCvs,
-  findCompetences
+  findPostes,
+  findCompetences,
+  updateCertif,
+  updateFormation,
+  updateExperience,
+  updateCompetence,
+  updateLangue,
+  updateAct
 }
