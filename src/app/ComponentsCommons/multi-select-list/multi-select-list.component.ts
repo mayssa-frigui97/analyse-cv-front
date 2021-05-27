@@ -1,18 +1,8 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Formation } from './../../../Models/formation';
-import { findCompetences, findNivFormations, findPostes, findSpecialites, findUniversites } from '../../../shared/Cv/query';
+import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
-import { Cv } from './../../../Models/cv';
-import { Experience } from './../../../Models/experience';
-import { Competence } from './../../../Models/competence';
+import { Cv } from '../../Models/cv';
 
-import { findCandidats } from 'src/app/shared/Candidat/query';
-import { Candidat } from 'src/app/Models/candidat';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -22,106 +12,106 @@ import { FormControl } from '@angular/forms';
 })
 export class MultiSelectListComponent implements  OnInit{
 
-  public universites: Formation[];
-  public specialites: Formation[];
-  public nivFormation: Formation[];
-  public cvs: Cv[];
-  public experiences = [
-    {id: 1, annee: 'débutant'},
-    {id: 2, annee: '1 à 3ans'},
-    {id: 3, annee: '3 à 5ans'},
-    {id: 4, annee: '5 à 10ans'},
-    {id: 5, annee: '+ 10ans'}
-  ];
-  public annees: number[];
-  public competences: Competence[];
+  // public universites: Formation[];
+  // public specialites: Formation[];
+  // public nivFormation: Formation[];
+  // public cvs: Cv[];
+  // public experiences = [
+  //   {id: 1, annee: 'débutant'},
+  //   {id: 2, annee: '1 à 3ans'},
+  //   {id: 3, annee: '3 à 5ans'},
+  //   {id: 4, annee: '5 à 10ans'},
+  //   {id: 5, annee: '+ 10ans'}
+  // ];
+  // public annees: number[];
+  // public competences: Competence[];
 
-  selectedNiv: string[];
-  selectedExp: string[];
-  selectedCompetence: string[];
-  selectedPoste: string[];
-  selectedUniver: string[];
-  selectedSpec: string[];
+  // selectedNiv: string[];
+  // selectedExp: string[];
+  // selectedCompetence: string[];
+  // selectedPoste: string[];
+  // selectedUniver: string[];
+  // selectedSpec: string[];
 
-  constructor(private apollo: Apollo) {}
+  // constructor(private apollo: Apollo) {}
 
   ngOnInit(): void {
-    this.getUniversites();
-    this.getNivForm();
-    this.getSpecialites();
-    this.getPostes();
-    this.getCompetences();
-    // this.selectedExp = this.experiences[0].annee;
-    // console.log("selectexp:",this.selectedExp)
-    // // this.getAnneesExperiences();
-    // this.selectedNiv = this.formations[0].niveau;
-    // console.log("selectniv:",this.selectedNiv)
+  //   this.getUniversites();
+  //   this.getNivForm();
+  //   this.getSpecialites();
+  //   this.getPostes();
+  //   this.getCompetences();
+  //   // this.selectedExp = this.experiences[0].annee;
+  //   // console.log("selectexp:",this.selectedExp)
+  //   // // this.getAnneesExperiences();
+  //   // this.selectedNiv = this.formations[0].niveau;
+  //   // console.log("selectniv:",this.selectedNiv)
   }
 
-  getUniversites(): Formation[] {
-    this.apollo
-      .watchQuery<any>({
-        query: findUniversites,
-      })
-      .valueChanges.pipe(map((result) => result.data.findUniversites))
-      .subscribe((data) => {
-        this.universites = data;
-        console.log('Universites:', this.universites);
-      });
-    return this.universites;
-  }
+  // getUniversites(): Formation[] {
+  //   this.apollo
+  //     .watchQuery<any>({
+  //       query: findUniversites,
+  //     })
+  //     .valueChanges.pipe(map((result) => result.data.findUniversites))
+  //     .subscribe((data) => {
+  //       this.universites = data;
+  //       console.log('Universites:', this.universites);
+  //     });
+  //   return this.universites;
+  // }
 
-  getSpecialites(): Formation[] {
-    this.apollo
-      .watchQuery<any>({
-        query: findSpecialites,
-      })
-      .valueChanges.pipe(map((result) => result.data.findSpecialites))
-      .subscribe((data) => {
-        this.specialites = data;
-        console.log('Specialites:', this.specialites);
-      });
-    return this.specialites;
-  }
+  // getSpecialites(): Formation[] {
+  //   this.apollo
+  //     .watchQuery<any>({
+  //       query: findSpecialites,
+  //     })
+  //     .valueChanges.pipe(map((result) => result.data.findSpecialites))
+  //     .subscribe((data) => {
+  //       this.specialites = data;
+  //       console.log('Specialites:', this.specialites);
+  //     });
+  //   return this.specialites;
+  // }
 
-  getNivForm(): Formation[] {
-    this.apollo
-      .watchQuery<any>({
-        query: findNivFormations,
-      })
-      .valueChanges.pipe(map((result) => result.data.findNivFormations))
-      .subscribe((data) => {
-        this.nivFormation = data;
-        console.log('Niv Formation:', this.nivFormation);
-      });
-    return this.nivFormation;
-  }
+  // getNivForm(): Formation[] {
+  //   this.apollo
+  //     .watchQuery<any>({
+  //       query: findNivFormations,
+  //     })
+  //     .valueChanges.pipe(map((result) => result.data.findNivFormations))
+  //     .subscribe((data) => {
+  //       this.nivFormation = data;
+  //       console.log('Niv Formation:', this.nivFormation);
+  //     });
+  //   return this.nivFormation;
+  // }
 
-  getPostes(): Cv[] {
-    this.apollo
-      .watchQuery<any>({
-        query: findPostes,
-      })
-      .valueChanges.pipe(map((result) => result.data.findPostes))
-      .subscribe((data) => {
-        this.cvs = data;
-        console.log('postes :', this.cvs);
-      });
-    return this.cvs;
-  }
+  // getPostes(): Cv[] {
+  //   this.apollo
+  //     .watchQuery<any>({
+  //       query: findPostes,
+  //     })
+  //     .valueChanges.pipe(map((result) => result.data.findPostes))
+  //     .subscribe((data) => {
+  //       this.cvs = data;
+  //       console.log('postes :', this.cvs);
+  //     });
+  //   return this.cvs;
+  // }
 
-  getCompetences(): Competence[] {
-    this.apollo
-      .watchQuery<any>({
-        query: findCompetences,
-      })
-      .valueChanges.pipe(map((result) => result.data.findCompetences))
-      .subscribe((data) => {
-        this.competences = data;
-        console.log('competences :', this.competences);
-      });
-    return this.competences;
-  }
+  // getCompetences(): Competence[] {
+  //   this.apollo
+  //     .watchQuery<any>({
+  //       query: findCompetences,
+  //     })
+  //     .valueChanges.pipe(map((result) => result.data.findCompetences))
+  //     .subscribe((data) => {
+  //       this.competences = data;
+  //       console.log('competences :', this.competences);
+  //     });
+  //   return this.competences;
+  // }
 
   // getExperiences(idCv: number): Experience[] {
   //   this.apollo.query<any>({

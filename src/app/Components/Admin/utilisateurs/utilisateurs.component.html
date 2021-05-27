@@ -1,71 +1,76 @@
-<h3><i class="fa fa-angle-right"></i> La liste des utilisateurs</h3>
-<div class="row mb" *ngIf="roles">
-    <!-- page start-->
-    <div class="content-panel">
-        <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-          <div class="col-md-4 mb">
-            <ng-select [items]="roles"
-                       bindLabel="role"
-                       bindValue="role"
-                       placeholder="Selectionner le(s) rôle(s)"
-                       appendTo="body"
-                       multiple="true"
-                       [(ngModel)]="selected"
-                       (change)="getFilterCols(selected)">
-            </ng-select>
+<section id="container" *ngIf="roles &&users">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <section id="main-content">
+    <section class="wrapper">
+      <h3><i class="fa fa-angle-right"></i> La liste des utilisateurs</h3>
+      <div class="row mb" *ngIf="roles">
+        <!-- page start-->
+        <div class="content-panel">
+          <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+            <div class="col-md-4 mb">
+              <ng-select [items]="roles" bindLabel="role" bindValue="role" placeholder="Selectionner le(s) rôle(s)"
+                appendTo="body" multiple="true" [(ngModel)]="selected" (change)="getFilterCols(selected)">
+              </ng-select>
+            </div>
+          </div>
+          <br>
+          <div class="adv-table" style="margin-left: 10px!important;">
+            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
+              id="hidden-table-info" *ngIf="users">
+              <thead>
+                <tr>
+                  <th>Nom et prénom</th>
+                  <th>Nom utilisateur</th>
+                  <th>Rôle(s)</th>
+                  <th class="hidden-phone">Date de naissance</th>
+                  <th class="hidden-phone">E-mail</th>
+                  <th class="hidden-phone">N° téléphone</th>
+                  <th class="hidden-phone">Poste</th>
+                  <th class="hidden-phone">Salaire</th>
+                  <th class="hidden-phone">date d'embauche</th>
+                  <th class="hidden-phone">évaluation</th>
+                  <th class="hidden-phone">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="gradeA" *ngFor="let user of users">
+                  <td>{{user.nom| titlecase}}</td>
+                  <td>{{user.nomUtilisateur}}</td>
+                  <td>{{user.role}}</td>
+                  <td class="hidden-phone">{{user.dateNaiss| date: 'dd/MM/yyyy'}}</td>
+                  <td class="center hidden-phone">{{user.emailPro}}</td>
+                  <td class="center hidden-phone">{{user.telPro}}</td>
+                  <td class="center hidden-phone">{{user.poste}}</td>
+                  <td class="center hidden-phone">{{user.salaire}}</td>
+                  <td class="hidden-phone">{{user.dateEmb| date: 'dd/MM/yyyy'}}</td>
+                  <td class="center hidden-phone">
+                    <app-star-rating rating={{user.evaluation}}></app-star-rating>
+                  </td>
+                  <td>
+                    <a>
+                      <button class="btn btn-primary btn-xs" title="voir détails utilisateur"
+                        [routerLink]="['cv', user.id]"
+                        style="padding-left: 4px!important; padding-right: 4px!important;">
+                        <i class="fa fa-eye"></i></button>
+                    </a>
+                    <a data-toggle="modal" href="#supp">
+                      <button class="btn btn-danger btn-xs" title="supprimer utilisateur" (click)="myUser = user">
+                        <i class="fa fa-trash-o "></i></button>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <br>
-        <div class="adv-table" style="margin-left: 10px!important;">
-            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
-                id="hidden-table-info" *ngIf="users">
-                <thead>
-                    <tr>
-                      <th>Nom et prénom</th>
-                      <th>Nom utilisateur</th>
-                      <th>Rôle(s)</th>
-                      <th class="hidden-phone">Date de naissance</th>
-                      <th class="hidden-phone">E-mail</th>
-                      <th class="hidden-phone">N° téléphone</th>
-                      <th class="hidden-phone">Poste</th>
-                      <th class="hidden-phone">Salaire</th>
-                      <th class="hidden-phone">date d'embauche</th>
-                      <th class="hidden-phone">évaluation</th>
-                      <th class="hidden-phone">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="gradeA" *ngFor="let user of users">
-                      <td>{{user.prenom| titlecase}} {{user.nom| uppercase}}</td>
-                      <td>{{user.nomUtilisateur}}</td>
-                      <td>{{user.role}}</td>
-                      <td class="hidden-phone">{{user.dateNaiss| date:  'dd/MM/yyyy'}}</td>
-                      <td class="center hidden-phone">{{user.emailPro}}</td>
-                      <td class="center hidden-phone">{{user.telPro}}</td>
-                      <td class="center hidden-phone">{{user.poste}}</td>
-                      <td class="center hidden-phone">{{user.salaire}}</td>
-                      <td class="hidden-phone">{{user.dateEmb| date:  'dd/MM/yyyy'}}</td>
-                      <td class="center hidden-phone"><app-star-rating rating={{user.evaluation}}></app-star-rating></td>
+        <!-- page end-->
+      </div>
+    </section>
+    <app-footer></app-footer>
+  </section>
+</section>
 
-                        <td>
-                            <a>
-                                <button class="btn btn-primary btn-xs" title="voir détails utilisateur" [routerLink]="['cv', user.id]"
-                                style="padding-left: 4px!important; padding-right: 4px!important;">
-                                    <i class="fa fa-eye"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#supp">
-                                <button class="btn btn-danger btn-xs" title="supprimer utilisateur">
-                                    <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- page end-->
-</div>
 
 <!-- Modal -->
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal fade">
@@ -76,11 +81,13 @@
               <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un utilisateur</h4>
           </div>
           <div class="modal-body" style="margin-bottom: 20px;">
-              Êtes-vous sûr de vouloir supprimer cet utilisateur?
+              Êtes-vous sûr de vouloir supprimer cet utilisateur
+              <!-- : {{myUser.prenom}}{{myUser.nom}} -->
+              ?
           </div>
           <div class="modal-footer">
               <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-              <button class="btn btn-theme" type="button">Confirmer</button>
+              <button class="btn btn-theme" data-dismiss="modal" type="button" (click)="deleteUser(myUser.id)">Confirmer</button>
           </div>
       </div>
   </div>

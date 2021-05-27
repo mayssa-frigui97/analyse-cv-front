@@ -1,5 +1,5 @@
-<div class="row" style="margin-right: 0px!important;margin-left: 10px!important"
-*ngIf="nivFormation && specialites && universites && cvs && competences && experiences">
+<!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important"></div>
+ *ngIf="nivFormation && specialites && universites && cvs && competences && experiences"
   <div class="col-md-4 mb">
     <ng-select [items]="nivFormation"
                bindLabel="niveau"
@@ -62,16 +62,16 @@
                multiple="true"
                [(ngModel)]="selectedExp">
     </ng-select>
-  </div>
+  </div> -->
   <!-- &nbsp;
   <button mat-flat-button color="warn" (click)="getFilterCols(selectedPole)">Filtrer</button> -->
-</div>
-<h6 *ngIf="selectedNiv">selected niv formation: {{selectedNiv}}</h6>
+<!-- </div> -->
+<!-- <h6 *ngIf="selectedNiv">selected niv formation: {{selectedNiv}}</h6>
 <h6 *ngIf="selectedSpec">selected spec formation: {{selectedSpec}}</h6>
 <h6 *ngIf="selectedUniver">selected universite formation: {{selectedUniver}}</h6>
 <h6 *ngIf="selectedPoste">selected poste: {{selectedPoste}}</h6>
 <h6 *ngIf="selectedCompetence">selected competence: {{selectedCompetence}}</h6>
-<h6 *ngIf="selectedExp">selected exp: {{selectedExp}}</h6>
+<h6 *ngIf="selectedExp">selected exp: {{selectedExp}}</h6> -->
 
 
 <!-- <div>

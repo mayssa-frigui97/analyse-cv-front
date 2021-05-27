@@ -5,7 +5,6 @@ const findCols = gql`
     findCols {
       id
       nom
-      prenom
       cin
       dateNaiss
       adresse
@@ -16,63 +15,11 @@ const findCols = gql`
       telPro
       emailPro
       role
+      permission
       poste
       dateEmb
       salaire
       evaluation
-      cv {
-        id
-        cmptGithub
-        cmptLinkedin
-        posteAct
-        description
-        statutCV
-        formations {
-          id
-          universite
-          dateDebut
-          dateFin
-          specialite
-          niveau
-          mention
-        }
-        certificats {
-          id
-          nom
-          dateObtention
-          dateExpiration
-          niveau
-        }
-        competences {
-          id
-          nom
-          version
-          niveau
-        }
-        langues {
-          id
-          nom
-          niveau
-          certifie
-        }
-        experiences {
-          id
-          societe
-          poste
-          dateDebut
-          dateFin
-          description
-          motCles
-        }
-        activiteAssociatives {
-          id
-          dateDebut
-          dateFin
-          poste
-          association
-          description
-        }
-      }
       equipe {
         id
         nom
@@ -90,7 +37,6 @@ const findCol = gql`
     findCol(idCol: $idCol) {
       id
       nom
-      prenom
       cin
       dateNaiss
       adresse
@@ -101,63 +47,11 @@ const findCol = gql`
       telPro
       emailPro
       role
+      permission
       poste
       dateEmb
       salaire
       evaluation
-      cv {
-        id
-        cmptGithub
-        cmptLinkedin
-        description
-        posteAct
-        statutCV
-        formations {
-          id
-          universite
-          dateDebut
-          dateFin
-          specialite
-          niveau
-          mention
-        }
-        certificats {
-          id
-          nom
-          dateObtention
-          dateExpiration
-          niveau
-        }
-        competences {
-          id
-          nom
-          version
-          niveau
-        }
-        langues {
-          id
-          nom
-          niveau
-          certifie
-        }
-        experiences {
-          id
-          societe
-          poste
-          dateDebut
-          dateFin
-          description
-          motCles
-        }
-        activiteAssociatives {
-          id
-          dateDebut
-          dateFin
-          poste
-          association
-          description
-        }
-      }
       equipe {
         id
         nom
@@ -165,6 +59,19 @@ const findCol = gql`
           id
           nom
         }
+      }
+      cv {
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        competences
+        langues
+        experiences
+        formations
+        projets
+        interets
       }
     }
   }
@@ -199,13 +106,11 @@ const findEquipesPole = gql`
 
 const findFilterCols = gql`
   query findFilterCols($selectedPoles: [Int!],$selectedEquipes: [Int!], $selectedComp: [String!],
-   $selectedPoste: [String!], $selectedUniver: [String!], $selectedSpec: [String!], $selectedNiv: [String!]) {
+   $selectedPoste: [String!]) {
     findFilterCols(selectedPoles: $selectedPoles, selectedEquipes: $selectedEquipes
-      selectedComp: $selectedComp, selectedPoste: $selectedPoste, selectedUniver: $selectedUniver,
-      selectedSpec: $selectedSpec, selectedNiv: $selectedNiv ) {
+      selectedComp: $selectedComp, selectedPoste: $selectedPoste) {
       id
       nom
-      prenom
       cin
       dateNaiss
       adresse
@@ -216,6 +121,7 @@ const findFilterCols = gql`
       telPro
       emailPro
       role
+      permission
       poste
       dateEmb
       salaire
@@ -237,7 +143,6 @@ const findFilterColsRole = gql`
     findFilterColsRole(selectedRoles: $selectedRoles) {
       id
       nom
-      prenom
       cin
       dateNaiss
       adresse
@@ -248,6 +153,7 @@ const findFilterColsRole = gql`
       telPro
       emailPro
       role
+      permission
       poste
       dateEmb
       salaire
@@ -258,30 +164,20 @@ const findFilterColsRole = gql`
         pole {
           id
           nom
-          rp {
-            id
-            nom
-            prenom
-            cin
-            dateNaiss
-            adresse
-            tel
-            email
-            avatar
-            nomUtilisateur
-            telPro
-            emailPro
-            role
-            poste
-            dateEmb
-            salaire
-            evaluation
-          }
         }
       }
     }
   }
 `;
+
+const findPostes = gql`
+query findPostes
+{
+  findPostes
+  {
+    poste
+  }
+}`;
 
 
 const updateCol = gql`
@@ -290,7 +186,6 @@ const updateCol = gql`
     updateCol(updateColInput: $updateColInput, idCol: $idCol){
       id
       nom
-      prenom
       cin
       dateNaiss
       adresse
@@ -301,6 +196,7 @@ const updateCol = gql`
       telPro
       emailPro
       role
+      permission
       poste
       dateEmb
       salaire
@@ -308,6 +204,91 @@ const updateCol = gql`
     }
   }`;
 
+const login = gql`
+  mutation login($nomUtilisateur: String!, $motDePasse: String!) {
+    login(nomUtilisateur: $nomUtilisateur, motDePasse: $motDePasse) {
+      access_token
+      user {
+        id
+        nom
+        cin
+        dateNaiss
+        adresse
+        tel
+        email
+        avatar
+        nomUtilisateur
+        telPro
+        emailPro
+        role
+        permission
+        poste
+        dateEmb
+        salaire
+        evaluation
+        equipe {
+          id
+          nom
+          pole {
+            id
+            nom
+          }
+        }
+        cv {
+          id
+          cmptLinkedin
+          statutCV
+          activiteAssociatives
+          certificats
+          competences
+          langues
+          experiences
+          formations
+          projets
+          interets
+        }
+      }
+    }
+  }
+`;
+
+const removeCol = gql`
+  mutation removeCol($idCol: Int!)
+  {
+    removeCol(idCol: $idCol)
+  }`;
+
+const getUserAuth = gql`
+  query getUserAuth {
+    getUserAuth {
+      id
+      nom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      permission
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+        }
+      }
+    }
+  }
+`;
 
 export {
   findCols,
@@ -317,5 +298,9 @@ export {
   findEquipesPole,
   findFilterCols,
   findFilterColsRole,
-  updateCol
+  findPostes,
+  updateCol,
+  removeCol,
+  login,
+  getUserAuth
 }

@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Pole } from 'src/app/Models/pole';
 
 @Pipe({
-  name: 'getNom',
+  name: 'getPole',
   pure: true
 })
 export class CollaborateursPipe implements PipeTransform {
@@ -13,10 +13,10 @@ export class CollaborateursPipe implements PipeTransform {
   constructor(private apollo: Apollo){}
 
   transform(id: number,poles: Pole[], args?: any): any {
-    return this.getNom(id,poles);
+    return this.getPole(id,poles);
   }
 
-  getNom(id: number, poles: Pole[]): string{
+  getPole(id: number, poles: Pole[]): string{
     for(var pole of poles){
       if(pole.rp.id === id)
       {

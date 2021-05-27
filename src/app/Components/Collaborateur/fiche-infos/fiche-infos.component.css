@@ -47,7 +47,7 @@
   margin-right: 0px!important;
   margin-left: 0px!important;
 }
-/* 
+/*
 .btn-theme02{
   border-radius: 60%;
   padding-bottom: 6px;
@@ -68,4 +68,8 @@
   padding-left: 5px;
   padding-right: 5px;
   padding-top: 1px;
+}
+
+.marge {
+  margin-right: 2em;
 }

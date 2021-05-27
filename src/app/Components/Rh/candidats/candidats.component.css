@@ -30,6 +30,11 @@ div.dataTables_length{
     background-color: #f0932b;
     border-color:#f0932b;
 }
+
+/* .btn-xs{
+  margin-right: 5px!important;
+} */
+
 /*
 @import "../../../../assets/lib/advanced-datatable/css/demo_page.css";
 @import "../../../../assets/lib/advanced-datatable/css/demo_table.css";

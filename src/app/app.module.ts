@@ -13,9 +13,7 @@ import { UtilisateursComponent } from './Components/Admin/utilisateurs/utilisate
 import { CollaborateursPoleComponent } from './Components/Rp/collaborateurs-pole/collaborateurs-pole.component';
 import { AccueilComponent } from './Components/Rh/accueil/accueil.component';
 import { SharedModule } from './shared/shared.module';
-import { CvComponent } from './Components/Commons/cv/cv.component';
-import { StarRatingComponent } from './Components/Commons/star-rating/star-rating.component';
-import { MultiSelectListComponent } from './Components/Commons/multi-select-list/multi-select-list.component';
+import { CvColComponent } from './Components/Rh/cv-col/cv-col.component';
 
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,7 +32,20 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData, DatePipe } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { CollaborateursPipe } from './Components/Rh/collaborateurs.pipe';
+import { CollaborateursPipe } from './Components/Rh/collaborateurs/collaborateurs.pipe';
+import { ToastrModule } from 'ngx-toastr';
+import { A11yModule } from '@angular/cdk/a11y';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AlertComponent } from './ComponentsCommons/alert/alert.component';
+import { CvCandComponent } from './Components/Rh/cv-cand/cv-cand.component';
+import { MultiSelectListComponent } from './ComponentsCommons/multi-select-list/multi-select-list.component';
+import { StarRatingComponent } from './ComponentsCommons/star-rating/star-rating.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -51,10 +62,12 @@ registerLocaleData(localeFr);
     UtilisateursComponent,
     CollaborateursPoleComponent,
     AccueilComponent,
-    CvComponent,
+    CvColComponent,
     StarRatingComponent,
     MultiSelectListComponent,
-    CollaborateursPipe
+    CollaborateursPipe,
+    AlertComponent,
+    CvCandComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +75,9 @@ registerLocaleData(localeFr);
     SharedModule,
     GraphQLModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     // select list
     NgMultiSelectDropDownModule.forRoot(),
     NgSelectModule,
@@ -70,12 +86,56 @@ registerLocaleData(localeFr);
     MatInputModule,
     MatTableModule,
     MatSelectModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    FormsModule,
     MatPaginatorModule,
     MatExpansionModule,
-    DataTablesModule.forRoot()
+    A11yModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSortModule,
+    MatTooltipModule,
+    OverlayModule,
+    PortalModule,
+    ScrollingModule,
+    CdkTableModule,
+    // ClipboardModule,
+    // CdkStepperModule,
+    // CdkTreeModule,
+    // DragDropModule,
+    // MatAutocompleteModule,
+    // MatBadgeModule,
+    // MatBottomSheetModule,
+    // MatButtonToggleModule,
+    // MatCardModule,
+    // MatCheckboxModule,
+    // MatChipsModule,
+    // MatStepperModule,
+    // MatDatepickerModule,
+    // MatDialogModule,
+    // MatDividerModule,
+    // MatGridListModule,
+    // MatIconModule,
+    // MatListModule,
+    // MatMenuModule,
+    // MatProgressBarModule,
+    // MatProgressSpinnerModule,
+    // MatRadioModule,
+    // MatSidenavModule,
+    // MatSliderModule,
+    // MatSlideToggleModule,
+    // MatSnackBarModule,
+    // MatTabsModule,
+    // MatToolbarModule,
+    // MatTreeModule,
+    DataTablesModule.forRoot(),
+
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-center',
+    })
+
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR'}, DatePipe],
   bootstrap: [AppComponent]

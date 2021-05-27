@@ -38,6 +38,7 @@
     "ng-multiselect-dropdown": "^0.3.4",
     "ngx-bar-rating": "^2.0.0",
     "ngx-mat-select-search": "^3.2.0",
+    "ngx-toastr": "^13.2.1",
     "rxjs": "~6.6.0",
     "select2": "^4.1.0-rc.0",
     "tslib": "^2.0.0",

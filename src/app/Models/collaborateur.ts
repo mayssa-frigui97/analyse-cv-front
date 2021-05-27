@@ -1,8 +1,11 @@
+import { UserPermission } from '../Enums/UserPermission';
 import { UserRole } from './../Enums/UserRole';
 import { Equipe } from "./equipe";
 import { Personne } from './personne';
 
 export class Collaborateur extends Personne{
+
+    public cin: number;
 
     public telPro: number;
 
@@ -19,6 +22,8 @@ export class Collaborateur extends Personne{
     public motDePasse: string;
 
     public role :UserRole;
+
+    public permission :UserPermission;
 
     public evaluation: number;
 

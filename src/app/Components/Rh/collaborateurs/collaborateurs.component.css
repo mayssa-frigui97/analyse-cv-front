@@ -35,3 +35,12 @@ div.dataTables_length{
 {
   margin-right: 1px!important;
 }
+
+table {
+  width: 100%;
+}
+.mat-elevation-z8{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 30px;
+}

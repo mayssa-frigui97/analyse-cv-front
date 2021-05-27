@@ -6,19 +6,19 @@ export class Personne {
 
     public nom:string;
 
-    public prenom:string;
+    public etatCivil?:string;
 
-    public cin: number;
+    public dateNaiss?:Date;
 
-    public dateNaiss:Date;
+    public adresse?: string;
 
-    public adresse: string;
-
-    public tel: number;
+    public tel?: number;
 
     public email: string;
 
     public avatar: string;
+
+    public recommande: boolean;
 
     public cv: Cv;
 

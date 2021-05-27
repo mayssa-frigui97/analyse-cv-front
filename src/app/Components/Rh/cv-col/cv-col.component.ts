@@ -1,52 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { findCol} from 'src/app/shared/Collaborateur';
 import { Collaborateur } from 'src/app/Models/collaborateur';
-import {Location} from '@angular/common';
-import { AuthService } from 'src/app/Services/auth.service';
 
 @Component({
-  selector: 'app-fiche-infos',
-  templateUrl: './fiche-infos.component.html',
-  styleUrls: ['./fiche-infos.component.css']
+  selector: 'app-cv',
+  templateUrl: './cv-col.component.html',
+  styleUrls: ['./cv-col.component.css']
 })
-export class FicheInfosComponent implements OnInit {
+export class CvColComponent implements OnInit {
 
-  user: Collaborateur;
-  idCol: number =2;
+  col: Collaborateur;
 
-  constructor(
-    // private apollo : Apollo,
-    private auth: AuthService,
+  constructor(private apollo : Apollo,
+    private activatedRoute: ActivatedRoute,
     private location: Location) { }
 
   ngOnInit(): void {
-    this.user=this.auth.getUser();
-    console.log("user fiche:",this.user)
-    // this.getCol(this.idCol);
-
+    const id = +this.activatedRoute.snapshot.paramMap.get('id');
+    this.getCol(id);
+    console.log("cv:",this.col);
   }
 
-  retour(){
-    this.location.back();
+  getCol(idCol: number) {
+    this.apollo.query<any>({
+      query: findCol,
+      variables: {idCol}
+    }).subscribe(({data}) => {
+      this.col = data.findCol;
+      console.log("data:",this.col);
+    });
   }
-
-  // getCol(idCol: number) {
-  //   // const datePipe = new DatePipe('En-FR');
-  //   this.apollo.query<any>({
-  //     query: findCol,
-  //     variables: {idCol}
-  //   }).subscribe(({data}) => {
-  //     // data.findCol.dateNaiss = this.datePipe.transform(data.findCol.dateNaiss, 'dd/MM/yyyy');
-  //     this.user = data.findCol;
-  //     console.log('user :', this.user);
-  //   });
-  // }
 
   // enregistrerInfos(value: any)
   // {
   //   console.log("user here enregistrer: ",value);
   //   this.apollo.mutate({
   //     mutation: updateCol,
-  //     variables: {updateColInput: value, idCol: this.idCol}
+  //     variables: {updateColInput: value, idCol: this.col.id}
   //   }).subscribe(({data}: any)=> {
   //     console.log("data ap modif:", data)
   //   }
@@ -125,6 +118,7 @@ export class FicheInfosComponent implements OnInit {
   //   );
   // }
 
-
-
+  retour(){
+    this.location.back();
+  }
 }

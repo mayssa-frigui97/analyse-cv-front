@@ -2,9 +2,11 @@ import { Collaborateur } from './../../../Models/collaborateur';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { findCols, findFilterColsRole } from '../../../shared/Collaborateur/query';
+import { findCols, findFilterColsRole, removeCol } from '../../../shared/Collaborateur/query';
 import { map } from 'rxjs/operators';
 import { UserRole } from 'src/app/Enums/UserRole';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -14,16 +16,18 @@ import { UserRole } from 'src/app/Enums/UserRole';
 export class UtilisateursComponent implements OnInit {
 
   users: Collaborateur[];
+  public myUser: Collaborateur;
   roles=[
     {id: 1, role: UserRole.COLLABORATEUR},
     {id: 2, role: UserRole.RH},
     {id: 3, role: UserRole.RP},
-    {id: 4, role: UserRole.TEAMLEADER},
-    {id: 5, role: UserRole.ADMIN}
+    {id: 4, role: UserRole.TEAMLEADER}
   ];
   selected = [];
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -38,8 +42,8 @@ export class UtilisateursComponent implements OnInit {
         map(result => result.data.findCols)
       ).subscribe(data => {
       this.users = data;
+      console.log("cols :",this.users);
     });
-    console.log("cols :",this.users);
   }
 
   getFilterCols(selectedRoles: UserRole[]) {
@@ -53,6 +57,26 @@ export class UtilisateursComponent implements OnInit {
         this.users = data.findFilterColsRole;
         console.log('colsFilter:', this.users);
       });
+  }
+
+  deleteUser(idCol: number) {
+    console.log("myUser:",this.myUser);
+    this.users = this.users.filter(col => col.id !== idCol);
+    // const deletedUser = this.candidats.filter(candidat => candidat.id === idCand)[0];
+    // if (confirm('Are you sure to delete this user?')) {
+    this.apollo.mutate({
+      mutation: removeCol,
+      variables: {idCol}
+    }).subscribe(res => {
+      this.toastr.success('Good', 'Utilisateurs supprimé');
+      this.router.navigate(['utilisateurs']);
+      // this.rerender({newData: deletedUser, deleteOper: true});
+
+    }, error => {
+      this.toastr.error("suppression impossible!!", 'Error');
+      console.log("suppression impossible!!")
+    });
+    // }
   }
 
 }

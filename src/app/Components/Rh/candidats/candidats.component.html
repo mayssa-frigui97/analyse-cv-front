@@ -1,78 +1,90 @@
-<h3><i class="fa fa-angle-right"></i> La liste des candidats</h3>
-<div class="row mb" *ngIf="candidats">
-    <div class="content-panel">
-        <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+<section id="container">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <section id="main-content">
+    <section class="wrapper">
+      <h3><i class="fa fa-angle-right"></i> La liste des candidats</h3>
+      <div class="row mb" *ngIf="candidats">
+        <div class="content-panel">
+          <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <div class="col-md-11">
-              <div class="row" style="margin-right: 0px!important;margin-left: 10px!important"
-                *ngIf="nivFormation && specialites && universites && cvs && competences && experiences">
-                <div class="col-md-4 mb">
+              <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important"></div> -->
+                <!-- *ngIf="nivFormation && specialites && universites && cvs && competences && experiences" -->
+                <!-- <div class="col-md-4 mb">
                   <ng-select [items]="nivFormation" bindLabel="niveau" bindValue="niveau"
-                    placeholder="Selectionner niveau de formation" appendTo="body" multiple="true" [(ngModel)]="selectedNiv">
+                    placeholder="Selectionner niveau de formation" appendTo="body" multiple="true"
+                    [(ngModel)]="selectedNiv">
                   </ng-select>
                 </div>
                 <div class="col-md-4 mb">
                   <ng-select [items]="specialites" bindLabel="specialite" bindValue="specialite"
-                    placeholder="Selectionner spécialité de formation" appendTo="body" multiple="true" [(ngModel)]="selectedSpec">
+                    placeholder="Selectionner spécialité de formation" appendTo="body" multiple="true"
+                    [(ngModel)]="selectedSpec">
                   </ng-select>
                 </div>
                 <div class="col-md-4 mb">
                   <ng-select [items]="universites" bindLabel="universite" bindValue="universite"
-                    placeholder="Selectionner l'université" appendTo="body" multiple="true" [(ngModel)]="selectedUniver">
+                    placeholder="Selectionner l'université" appendTo="body" multiple="true"
+                    [(ngModel)]="selectedUniver">
                   </ng-select>
                 </div>
               </div>
               <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
                 <div class="col-md-4 mb">
-                  <ng-select [items]="cvs" bindLabel="posteAct" bindValue="posteAct" placeholder="Selectionner les postes"
-                    appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
+                  <ng-select [items]="cvs" bindLabel="posteAct" bindValue="posteAct"
+                    placeholder="Selectionner les postes" appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
                   </ng-select>
                 </div>
                 <div class="col-md-4 mb">
                   <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
-                    placeholder="Selectionner les compétences" appendTo="body" multiple="true" [(ngModel)]="selectedCompetence">
+                    placeholder="Selectionner les compétences" appendTo="body" multiple="true"
+                    [(ngModel)]="selectedCompetence">
                   </ng-select>
                 </div>
                 <div class="col-md-4 mb">
-                  <ng-select [items]="experiences" bindLabel="annee" bindValue="annee" placeholder="Selectionner l'expérience"
-                    appendTo="body" multiple="true" [(ngModel)]="selectedExp">
+                  <ng-select [items]="experiences" bindLabel="annee" bindValue="annee"
+                    placeholder="Selectionner l'expérience" appendTo="body" multiple="true" [(ngModel)]="selectedExp">
                   </ng-select>
                 </div>
                 <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-                  <button (click)="getFilterCands(selectedCompetence,selectedPoste,selectedUniver,selectedSpec,selectedNiv)" class="btn btn-danger mb" style="float: right; margin-right: 60px;">Filtrer</button>
-                </div>
-              </div>
+                  <button
+                    (click)="getFilterCands(selectedCompetence,selectedPoste,selectedUniver,selectedSpec,selectedNiv)"
+                    class="btn btn-danger mb" style="float: right; margin-right: 60px;">Filtrer</button>
+                </div> -->
+              <!-- </div> -->
             </div>
             <div class="col-md-1">
-                <a data-toggle="modal" href="#myModal">
-                    <button type="button" class="btn btn-theme02" title="ajouter candidat">
-                        <i class="fa fa-user-plus fa-2x"></i>
-                    </button>
-                </a>
+              <a data-toggle="modal" href="#myModal">
+                <button type="button" class="btn btn-theme02" title="ajouter candidat">
+                  <i class="fa fa-user-plus fa-2x"></i>
+                </button>
+              </a>
             </div>
-        </div><br>
-        <!-- Modal -->
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          </div><br>
+          <!-- Modal -->
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal"
+            class="modal fade">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title"><i class="fa fa-user-plus"></i>  Ajouter un candidat</h4>
+                  <h4 class="modal-title"><i class="fa fa-user-plus"></i> Ajouter un candidat</h4>
                 </div>
                 <div class="modal-body" style="margin-bottom: 20px;">
-                    <div class="form-group">
-                        <div class="controls col-md-11">
-                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                <span class="btn btn-theme02 btn-file" style="border-radius: 0!important;">
-                                    <span class="fileupload-new"><i class="fa fa-paperclip"></i> Choisir un fichier</span>
-                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Changer le fichier</span>
-                                    <input type="file" class="default" />
-                                </span>
-                                <span class="fileupload-preview" style="margin-left:5px;"></span>
-                                <a href="" class="close fileupload-exists" data-dismiss="fileupload"
-                                    style="float: none; margin-left:5px;"></a>
-                            </div>
-                        </div>
+                  <div class="form-group">
+                    <div class="controls col-md-11">
+                      <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <span class="btn btn-theme02 btn-file" style="border-radius: 0!important;">
+                          <span class="fileupload-new"><i class="fa fa-paperclip"></i> Choisir un fichier</span>
+                          <span class="fileupload-exists"><i class="fa fa-undo"></i> Changer le fichier</span>
+                          <input type="file" class="default" />
+                        </span>
+                        <span class="fileupload-preview" style="margin-left:5px;"></span>
+                        <a href="" class="close fileupload-exists" data-dismiss="fileupload"
+                          style="float: none; margin-left:5px;"></a>
+                      </div>
                     </div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
@@ -82,49 +94,52 @@
             </div>
           </div>
           <!-- modal -->
-        <div class="adv-table" style="margin-left: 10px!important;">
-            <table cellpadding="0" cellspacing="0" class="display table table-bordered"
-                id="hidden-table-info">
-                <thead>
-                    <tr>
-                        <th>Nom et prénom</th>
-                        <th>CIN</th>
-                        <th class="hidden-phone">Date de naissance</th>
-                        <th class="hidden-phone">Email</th>
-                        <th class="hidden-phone">N° téléphone</th>
-                        <th class="hidden-phone">Adresse</th>
-                        <th class="hidden-phone">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="gradeA" *ngFor="let candidat of candidats">
-                        <td>{{candidat.prenom| titlecase}} {{candidat.nom| uppercase}}</td>
-                        <td>{{candidat.cin}}</td>
-                        <td class="hidden-phone">{{candidat.dateNaiss| date:  'dd/MM/yyyy'}}</td>
-                        <td class="center hidden-phone">{{candidat.email}}</td>
-                        <td class="center hidden-phone">{{candidat.tel}}</td>
-                        <td class="center hidden-phone">{{candidat.adresse}}</td>
-                        <td>
-                            <a>
-                              <button class="btn btn-primary btn-xs" [routerLink]="['cv', candidat.id]" title="voir détails candidat"
-                              style="padding-left: 4px!important; padding-right: 4px!important;">
-                                <i class="fa fa-eye"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#affecter">
-                              <button class="btn btn-success btn-xs" title="affecter candidat">
-                                <i class="fa fa-plus"></i></button>
-                            </a>
-                            <a data-toggle="modal" href="#supp">
-                              <button class="btn btn-danger btn-xs" title="supprimer candidat" (click)="myUser = candidat">
-                                <i class="fa fa-trash-o "></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
+          <div class="adv-table" style="margin-left: 10px!important;">
+            <table cellpadding="0" cellspacing="0" class="display table table-bordered" id="hidden-table-info">
+              <thead>
+                <tr>
+                  <th class="hidden-phone">Nom et prénom</th>
+                  <th class="hidden-phone">Email</th>
+                  <th>N° téléphone</th>
+                  <!-- <th>Adresse</th> -->
+                  <th>Recommandé</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="gradeA" *ngFor="let candidat of candidats">
+                  <td>{{candidat.nom| titlecase}}</td>
+                  <td class="center hidden-phone">{{candidat.email}}</td>
+                  <td class="center hidden-phone">{{candidat.tel}}</td>
+                  <!-- <td class="center hidden-phone">{{candidat.adresse}}</td> -->
+                  <td class="center"><input type="checkbox" name="recommande" [ngModel]="candidat.recommande" (change)="changeRecommande($event,candidat.id)"></td>
+                  <td>
+                    <a>
+                      <button class="btn btn-primary btn-xs" [routerLink]="['cv', candidat.id]"
+                        title="voir détails candidat"
+                        style="padding-left: 4px!important; padding-right: 4px!important;">
+                        <i class="fa fa-eye"></i></button>
+                    </a>
+                    <a data-toggle="modal" href="#affecter">
+                      <button class="btn btn-success btn-xs" title="affecter candidat">
+                        <i class="fa fa-plus"></i></button>
+                    </a>
+                    <a data-toggle="modal" href="#supp">
+                      <button class="btn btn-danger btn-xs" title="supprimer candidat" (click)="myUser = candidat">
+                        <i class="fa fa-trash-o "></i></button>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
+    <app-footer></app-footer>
+  </section>
+</section>
+
 
 <!-- ModalSupp -->
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal fade">
@@ -135,63 +150,64 @@
         <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un collaborateur</h4>
       </div>
       <div class="modal-body" style="margin-bottom: 20px;">
-        <h5>Êtes-vous sûr de vouloir supprimer ce collaborateur
-        <!--: {{myUser.prenom}}{{myUser.nom}} -->
-        ?
-      </h5>
+        <h5>Êtes-vous sûr de vouloir supprimer ce candidat
+          <!--: {{myUser.prenom}}{{myUser.nom}} -->
+          ?
+        </h5>
       </div>
       <div class="modal-footer">
         <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-        <button class="btn btn-theme" data-dismiss="modal" type="button" (click)="deleteUser(myUser.id)" >Confirmer</button>
+        <button class="btn btn-theme" data-dismiss="modal" type="button"
+          (click)="deleteUser(myUser.id)">Confirmer</button>
       </div>
     </div>
   </div>
 </div>
 <!-- modalSupp -->
-  <!-- ModalAff -->
-  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="affecter" class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"><i class="fa fa-plus"></i> Affecter un candidat</h4>
-        </div>
-        <div class="modal-body" style="margin-bottom: 20px;">
-          <div class="row">
-            <div class="col-md-10">
-              <div id="hidden-table-info_length" class="dataTables_length"
-                style="font-size: 16px;margin-right: 30px!important;">
-                <label>Département<br>
-                  <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
-                    <option value="" selected="selected">ESS</option>
-                    <option value="">E-business</option>
-                    <option value="">Mobile</option>
-                  </select>
-                </label>
-              </div>
-              <div id="hidden-table-info_length" class="dataTables_length" style="font-size: 16px;">
-                <label>Chef de l'équipe<br>
-                  <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
-                    <option value="" selected="selected">Nidhal Jammeli</option>
-                    <option value="">Nidhal Jammeli</option>
-                  </select>
-                </label>
-              </div>
+<!-- ModalAff -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="affecter" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-plus"></i> Affecter un candidat</h4>
+      </div>
+      <div class="modal-body" style="margin-bottom: 20px;">
+        <div class="row">
+          <div class="col-md-10">
+            <div id="hidden-table-info_length" class="dataTables_length"
+              style="font-size: 16px;margin-right: 30px!important;">
+              <label>Département<br>
+                <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
+                  <option value="" selected="selected">ESS</option>
+                  <option value="">E-business</option>
+                  <option value="">Mobile</option>
+                </select>
+              </label>
+            </div>
+            <div id="hidden-table-info_length" class="dataTables_length" style="font-size: 16px;">
+              <label>Chef de l'équipe<br>
+                <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
+                  <option value="" selected="selected">Nidhal Jammeli</option>
+                  <option value="">Nidhal Jammeli</option>
+                </select>
+              </label>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-          <button class="btn btn-theme" type="button">Enregistrer</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
+        <button class="btn btn-theme" type="button">Enregistrer</button>
       </div>
     </div>
   </div>
-  <!-- modalAff -->
+</div>
+<!-- modalAff -->
 
 
 <!--js loader-->
 <!-- <app-base-js></app-base-js> -->
-<app-data-table-js ></app-data-table-js>
+<app-data-table-js></app-data-table-js>
 <app-modal-js></app-modal-js>
 <!--js loader-->

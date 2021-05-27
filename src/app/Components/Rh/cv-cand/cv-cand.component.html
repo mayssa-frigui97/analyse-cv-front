@@ -1,0 +1,220 @@
+<!-- <button (click)="goBack()">go back</button> -->
+<section id="container" *ngIf="candidat">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <section id="main-content">
+    <section class="wrapper">
+      <div class="row mt">
+        <div class="col-lg-12">
+          <div class="row content-panel">
+            <div class="col-md-4 profile-text mt mb centered">
+              <div class="right-divider hidden-sm hidden-xs">
+                <h4 *ngIf="candidat.etatCivil"><i class="fa fa-id-card-o"></i> État civil</h4>
+                <h5 style="color: rgb(163, 157, 157)!important;">{{candidat.etatCivil}}</h5>
+                <h4 *ngIf="candidat.dateNaiss != date"><i class="fa fa-calendar"></i> Date de naissance</h4>
+                <h5 style="color: rgb(163, 157, 157)!important;" *ngIf="candidat.dateNaiss != date">{{candidat.dateNaiss | date: 'dd/MM/yyyy'}}</h5>
+                <h4><i class="fa fa-envelope"></i> Email</h4>
+                <h5 style="color: rgb(163, 157, 157)!important;">{{candidat.email}}</h5>
+                <h4 *ngIf="candidat.cv.cmptLinkedin" ><i class="fa fa-linkedin-square"></i> Linkedin</h4>
+                <h5 style="color: rgb(163, 157, 157)!important;">{{candidat.cv.cmptLinkedin}}</h5>
+                <h4 *ngIf="candidat.tel"><i class="fa fa-phone"></i> N° Téléphone</h4>
+                <h5 style="color: rgb(163, 157, 157)!important;">{{candidat.tel}}</h5>
+                <h4 *ngIf="candidat.adresse"><i class="fa fa-map-marker"></i> Adresse</h4>
+                <h5 style="color: rgb(163, 157, 157)!important;">{{candidat.adresse}}</h5>
+              </div>
+            </div>
+            <!-- /col-md-4 -->
+            <div class="col-md-4 profile-text">
+              <h3>{{candidat.nom| titlecase}}</h3>
+              <!-- <h6>Main Administrator</h6> -->
+              <br>
+            </div>
+            <!-- /col-md-4 -->
+            <div class="col-md-4 centered">
+              <div class="profile-pic">
+                <p *ngIf="candidat.avatar"><img src="../../../../assets/img/{{candidat.avatar}}" class="img-circle"></p>
+                <p *ngIf="!candidat.avatar"><img src="../../../../assets/img/man.png" class="img-circle"></p>
+              </div>
+            </div>
+            <!-- /col-md-4 -->
+          </div>
+          <!-- /row -->
+        </div>
+        <!-- /col-lg-12 -->
+        <div class="col-lg-12 mt" *ngIf="candidat.cv.formations || candidat.cv.competences || candidat.cv.langues || candidat.cv.certificats || candidat.cv.experiences || candidat.cv.activiteAssociatives">
+          <div class="row content-panel">
+            <div class="panel-heading">
+              <ul class="nav nav-tabs nav-justified">
+                <li class="active">
+                  <a data-toggle="tab" href="#details">Détails du CV</a>
+                </li>
+                <li>
+                  <a data-toggle="tab" href="#historique" class="contact-map">Historique</a>
+                </li>
+                <!-- <li>
+                  <a data-toggle="tab" href="#modifier">Modifier CV</a>
+                </li> -->
+              </ul>
+            </div>
+            <!-- /panel-heading -->
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id="details" class="tab-pane active">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row" *ngIf="candidat.cv.formations">
+                        <div class="detailed mt">
+                          <h4><i class="fa fa-graduation-cap"></i> Formation</h4>
+                          <div class="container-fluid">
+                            <div class="row">
+                              <!-- <div class="col-md-12"> -->
+                                <p>{{candidat.cv.formations}}</p>
+                              <!-- </div> -->
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="candidat.cv.experiences">
+                        <div class="detailed mt">
+                          <h4><i class="fa fa-briefcase"></i> Expériences professionelles</h4>
+                          <div class="container-fluid">
+                            <div class="row" >
+                              <p>{{candidat.cv.experiences}}</p>
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="candidat.cv.projets">
+                        <div class="detailed mt">
+                          <h4><i class="fa fa-cogs"></i> Projets</h4>
+                          <div class="container-fluid">
+                            <div class="row" >
+                              <p>{{candidat.cv.projets}}</p>
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
+                      <!-- /detailed -->
+                    </div>
+                    <!-- /col-md-6 -->
+                    <div class="col-md-6">
+                      <div class="row" *ngIf="candidat.cv.competences">
+                        <div class="detailed mt">
+                          <h4><i class="fa fa-wrench"></i> Compétences</h4>
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-md-11">
+                                <span  *ngFor="let c of candidat.cv.competences"><strong class="marge">▪{{c}} </strong></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="candidat.cv.certificats">
+                        <div class="detailed mt">
+                          <h4><i class="fa fa-trophy"></i> Certifications</h4>
+                          <div class="container-fluid">
+                            <div class="row">
+                              <p>{{candidat.cv.certificats}}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="candidat.cv.langues">
+                        <div class="detailed mt">
+                          <h4><i class="fa fa-language"></i> Langues</h4>
+                          <div class="container-fluid">
+                            <div class="row" >
+                              <div class="col-md-8" *ngFor="let langue of candidat.cv.langues">
+                                <p><strong >▪ {{langue}}</strong></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="candidat.cv.activiteAssociatives">
+                        <div class="detailed mt" >
+                          <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
+                          <div class="container-fluid">
+                            <div class="row">
+                              <p>{{candidat.cv.activiteAssociatives}}</p>
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="candidat.cv.interets">
+                        <div class="detailed mt" >
+                          <h4><i class="fa fa-heart"></i> Centre d'intérêt</h4>
+                          <div class="container-fluid">
+                            <div class="row">
+                              <p>{{candidat.cv.interets}}</p>
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
+                      <!-- /row -->
+                    </div>
+                    <!-- /col-md-6 -->
+                  </div>
+                  <!-- /OVERVIEW -->
+                </div>
+                <!-- /tab-pane -->
+                <div id="historique" class="tab-pane">
+                  <div class="row">
+                    <div class="chat-room mt">
+                      <aside class="mid-side">
+                        <div class="chat-room-head">
+                          <h3><i class="fa fa-history"></i> Historique du processus de recrutement</h3>
+                          <form action="#" class="pull-right position">
+                            <div class="input_container">
+                              <span class="input_icon"><i class="fa fa-search"></i></span>
+                              <input type="text" placeholder="Rechercher" class="form-control search-btn ">
+                            </div>
+                          </form>
+                        </div>
+                        <div class="room-desk">
+                          <div class="room-box">
+                            <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 17:30 20/02/2022</a></h5>
+                            <p>Vous avez passé un deuxième entretien concernant l'offre de recrutement d'un ingénieur
+                              web Full Stack.</p>
+                          </div>
+                          <div class="room-box">
+                            <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 17:30 15/01/2022</a></h5>
+                            <p>Vous avez passé un premier entretien concernant l'offre de recrutement d'un ingénieur web
+                              Full Stack.</p>
+                          </div>
+                          <div class="room-box">
+                            <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 10:35 05/01/2022</a></h5>
+                            <p>Vous avez postuler dans la plateforme de recrutement de Proxym-IT concernant l'offre de
+                              recrutement d'un ingénieur web Full Stack.</p>
+                          </div>
+                        </div>
+                      </aside>
+                    </div>
+                  </div>
+                </div>
+                <!-- /tab-pane -->
+              </div>
+              <!-- /tab-content -->
+            </div>
+            <!-- /panel-body -->
+          </div>
+          <!-- /col-lg-12 -->
+        </div>
+        <!-- /row -->
+      </div>
+    </section>
+    <app-footer></app-footer>
+  </section>
+</section>
+
+
+<!-- Js-loader -->
+<!-- <app-base-js></app-base-js> -->
+<!-- /Js-loader -->
