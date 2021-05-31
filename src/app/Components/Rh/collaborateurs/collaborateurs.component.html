@@ -1,11 +1,11 @@
-<section id="container" *ngIf="poles && equipes && projets && experiences && cols">
+<section id="container" *ngIf="cols"  >
   <!-- && nivFormation && specialites && universites && cvs && competences -->
   <app-header></app-header>
   <app-sidebar></app-sidebar>
   <section id="main-content">
     <section class="wrapper">
       <h3><i class="fa fa-angle-right"></i> La liste des collaborateurs</h3>
-      <div class="row mb">
+      <div class="row mb" *ngIf="poles && equipes && projets && experiences">
         <div class="content-panel">
           <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
         <button (click)="getFilterCols(selectedPoles)" class="btn btn-danger mb" style="float: right; margin-right: 50px;">Filtrer</button>
@@ -53,7 +53,7 @@
               </ng-select>
             </div>
             <div class="col-md-4 mb">
-              <ng-select [items]="competences" bindLabel="competences" bindValue="competences" [virtualScroll]="true"
+              <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
                 placeholder="Selectionner les compétences" appendTo="body" multiple="true"
                 [(ngModel)]="selectedCompetence">
               </ng-select>
@@ -72,7 +72,11 @@
           <br>
           <div class="adv-table" style="margin-left: 10px!important;">
             <table datatable cellpadding="0" cellspacing="0"
-              class="display table table-bordered" id="hidden-table-info" *ngIf="cols">
+              class="display table table-bordered" id="hidden-table-info">
+              <!-- <thead #elseTemplate>
+                <tr class="center">Le tableau est vide.</tr>
+              </thead> -->
+
               <thead>
                 <tr>
                   <th>Nom et prénom</th>
@@ -87,8 +91,8 @@
                   <th class="hidden-phone">Action</th>
                 </tr>
               </thead>
-              <tbody *ngFor="let col of cols">
-                <tr class="gradeA">
+              <tbody>
+                <tr class="gradeA" *ngFor="let col of cols">
                   <td>{{col.nom| titlecase}}</td>
                   <td class="center hidden-phone">{{col.emailPro}}</td>
                   <td class="center hidden-phone">{{col.telPro}}</td>
@@ -114,6 +118,12 @@
                       </button>
                     </a>
                   </td>
+                  </tr>
+              </tbody>
+              <tbody *ngIf="test" >
+                <tr>
+                  <td class="center" colspan="10" style="background-color: #c4ffc4;font-size: small;"> Aucun collaborateur correspond aux filtre de recherche spécifiés.</td>
+                </tr>
               </tbody>
             </table>
           </div>

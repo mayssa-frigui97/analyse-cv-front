@@ -15,6 +15,9 @@ const findCvPersonne = gql`
       formations
       projets
       interets
+      skills{
+        nom
+      }
       personne {
         id
         nom
@@ -77,12 +80,12 @@ const findCvPersonne = gql`
 //   }
 // }`;
 
-const findCompetences = gql`
-query findCvs
+const findAllCompetences = gql`
+query findAllCompetences
 {
-  findCvs
+  findAllCompetences
   {
-    competences
+    nom
   }
 }`;
 
@@ -173,7 +176,7 @@ export {
   // findNivFormations,
   // findExperiencesCv,
   // findPostes,
-  findCompetences,
+  findAllCompetences,
   // updateCertif,
   // updateFormation,
   // updateExperience,

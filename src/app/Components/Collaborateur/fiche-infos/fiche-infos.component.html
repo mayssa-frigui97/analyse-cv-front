@@ -101,7 +101,7 @@
                           <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-11">
-                                  <span  *ngFor="let c of user.cv.competences"><strong class="marge">▪{{c}} </strong></span>
+                                  <p *ngFor="let c of user.cv.skills"><strong>▪{{c.nom}} </strong></p>
                                 </div>
                             </div>
                           </div>

@@ -1,12 +1,16 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import {map} from 'rxjs/operators'
 import { Router } from '@angular/router';
 import { Cv } from 'src/app/Models/cv';
 import { ToastrService } from 'ngx-toastr';
-import { findPersonnes, removePersonne, updateRecommande } from 'src/app/shared/Candidat/query';
+import { findFilterCands, findPersonnes, removePersonne, updateRecommande } from 'src/app/shared/Candidat/query';
 import { Personne } from './../../../Models/personne';
+import { Competence } from 'src/app/Models/competence';
+import { findAllCompetences } from 'src/app/shared/Cv/query';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-candidats',
@@ -18,6 +22,7 @@ export class CandidatsComponent implements OnInit {
   candidats: Personne[];
   myUser: Personne;
   marked=false;
+  public test: boolean;
   // public universites: Formation[];
   // public specialites: Formation[];
   // public nivFormation: Formation[];
@@ -30,14 +35,19 @@ export class CandidatsComponent implements OnInit {
     {id: 5, annee: '+ 10ans'}
   ];
   public annees: number[];
-  // public competences: Competence[];
+  public competences: Competence[];
 
-  selectedNiv: string[];
+  // selectedNiv: string[];
   selectedExp: string[];
   selectedCompetence: string[];
-  selectedPoste: string[];
-  selectedUniver: string[];
-  selectedSpec: string[];
+  // selectedPoste: string[];
+  // selectedUniver: string[];
+  // selectedSpec: string[];
+
+  displayedColumns: string[] = ['nom', 'email', 'tel', 'recommandé'];
+  dataSource: MatTableDataSource<Personne>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private apollo: Apollo,
@@ -47,11 +57,11 @@ export class CandidatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCandidats();
+    this.getCompetences();
     // this.getUniversites();
     // this.getNivForm();
     // this.getSpecialites();
     // this.getPostes();
-    // this.getCompetences();
   }
 
   getCandidats() {
@@ -79,12 +89,11 @@ export class CandidatsComponent implements OnInit {
     })
       .subscribe(({data}:any) => {
         console.log("data:",data);
-        this.candidats = [];
+        // this.candidats = [];
         console.log("candidats:",this.candidats);
-        this.getCandidats();
+        // this.getCandidats();
         console.log("candidats nv:",this.candidats);
     });
-    // this.getCandidats();
   }
 
 
@@ -106,6 +115,42 @@ export class CandidatsComponent implements OnInit {
       console.log("suppression impossible!!")
     });
     // }
+  }
+
+  getCompetences(): Competence[] {
+    this.apollo
+      .watchQuery<any>({
+        query: findAllCompetences,
+      })
+      .valueChanges.pipe(map((result) => result.data.findAllCompetences))
+      .subscribe((data) => {
+        this.competences = data;
+        console.log('competences :', this.competences);
+      });
+    return this.competences;
+  }
+
+  getFilterCands(selectedComp?: string[]) {
+    this.apollo
+      .query<any>({
+        query: findFilterCands,
+        variables: { selectedComp}
+      })
+      .subscribe(({ data }) => {
+        this.candidats = [];
+        this.candidats=Object.assign([], this.candidats);
+        this.candidats = data.findFilterCands;
+        if(data.findFilterCands.length == 0){
+          this.test = true;
+          console.log("test",this.test,this.candidats.length)
+        }
+        else{
+          this.test = false;
+          console.log("test",this.test,this.candidats.length)
+        }
+        // console.log('candsFilter:', data.findFilterCands);
+        console.log('candidats apres filter:',this.candidats)
+      });
   }
 
   // getUniversites(): Formation[] {
@@ -158,32 +203,6 @@ export class CandidatsComponent implements OnInit {
   //       console.log('postes :', this.cvs);
   //     });
   //   return this.cvs;
-  // }
-
-  // getCompetences(): Competence[] {
-  //   this.apollo
-  //     .watchQuery<any>({
-  //       query: findCompetences,
-  //     })
-  //     .valueChanges.pipe(map((result) => result.data.findCompetences))
-  //     .subscribe((data) => {
-  //       this.competences = data;
-  //       console.log('competences :', this.competences);
-  //     });
-  //   return this.competences;
-  // }
-
-  // getFilterCands(selectedComp?: string[], selectedPoste?: string[], selectedUniver?: string[], selectedSpec?: string[], selectedNiv?: string[]) {
-  //   this.apollo
-  //     .query<any>({
-  //       query: findFilterCands,
-  //       variables: { selectedComp,selectedPoste, selectedUniver, selectedSpec, selectedNiv}
-  //     })
-  //     .subscribe(({ data }) => {
-  //       this.candidats = [];
-  //       this.candidats = data.findFilterCands;
-  //       console.log('candsFilter:', data.findFilterCands);
-  //     });
   // }
 
 }

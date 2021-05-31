@@ -8,9 +8,8 @@
         <div class="content-panel">
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <div class="col-md-11">
-              <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important"></div> -->
-                <!-- *ngIf="nivFormation && specialites && universites && cvs && competences && experiences" -->
-                <!-- <div class="col-md-4 mb">
+              <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+                <div class="col-md-4 mb">
                   <ng-select [items]="nivFormation" bindLabel="niveau" bindValue="niveau"
                     placeholder="Selectionner niveau de formation" appendTo="body" multiple="true"
                     [(ngModel)]="selectedNiv">
@@ -28,30 +27,30 @@
                     [(ngModel)]="selectedUniver">
                   </ng-select>
                 </div>
-              </div>
+              </div> -->
               <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-                <div class="col-md-4 mb">
+                <!-- <div class="col-md-4 mb">
                   <ng-select [items]="cvs" bindLabel="posteAct" bindValue="posteAct"
                     placeholder="Selectionner les postes" appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
                   </ng-select>
-                </div>
+                </div> -->
                 <div class="col-md-4 mb">
                   <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
                     placeholder="Selectionner les compétences" appendTo="body" multiple="true"
-                    [(ngModel)]="selectedCompetence">
+                    [(ngModel)]="selectedCompetence" (change)="getFilterCands(selectedCompetence)">
                   </ng-select>
                 </div>
-                <div class="col-md-4 mb">
+                <!-- <div class="col-md-4 mb">
                   <ng-select [items]="experiences" bindLabel="annee" bindValue="annee"
                     placeholder="Selectionner l'expérience" appendTo="body" multiple="true" [(ngModel)]="selectedExp">
                   </ng-select>
                 </div>
                 <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
                   <button
-                    (click)="getFilterCands(selectedCompetence,selectedPoste,selectedUniver,selectedSpec,selectedNiv)"
+                    (click)="getFilterCands(selectedCompetence)"
                     class="btn btn-danger mb" style="float: right; margin-right: 60px;">Filtrer</button>
                 </div> -->
-              <!-- </div> -->
+              </div>
             </div>
             <div class="col-md-1">
               <a data-toggle="modal" href="#myModal">
@@ -106,7 +105,7 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngIf=" candidats && candidats.length > 0">
                 <tr class="gradeA" *ngFor="let candidat of candidats">
                   <td>{{candidat.nom| titlecase}}</td>
                   <td class="center hidden-phone">{{candidat.email}}</td>
@@ -132,6 +131,7 @@
                 </tr>
               </tbody>
             </table>
+            {{ candidats | json}}
           </div>
         </div>
       </div>
@@ -209,5 +209,5 @@
 <!--js loader-->
 <!-- <app-base-js></app-base-js> -->
 <app-data-table-js></app-data-table-js>
-<app-modal-js></app-modal-js>
+<!-- <app-modal-js></app-modal-js> -->
 <!--js loader-->

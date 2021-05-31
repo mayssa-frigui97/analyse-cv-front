@@ -72,6 +72,9 @@ const findCol = gql`
         formations
         projets
         interets
+        skills{
+        nom
+        }
       }
     }
   }
@@ -246,6 +249,9 @@ const login = gql`
           formations
           projets
           interets
+          skills{
+            nom
+          }
         }
       }
     }
@@ -285,6 +291,22 @@ const getUserAuth = gql`
           id
           nom
         }
+      }
+      cv {
+          id
+          cmptLinkedin
+          statutCV
+          activiteAssociatives
+          certificats
+          competences
+          langues
+          experiences
+          formations
+          projets
+          interets
+          skills{
+            nom
+          }
       }
     }
   }

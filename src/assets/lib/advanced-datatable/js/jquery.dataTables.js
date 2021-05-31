@@ -6869,7 +6869,7 @@
 	/**
 	 * Get all DataTable tables that have been initialised - optionally you can select to
 	 * get only currently visible tables.
-	 *  @param {boolean} [bVisible=false] Flag to indicate if you want all (default) or
+	 *  @param {boolean} [bVisible=true] Flag to indicate if you want all (default) or
 	 *    visible tables only.
 	 *  @returns {array} Array of TABLE nodes (not DataTable instances) which are DataTables
 	 *  @static

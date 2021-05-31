@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { findCompetences } from 'src/app/shared/Cv/query';
+import { findAllCompetences} from 'src/app/shared/Cv/query';
 // import * as jquery from 'jquery';
 // import 'datatables.net';
 // import 'datatables.net-bs4';
+import { Competence } from './../../../Models/competence';
 
 
 @Component({
@@ -34,8 +35,9 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
   // public nivFormation: Formation[];
   public cvs: Cv[];
   public annees: number[];
-  public competences: Cv[];
+  public competences: Competence[];
   public myUser: Collaborateur;
+  public test : boolean;
 
   public projets = [
     { id: 1, nom: 'Application mobile Amen Bank' },
@@ -69,10 +71,10 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
   // dtInstance:Promise<DataTables.Api>;
   // dtTrigger: Subject<any> = new Subject();
 
-  displayedColumns: string[] = ['nom','prenom', 'email', 'tel', 'poste','salaire','dateEmb','evaluation'];
+  displayedColumns: string[] = ['nom', 'email', 'tel', 'poste','salaire','dateEmb','evaluation'];
   dataSource: MatTableDataSource<Collaborateur>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -107,7 +109,7 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
       .subscribe((data) => {
         this.cols = data;
         this.dataSource = new MatTableDataSource(this.cols);
-        this.dataSource.paginator = this.paginator;
+        // this.dataSource.paginator = this.paginator;
         console.log('cols :', this.cols);
         console.log("dataSource:",this.dataSource.data);
       });
@@ -115,6 +117,10 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
 
   getFilterCols(selectedPoles: number[],selectedEquipes: number[],
     selectedComp?: string[], selectedPoste?: string[]) {
+    // console.log("selectedPole:",selectedPoles)
+    // console.log("selectedEquipes:",selectedEquipes)
+    console.log("selectedComp:",selectedComp)
+    // console.log("selectedPoste:",selectedPoste)
     this.apollo
       .query<any>({
         query: findFilterCols,
@@ -123,9 +129,16 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
       .subscribe(({ data }) => {
         this.cols = [];
         this.cols = data.findFilterCols;
+        if(data.findFilterCols.length == 0){
+          this.test = true;
+          console.log("test",this.test,this.cols.length)
+        }
+        else{
+          this.test = false;
+          console.log("test",this.test,this.cols.length)
+        }
         this.dataSource = new MatTableDataSource(this.cols);
         console.log('colsFilter:', data.findFilterCols);
-        console.log("dataSource:",this.dataSource);
       });
   }
 
@@ -182,9 +195,9 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
   async getCompetences() {
     await  this.apollo
       .watchQuery<any>({
-        query: findCompetences,
+        query: findAllCompetences,
       })
-      .valueChanges.pipe(map((result) => result.data.findCvs))
+      .valueChanges.pipe(map((result) => result.data.findAllCompetences))
       .subscribe((data) => {
         this.competences = data;
         console.log('competences :', data);

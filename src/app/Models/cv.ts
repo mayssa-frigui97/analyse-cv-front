@@ -1,4 +1,5 @@
 import { StatutCV } from './../Enums/StatutCV';
+import { Competence } from './competence';
 import { Personne } from './personne';
 export class Cv {
 
@@ -25,4 +26,6 @@ export class Cv {
     public interets?: string;
 
     public personne :Personne;
+
+    public skills: Competence[];
 }

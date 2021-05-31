@@ -21,6 +21,9 @@ const findPersonnes = gql`
         formations
         projets
         interets
+        skills{
+          nom
+        }
       }
     }
   }
@@ -50,6 +53,9 @@ const findPersonne = gql`
         formations
         projets
         interets
+        skills{
+          nom
+        }
       }
     }
   }
@@ -61,23 +67,35 @@ const removePersonne = gql`
     removePersonne(idPersonne: $idPersonne)
   }`;
 
-// const findFilterCands = gql`
-//   query findFilterCands($selectedComp: [String!], $selectedPoste: [String!], $selectedUniver: [String!],
-//   $selectedSpec: [String!], $selectedNiv: [String!]) {
-//     findFilterCands(selectedComp: $selectedComp, selectedPoste: $selectedPoste, selectedUniver: $selectedUniver,
-//       selectedSpec: $selectedSpec, selectedNiv: $selectedNiv ) {
-//       id
-//       nom
-//       prenom
-//       cin
-//       dateNaiss
-//       adresse
-//       tel
-//       email
-//       avatar
-//     }
-//   }
-// `;
+const findFilterCands = gql`
+  query findFilterCands($selectedComp: [String!]) {
+    findFilterCands(selectedComp: $selectedComp) {
+      id
+      nom
+      dateNaiss
+      adresse
+      tel
+      email
+      recommande
+      cv{
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        competences
+        langues
+        experiences
+        formations
+        projets
+        interets
+        skills{
+          nom
+        }
+      }
+    }
+  }
+`;
 
 const updateRecommande = gql`
   mutation updateRecommande($value: Boolean!,$idPersonne: Int!) {
@@ -98,6 +116,6 @@ export {
   findPersonnes,
   findPersonne,
   removePersonne,
-  updateRecommande
-  // findFilterCands
+  updateRecommande,
+  findFilterCands
 }
