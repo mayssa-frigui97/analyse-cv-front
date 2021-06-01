@@ -6,9 +6,9 @@ export class Competence {
 
   public nom:string;
 
-  public version:string;
+  // public version:string;
 
-  public niveau: string;
+  // public niveau: string;
 
   public cvs: Cv[];
 }

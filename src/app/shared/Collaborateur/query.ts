@@ -66,13 +66,12 @@ const findCol = gql`
         statutCV
         activiteAssociatives
         certificats
-        competences
         langues
         experiences
         formations
         projets
         interets
-        skills{
+        competences{
         nom
         }
       }
@@ -243,13 +242,12 @@ const login = gql`
           statutCV
           activiteAssociatives
           certificats
-          competences
           langues
           experiences
           formations
           projets
           interets
-          skills{
+          competences{
             nom
           }
         }
@@ -298,13 +296,12 @@ const getUserAuth = gql`
           statutCV
           activiteAssociatives
           certificats
-          competences
           langues
           experiences
           formations
           projets
           interets
-          skills{
+          competences{
             nom
           }
       }

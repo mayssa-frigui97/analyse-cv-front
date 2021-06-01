@@ -129,7 +129,7 @@ registerLocaleData(localeFr);
     // MatTabsModule,
     // MatToolbarModule,
     // MatTreeModule,
-    DataTablesModule.forRoot(),
+    DataTablesModule,
 
     ToastrModule.forRoot({
       timeOut: 10000,

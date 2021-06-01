@@ -13,7 +13,7 @@ export class Cv {
 
     public certificats?:string;
 
-    public competences: string[];
+    // public competences: string[];
 
     public langues: string[];
 
@@ -27,5 +27,5 @@ export class Cv {
 
     public personne :Personne;
 
-    public skills: Competence[];
+    public competences: Competence[];
 }

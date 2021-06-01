@@ -9,13 +9,12 @@ const findCvPersonne = gql`
       statutCV
       activiteAssociatives
       certificats
-      competences
       langues
       experiences
       formations
       projets
       interets
-      skills{
+      competences{
         nom
       }
       personne {

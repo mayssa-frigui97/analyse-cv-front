@@ -94,13 +94,12 @@
           </div>
           <!-- modal -->
           <div class="adv-table" style="margin-left: 10px!important;">
-            <table cellpadding="0" cellspacing="0" class="display table table-bordered" id="hidden-table-info">
+            <!-- <table cellpadding="0" cellspacing="0" class="display table table-bordered" id="hidden-table-info">
               <thead>
                 <tr>
                   <th class="hidden-phone">Nom et prénom</th>
                   <th class="hidden-phone">Email</th>
                   <th>N° téléphone</th>
-                  <!-- <th>Adresse</th> -->
                   <th>Recommandé</th>
                   <th>Action</th>
                 </tr>
@@ -110,7 +109,6 @@
                   <td>{{candidat.nom| titlecase}}</td>
                   <td class="center hidden-phone">{{candidat.email}}</td>
                   <td class="center hidden-phone">{{candidat.tel}}</td>
-                  <!-- <td class="center hidden-phone">{{candidat.adresse}}</td> -->
                   <td class="center"><input type="checkbox" name="recommande" [ngModel]="candidat.recommande" (change)="changeRecommande($event,candidat.id)"></td>
                   <td>
                     <a>
@@ -130,8 +128,42 @@
                   </td>
                 </tr>
               </tbody>
+            </table> -->
+            <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
+              <thead>
+                <tr>
+                  <th>Nom et prénom</th>
+                  <th>Email</th>
+                  <th>N° téléphone</th>
+                  <th>Recommandé</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf=" candidats && candidats.length > 0">
+                <tr *ngFor="let candidat of candidats">
+                  <td>{{candidat.nom| titlecase}}</td>
+                  <td class="center hidden-phone">{{candidat.email}}</td>
+                  <td class="center hidden-phone">{{candidat.tel}}</td>
+                  <td class="center"><input type="checkbox" name="recommande" [ngModel]="candidat.recommande"
+                      (change)="changeRecommande($event,candidat.id)"></td>
+                  <td>
+                    <a>
+                      <button class="btn btn-primary btn-xs" [routerLink]="['cv', candidat.id]" title="voir détails candidat"
+                        style="padding-left: 4px!important; padding-right: 4px!important;">
+                        <i class="fa fa-eye"></i></button>
+                    </a>
+                    <a data-toggle="modal" href="#affecter">
+                      <button class="btn btn-success btn-xs" title="affecter candidat">
+                        <i class="fa fa-plus"></i></button>
+                    </a>
+                    <a data-toggle="modal" href="#supp">
+                      <button class="btn btn-danger btn-xs" title="supprimer candidat" (click)="myUser = candidat">
+                        <i class="fa fa-trash-o "></i></button>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-            {{ candidats | json}}
           </div>
         </div>
       </div>

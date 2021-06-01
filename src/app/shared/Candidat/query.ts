@@ -15,13 +15,12 @@ const findPersonnes = gql`
         statutCV
         activiteAssociatives
         certificats
-        competences
         langues
         experiences
         formations
         projets
         interets
-        skills{
+        competences{
           nom
         }
       }
@@ -47,13 +46,12 @@ const findPersonne = gql`
         statutCV
         activiteAssociatives
         certificats
-        competences
         langues
         experiences
         formations
         projets
         interets
-        skills{
+        competences{
           nom
         }
       }
@@ -83,13 +81,12 @@ const findFilterCands = gql`
         statutCV
         activiteAssociatives
         certificats
-        competences
         langues
         experiences
         formations
         projets
         interets
-        skills{
+        competences{
           nom
         }
       }

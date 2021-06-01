@@ -44,8 +44,9 @@ export class CandidatsComponent implements OnInit {
   // selectedUniver: string[];
   // selectedSpec: string[];
 
-  displayedColumns: string[] = ['nom', 'email', 'tel', 'recommandé'];
-  dataSource: MatTableDataSource<Personne>;
+  // displayedColumns: string[] = ['nom', 'email', 'tel', 'recommandé'];
+  // dataSource: MatTableDataSource<Personne>;
+  dtOptions: DataTables.Settings = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -56,6 +57,12 @@ export class CandidatsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      lengthMenu : [5, 10, 25],
+      processing: true
+    }
     this.getCandidats();
     this.getCompetences();
     // this.getUniversites();
