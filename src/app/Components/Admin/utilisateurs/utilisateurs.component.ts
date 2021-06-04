@@ -2,11 +2,12 @@ import { Collaborateur } from './../../../Models/collaborateur';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { findCols, findFilterColsRole, removeCol } from '../../../shared/Collaborateur/query';
+import { findCols, findFilterUsers, findPermissions, findRoles, removeCol, searchCol } from '../../../shared/Collaborateur/query';
 import { map } from 'rxjs/operators';
 import { UserRole } from 'src/app/Enums/UserRole';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserPermission } from 'src/app/Enums/UserPermission';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -17,20 +18,28 @@ export class UtilisateursComponent implements OnInit {
 
   users: Collaborateur[];
   public myUser: Collaborateur;
-  roles=[
-    {id: 1, role: UserRole.COLLABORATEUR},
-    {id: 2, role: UserRole.RH},
-    {id: 3, role: UserRole.RP},
-    {id: 4, role: UserRole.TEAMLEADER}
-  ];
-  selected = [];
+  roles :Collaborateur[];
+  permissions :Collaborateur[];
+  selectedRoles = [];
+  selectedPermissions = [];
+  test : boolean;
+
+  dtOptions: DataTables.Settings = {};
 
   constructor(private apollo: Apollo,
     private router: Router,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      lengthMenu : [5, 10, 25],
+      processing: true
+    }
     this.getUsers();
+    this.getRoles();
+    this.getPermissions();
   }
 
   getUsers(){
@@ -46,15 +55,23 @@ export class UtilisateursComponent implements OnInit {
     });
   }
 
-  getFilterCols(selectedRoles: UserRole[]) {
+  getFilterUsers(selectedRoles: UserRole[],selectedPermissions: UserPermission[]) {
     this.apollo
       .query<any>({
-        query: findFilterColsRole,
-        variables: { selectedRoles }
+        query: findFilterUsers,
+        variables: { selectedRoles ,selectedPermissions}
       })
       .subscribe(({ data }) => {
         this.users = [];
-        this.users = data.findFilterColsRole;
+        this.users = data.findFilterUsers;
+        if(data.findFilterUsers.length == 0){
+          this.test = true;
+          console.log("test",this.test,this.users.length)
+        }
+        else{
+          this.test = false;
+          console.log("test",this.test,this.users.length)
+        }
         console.log('colsFilter:', this.users);
       });
   }
@@ -77,6 +94,56 @@ export class UtilisateursComponent implements OnInit {
       console.log("suppression impossible!!")
     });
     // }
+  }
+
+  getRoles(){
+    this.apollo
+      .watchQuery<any>({
+        query: findRoles,
+      })
+      .valueChanges.pipe(map((result) => result.data.findRoles))
+      .subscribe((data) => {
+        this.roles = data;
+        console.log('postes data:', data);
+      });
+      console.log('postes :', this.roles);
+  }
+
+  getPermissions(){
+    this.apollo
+      .watchQuery<any>({
+        query: findPermissions,
+      })
+      .valueChanges.pipe(map((result) => result.data.findPermissions))
+      .subscribe((data) => {
+        this.permissions = data;
+        console.log('postes data:', data);
+      });
+      console.log('postes :', this.permissions);
+  }
+
+  search(searchWord: string) {
+    console.log("searchWord:",searchWord);
+    if(searchWord){
+      this.apollo
+      .query<any>({
+        query: searchCol,
+        variables: {mot: searchWord},
+      })
+      .subscribe(({ data }) => {
+        this.users = [];
+        this.users = data.searchCol;
+        if(data.searchCol.length == 0){
+          this.test = true;
+          console.log("test",this.test,this.users.length)
+        }
+        else{
+          this.test = false;
+          console.log("test",this.test,this.users.length)
+        }
+        console.log('users apres recherche:',this.users)
+      });
+    }
   }
 
 }

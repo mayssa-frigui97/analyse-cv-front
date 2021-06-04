@@ -6,6 +6,36 @@ body {
   font-family: 'Ruda', sans-serif!important;
   font-size: 13px!important;
 }
+
+.dataTables_filter {/*to disable the search box*/
+  display: none!important;
+}
+
+.paging_full_numbers a.paginate_button {
+  /* background-color: #65dad2!important; */
+  /* color: white!important; */
+  border: none;
+  padding-right: 8px!important;
+  padding-left: 8px!important;
+  color: #fff!important;
+  background: #4ECDC4;
+  -webkit-border-radius: 3px;
+  display: inline-block;
+}
+
+.table-bordered>tbody>tr>td{
+  background-color: #d5ffd5;
+}
+
+tr.odd td.sorting_1 {
+  background-color: #c4ffc4;
+}
+
+tr.even td.sorting_1 {
+  background-color: #d5ffd5;
+}
+
+
 /* .h3, .mat-typography
 {
   font-weight: 400!important;

@@ -1,7 +1,7 @@
 import { Collaborateur } from './../../../Models/collaborateur';
 import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, Pipe } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { findCols, findEquipes, findEquipesPole,  findFilterCols,  findPoles, findPostes, removeCol } from 'src/app/shared/Collaborateur/query';
+import { findCols, findEquipes, findEquipesPole,  findFilterCols,  findPoles, findPostes, removeCol, searchCol } from 'src/app/shared/Collaborateur/query';
 import { map } from 'rxjs/operators';
 import { Equipe } from './../../../Models/equipe';
 import { Pole } from './../../../Models/pole';
@@ -24,61 +24,25 @@ import { Competence } from './../../../Models/competence';
   templateUrl: './collaborateurs.component.html',
   styleUrls: ['./collaborateurs.component.css'],
 })
-export class CollaborateursComponent implements OnInit, AfterViewInit{
+export class CollaborateursComponent implements OnInit{
   public cols: Collaborateur[];
   public equipes: Equipe[];
   public postes: Collaborateur[];
   public poles: Pole[];
   public rpId: number;
-  // public universites: Formation[];
-  // public specialites: Formation[];
-  // public nivFormation: Formation[];
   public cvs: Cv[];
-  public annees: number[];
+
   public competences: Competence[];
   public myUser: Collaborateur;
   public test : boolean;
 
-  public projets = [
-    { id: 1, nom: 'Application mobile Amen Bank' },
-    { id: 2, nom: 'Application mobile BTK Bank' },
-    { id: 3, nom: 'Application web Amen Bank' },
-    { id: 4, nom: 'Application web BTK Bank' },
-  ];
-  public experiences = [
-    {id: 1, annee: 'débutant'},
-    {id: 2, annee: '1 à 3ans'},
-    {id: 3, annee: '3 à 5ans'},
-    {id: 4, annee: '5 à 10ans'},
-    {id: 5, annee: '+ 10ans'}
-  ];
-
-  selectedProjets: number[]=[];
   selectedEquipes: number[];
   selectedPoles: number[];
-  selectedNiv: string[];
-  selectedExp: string[];
   selectedCompetence: string[];
   selectedPoste: string[];
-  selectedUniver: string[];
-  selectedSpec: string[];
-  // détecteur de changement recherche le premier élément ou la directive correspondant au sélecteur dans la vue DOM.
-  // Si un nouvel enfant correspond au sélecteur, la propriété est mise à jour.
+  searchWord: string;
 
-  // @ViewChild(DataTableDirective)
-  // dtElement: DataTableDirective;
-  // dtOptions: DataTables.Settings = {};
-  // dtInstance:Promise<DataTables.Api>;
-  // dtTrigger: Subject<any> = new Subject();
-
-  displayedColumns: string[] = ['nom', 'email', 'tel', 'poste','salaire','dateEmb','evaluation'];
-  dataSource: MatTableDataSource<Collaborateur>;
-
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-  }
+  dtOptions: DataTables.Settings = {};
 
   constructor(
     private apollo: Apollo,
@@ -90,6 +54,12 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
     }
 
     ngOnInit(): void {
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        lengthMenu : [5, 10,25],
+        processing: true
+      }
     this.getCompetences();
     this.getCols();
     this.getEquipes();
@@ -108,19 +78,15 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
       .valueChanges.pipe(map((result) => result.data.findCols))
       .subscribe((data) => {
         this.cols = data;
-        this.dataSource = new MatTableDataSource(this.cols);
+        // this.dataSource = new MatTableDataSource(this.cols);
         // this.dataSource.paginator = this.paginator;
         console.log('cols :', this.cols);
-        console.log("dataSource:",this.dataSource.data);
+        // console.log("dataSource:",this.dataSource.data);
       });
   }
 
   getFilterCols(selectedPoles: number[],selectedEquipes: number[],
     selectedComp?: string[], selectedPoste?: string[]) {
-    // console.log("selectedPole:",selectedPoles)
-    // console.log("selectedEquipes:",selectedEquipes)
-    console.log("selectedComp:",selectedComp)
-    // console.log("selectedPoste:",selectedPoste)
     this.apollo
       .query<any>({
         query: findFilterCols,
@@ -137,7 +103,7 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
           this.test = false;
           console.log("test",this.test,this.cols.length)
         }
-        this.dataSource = new MatTableDataSource(this.cols);
+        // this.dataSource = new MatTableDataSource(this.cols);
         console.log('colsFilter:', data.findFilterCols);
       });
   }
@@ -223,6 +189,30 @@ export class CollaborateursComponent implements OnInit, AfterViewInit{
       console.log("suppression impossible!!")
     });
     // }
+  }
+
+  search(searchWord: string) {
+    console.log("searchWord:",searchWord);
+    if(searchWord){
+      this.apollo
+      .query<any>({
+        query: searchCol,
+        variables: {mot: searchWord},
+      })
+      .subscribe(({ data }) => {
+        this.cols = [];
+        this.cols = data.searchCol;
+        if(data.searchCol.length == 0){
+          this.test = true;
+          console.log("test",this.test,this.cols.length)
+        }
+        else{
+          this.test = false;
+          console.log("test",this.test,this.cols.length)
+        }
+        console.log('cols apres recherche:',this.cols)
+      });
+    }
   }
 
   //n 'est pas utilisée : non fonctionnelle

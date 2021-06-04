@@ -31,6 +31,66 @@ div.dataTables_length{
     border-color:#f0932b;
 }
 
+
+.btn-search{
+  /* padding: 9px 10px; */
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: -37px;
+  height: 34px;
+  padding-bottom: 4px;
+  /* background: #4ECDC4;
+  color: white; */
+  /* padding-bottom: 5px; */
+}
+
+.btn-search:hover {
+  background: #4ECDC4;
+  color: white;
+}
+
+.btn-search:focus {
+  background: #4ECDC4;
+  color: white;
+  border-color: none;
+}
+
+.form-control{
+  width: auto;
+}
+
+.custom-select-md{
+  width: 100%;
+  min-height: 34px;
+  border-radius: 4px;
+}
+
+
+
+
+
+
+
+/* .search-container button:hover {
+  background: #ccc;
+} */
+
+/* .search-container input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+} */
+
+
+
+
 /* .btn-xs{
   margin-right: 5px!important;
 } */

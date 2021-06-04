@@ -34,6 +34,7 @@
     "datatables.net-dt": "^1.10.24",
     "font-awesome": "^4.7.0",
     "graphql": "^15.5.0",
+    "graphql-upload": "^11.0.0",
     "jquery": "^3.6.0",
     "ng-multiselect-dropdown": "^0.3.4",
     "ngx-bar-rating": "^2.0.0",

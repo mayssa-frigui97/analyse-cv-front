@@ -5,6 +5,7 @@ const findPersonnes = gql`
     findPersonnes {
       id
       nom
+      dateNaiss
       adresse
       tel
       email
@@ -97,16 +98,45 @@ const findFilterCands = gql`
 const updateRecommande = gql`
   mutation updateRecommande($value: Boolean!,$idPersonne: Int!) {
     updateRecommande(value: $value,idPersonne: $idPersonne)
-    # {
-    #   id
-    #   nom
-    #   adresse
-    #   tel
-    #   email
-    #   recommande
-    # }
   }
 `;
+
+const search = gql`
+  query search($mot: String!) {
+    search(mot: $mot)
+    {
+      id
+      nom
+      dateNaiss
+      adresse
+      tel
+      email
+      recommande
+      cv{
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        langues
+        experiences
+        formations
+        projets
+        interets
+        competences{
+          nom
+        }
+      }
+    }
+  }
+`;
+
+const removeCandidat = gql`
+  mutation removeCandidat($idCand: Int!)
+  {
+    removeCandidat(idCand: $idCand)
+  }`;
+
 
 
 export {
@@ -114,5 +144,7 @@ export {
   findPersonne,
   removePersonne,
   updateRecommande,
-  findFilterCands
+  findFilterCands,
+  search,
+  removeCandidat
 }

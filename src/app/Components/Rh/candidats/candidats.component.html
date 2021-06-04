@@ -8,93 +8,34 @@
         <div class="content-panel">
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <div class="col-md-11">
-              <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-                <div class="col-md-4 mb">
-                  <ng-select [items]="nivFormation" bindLabel="niveau" bindValue="niveau"
-                    placeholder="Selectionner niveau de formation" appendTo="body" multiple="true"
-                    [(ngModel)]="selectedNiv">
-                  </ng-select>
-                </div>
-                <div class="col-md-4 mb">
-                  <ng-select [items]="specialites" bindLabel="specialite" bindValue="specialite"
-                    placeholder="Selectionner spécialité de formation" appendTo="body" multiple="true"
-                    [(ngModel)]="selectedSpec">
-                  </ng-select>
-                </div>
-                <div class="col-md-4 mb">
-                  <ng-select [items]="universites" bindLabel="universite" bindValue="universite"
-                    placeholder="Selectionner l'université" appendTo="body" multiple="true"
-                    [(ngModel)]="selectedUniver">
-                  </ng-select>
-                </div>
-              </div> -->
               <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-                <!-- <div class="col-md-4 mb">
-                  <ng-select [items]="cvs" bindLabel="posteAct" bindValue="posteAct"
-                    placeholder="Selectionner les postes" appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
-                  </ng-select>
-                </div> -->
-                <div class="col-md-4 mb">
+                <div class="col-md-4 mb" style="margin-right: 30px;">
                   <ng-select [items]="competences" bindLabel="nom" bindValue="nom" [virtualScroll]="true"
-                    placeholder="Selectionner les compétences" appendTo="body" multiple="true"
-                    [(ngModel)]="selectedCompetence" (change)="getFilterCands(selectedCompetence)">
-                  </ng-select>
+                  placeholder="Selectionner les compétences" appendTo="body" multiple="true"
+                  [(ngModel)]="selectedComp" (change)="getFilterCands(selectedComp)">
+                </ng-select>
                 </div>
-                <!-- <div class="col-md-4 mb">
-                  <ng-select [items]="experiences" bindLabel="annee" bindValue="annee"
-                    placeholder="Selectionner l'expérience" appendTo="body" multiple="true" [(ngModel)]="selectedExp">
-                  </ng-select>
+                <div class="col-md-6 mb" style="float: right;">
+                    <form class="form-inline md-form mr-auto mb-4" style="float: right;">
+                      <input class="form-control mr-sm-2" type="text" placeholder="Rechercher.." [(ngModel)]="searchWord"  style="height: 36px;width: 260px;" name="mot">
+                      <button class="btn-search" type="submit" rounded="true" (click)="search(searchWord)"><i class="fa fa-search" ></i></button>
+                    </form>
                 </div>
-                <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-                  <button
-                    (click)="getFilterCands(selectedCompetence)"
-                    class="btn btn-danger mb" style="float: right; margin-right: 60px;">Filtrer</button>
-                </div> -->
               </div>
             </div>
-            <div class="col-md-1">
-              <a data-toggle="modal" href="#myModal">
-                <button type="button" class="btn btn-theme02" title="ajouter candidat">
-                  <i class="fa fa-user-plus fa-2x"></i>
-                </button>
-              </a>
+            <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+              <div class="col-md-11"></div>
+              <div class="col-md-1">
+                <a data-toggle="modal" data-target="#myModal">
+                  <button type="button" class="btn btn-theme02" title="ajouter candidat">
+                    <i class="fa fa-user-plus fa-2x"></i>
+                  </button>
+                </a>
+              </div>
             </div>
           </div><br>
-          <!-- Modal -->
-          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal"
-            class="modal fade">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title"><i class="fa fa-user-plus"></i> Ajouter un candidat</h4>
-                </div>
-                <div class="modal-body" style="margin-bottom: 20px;">
-                  <div class="form-group">
-                    <div class="controls col-md-11">
-                      <div class="fileupload fileupload-new" data-provides="fileupload">
-                        <span class="btn btn-theme02 btn-file" style="border-radius: 0!important;">
-                          <span class="fileupload-new"><i class="fa fa-paperclip"></i> Choisir un fichier</span>
-                          <span class="fileupload-exists"><i class="fa fa-undo"></i> Changer le fichier</span>
-                          <input type="file" class="default" />
-                        </span>
-                        <span class="fileupload-preview" style="margin-left:5px;"></span>
-                        <a href="" class="close fileupload-exists" data-dismiss="fileupload"
-                          style="float: none; margin-left:5px;"></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-                  <button class="btn btn-theme" type="button">Enregistrer</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- modal -->
           <div class="adv-table" style="margin-left: 10px!important;">
-            <!-- <table cellpadding="0" cellspacing="0" class="display table table-bordered" id="hidden-table-info">
+            <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
               <thead>
                 <tr>
                   <th class="hidden-phone">Nom et prénom</th>
@@ -107,29 +48,34 @@
               <tbody *ngIf=" candidats && candidats.length > 0">
                 <tr class="gradeA" *ngFor="let candidat of candidats">
                   <td>{{candidat.nom| titlecase}}</td>
-                  <td class="center hidden-phone">{{candidat.email}}</td>
-                  <td class="center hidden-phone">{{candidat.tel}}</td>
-                  <td class="center"><input type="checkbox" name="recommande" [ngModel]="candidat.recommande" (change)="changeRecommande($event,candidat.id)"></td>
-                  <td>
+                  <td class="hidden-phone">{{candidat.email}}</td>
+                  <td class="hidden-phone">{{candidat.tel}}</td>
+                  <td class="centered"><input type="checkbox" name="recommande" [ngModel]="candidat.recommande" (change)="changeRecommande($event,candidat.id)"></td>
+                  <td class="centered">
                     <a>
                       <button class="btn btn-primary btn-xs" [routerLink]="['cv', candidat.id]"
                         title="voir détails candidat"
                         style="padding-left: 4px!important; padding-right: 4px!important;">
                         <i class="fa fa-eye"></i></button>
                     </a>
-                    <a data-toggle="modal" href="#affecter">
-                      <button class="btn btn-success btn-xs" title="affecter candidat">
+                    <a data-toggle="modal" data-target="#affecter">
+                      <button class="btn btn-success btn-xs" title="affecter candidat" (click)="myUser = candidat">
                         <i class="fa fa-plus"></i></button>
                     </a>
-                    <a data-toggle="modal" href="#supp">
+                    <a data-toggle="modal" data-target="#supp">
                       <button class="btn btn-danger btn-xs" title="supprimer candidat" (click)="myUser = candidat">
                         <i class="fa fa-trash-o "></i></button>
                     </a>
                   </td>
                 </tr>
               </tbody>
-            </table> -->
-            <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
+              <tbody *ngIf="test" >
+                <tr>
+                  <td class="centered" colspan="10" style="background-color: #c4ffc4;font-size: small;padding: 15px;"> Aucun candidat correspond aux filtre de recherche spécifiés.</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <table class="table table-striped table-bordered table-sm row-border hover">
               <thead>
                 <tr>
                   <th>Nom et prénom</th>
@@ -163,18 +109,50 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
-        </div>
+      </div>
       </div>
     </section>
     <app-footer></app-footer>
   </section>
 </section>
 
-
+<!-- Modal Add-->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title"><i class="fa fa-user-plus"></i> Ajouter un candidat</h4>
+    </div>
+    <div class="modal-body" style="margin-bottom: 20px;">
+      <div class="form-group">
+        <div class="controls col-md-11">
+          <div class="fileupload fileupload-new" data-provides="fileupload">
+            <span class="btn btn-theme02 btn-file" style="border-radius: 0!important;">
+              <span class="fileupload-new"><i class="fa fa-paperclip"></i> Choisir un fichier</span>
+              <span class="fileupload-exists"><i class="fa fa-undo"></i> Changer le fichier</span>
+              <input type="file" class="default" ngModel id=file name="file" (change)="upload($event)" />
+            </span>
+            <!-- (change)="upload($event)" -->
+            <span class="fileupload-preview" style="margin-left:5px;"></span>
+            <a href="" class="close fileupload-exists" data-dismiss="fileupload"
+              style="float: none; margin-left:5px;"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
+      <button class="btn btn-theme" type="button">Enregistrer</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- modal Add-->
 <!-- ModalSupp -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal fade">
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -182,55 +160,157 @@
         <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un collaborateur</h4>
       </div>
       <div class="modal-body" style="margin-bottom: 20px;">
-        <h5>Êtes-vous sûr de vouloir supprimer ce candidat
-          <!--: {{myUser.prenom}}{{myUser.nom}} -->
-          ?
+        <h5>Êtes-vous sûr de vouloir supprimer ce candidat ?
         </h5>
       </div>
       <div class="modal-footer">
         <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
         <button class="btn btn-theme" data-dismiss="modal" type="button"
-          (click)="deleteUser(myUser.id)">Confirmer</button>
+          (click)="deleteCand(myUser.id)">Confirmer</button>
       </div>
     </div>
   </div>
 </div>
 <!-- modalSupp -->
 <!-- ModalAff -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="affecter" class="modal fade">
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="affecter" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title"><i class="fa fa-plus"></i> Affecter un candidat</h4>
       </div>
-      <div class="modal-body" style="margin-bottom: 20px;">
-        <div class="row">
-          <div class="col-md-10">
-            <div id="hidden-table-info_length" class="dataTables_length"
-              style="font-size: 16px;margin-right: 30px!important;">
-              <label>Département<br>
-                <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
-                  <option value="" selected="selected">ESS</option>
-                  <option value="">E-business</option>
-                  <option value="">Mobile</option>
-                </select>
-              </label>
+      <div class="modal-body mb">
+        <div class="row " style="margin-left: 5px;margin-right: 5px;">
+          <form #formulaire="ngForm" role="form" class="form-horizontal" name="form">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Nom utilisateur</label>
+                  <div class="col-lg-6">
+                    <input required type="text" placeholder="" id="nomUtilisateur" class="form-control" ngModel name="nomUtilisateur">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Mot de passe</label>
+                  <div class="col-lg-6">
+                    <input required type="password" placeholder="" id="motDePasse" class="form-control" ngModel name="motDePasse">
+                  </div>
+                </div>
+              </div>
             </div>
-            <div id="hidden-table-info_length" class="dataTables_length" style="font-size: 16px;">
-              <label>Chef de l'équipe<br>
-                <select size="1" name="hidden-table-info_length" aria-controls="hidden-table-info">
-                  <option value="" selected="selected">Nidhal Jammeli</option>
-                  <option value="">Nidhal Jammeli</option>
-                </select>
-              </label>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">CIN</label>
+                  <div class="col-lg-6">
+                    <input required type="number" id="cin" class="form-control" ngModel name="cin">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Poste</label>
+                  <div class="col-lg-6">
+                    <input required type="text" placeholder="" id="poste" class="form-control" ngModel name="poste">
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Date d'embauche</label>
+                  <div class="col-lg-8">
+                    <input required type="date" placeholder="Date d'embauche" id="dateEmb" class="form-control" ngModel name="dateEmb">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Salaire</label>
+                  <div class="col-lg-6">
+                    <input type="number" placeholder="" id="salaire" class="form-control" ngModel name="salaire">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">E-mail</label>
+                  <div class="col-lg-6">
+                    <input required type="email" placeholder="exemple@gmail.com" ngModel id="emailPro" class="form-control" name="emailPro">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">N° Téléphone</label>
+                  <div class="col-lg-6">
+                    <input type="tel" placeholder="" id="telPro" class="form-control" ngModel name="telPro">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Pôle</label>
+                  <div class="col-lg-6">
+                    <select required class="custom-select custom-select-md" ngModel name="pole" id="pole">
+                      <!-- <option disabled selected>Selectionner le pôle</option> -->
+                      <option [value]="pole.id" *ngFor="let pole of poles">{{pole.nom}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Chef d'équipe</label>
+                  <div class="col-lg-6">
+                    <select required class="custom-select custom-select-md" ngModel name="equipe" id="equipe">
+                      <!-- <option disabled selected>Selectionner le chef d'équipe</option> -->
+                      <option [value]="equipe.id" *ngFor="let equipe of equipes">{{equipe.teamleader.nom | titlecase}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Rôle</label>
+                  <div class="col-lg-6">
+                    <select required class="custom-select custom-select-md" ngModel name="role" id="role">
+                      <!-- <option disabled selected>Selectionner le rôle</option> -->
+                      <option [value]="r.role" *ngFor="let r of roles">{{r.role | titlecase}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">Permission</label>
+                  <div class="col-lg-6">
+                    <select required class="custom-select custom-select-md" ngModel name="permission" id="permission">
+                      <!-- <option disabled selected>Selectionner la permission</option> -->
+                      <option [value]="p.permission" *ngFor="let p of permissions">{{p.permission | titlecase}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
       <div class="modal-footer">
         <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-        <button class="btn btn-theme" type="button">Enregistrer</button>
+        <button [disabled]="formulaire.invalid" data-dismiss="modal" class="btn btn-theme" type="submit"
+          (click)="affecterCandidat(formulaire.value,myUser)">Enregistrer</button>
       </div>
     </div>
   </div>
@@ -240,6 +320,6 @@
 
 <!--js loader-->
 <!-- <app-base-js></app-base-js> -->
-<app-data-table-js></app-data-table-js>
-<!-- <app-modal-js></app-modal-js> -->
+<!-- <app-data-table-js></app-data-table-js>-->
+<app-modal-js></app-modal-js>
 <!--js loader-->

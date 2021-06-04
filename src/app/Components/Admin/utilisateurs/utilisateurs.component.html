@@ -1,35 +1,54 @@
-<section id="container" *ngIf="roles &&users">
+<section id="container" *ngIf="users">
   <app-header></app-header>
   <app-sidebar></app-sidebar>
   <section id="main-content">
     <section class="wrapper">
       <h3><i class="fa fa-angle-right"></i> La liste des utilisateurs</h3>
-      <div class="row mb" *ngIf="roles">
+      <div class="row mb"  style="margin-bottom: 60px;">
         <!-- page start-->
         <div class="content-panel">
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-            <div class="col-md-4 mb">
-              <ng-select [items]="roles" bindLabel="role" bindValue="role" placeholder="Selectionner le(s) rôle(s)"
-                appendTo="body" multiple="true" [(ngModel)]="selected" (change)="getFilterCols(selected)">
-              </ng-select>
+            <div class="col-md-8">
+              <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+                <div class="col-md-6 mb" *ngIf="roles">
+                  <ng-select [items]="roles" bindLabel="role" bindValue="role" placeholder="Selectionner le(s) rôle(s)"
+                    appendTo="body" multiple="true" [(ngModel)]="selectedRoles">
+                  </ng-select>
+                </div>
+                <div class="col-md-6 mb" *ngIf="permissions">
+                  <ng-select [items]="permissions" bindLabel="permission" bindValue="permission"
+                    placeholder="Selectionner le(s) permission(s)" appendTo="body" multiple="true"
+                    [(ngModel)]="selectedPermissions">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+                <div class="col-md-11"></div>
+                <div class="col-md-1">
+                  <button (click)="getFilterUsers(selectedRoles,selectedPermissions)" class="btn btn-danger mb"
+                    style="float: right; margin-right: 60px;">Filtrer</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <form class="form-inline md-form mr-auto mb-4" style="float: right;">
+                <input class="form-control mr-sm-2" type="text" placeholder="Rechercher.." [(ngModel)]="searchWord"  style="height: 36px;width: 260px;" name="mot">
+                <button class="btn-search" type="submit" rounded="true" (click)="search(searchWord)"><i class="fa fa-search" ></i></button>
+              </form>
             </div>
           </div>
           <br>
           <div class="adv-table" style="margin-left: 10px!important;">
             <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
-              id="hidden-table-info" *ngIf="users">
+              id="hidden-table-info" *ngIf="users" datatable [dtOptions]="dtOptions">
               <thead>
                 <tr>
                   <th>Nom et prénom</th>
                   <th>Nom utilisateur</th>
-                  <th>Rôle(s)</th>
-                  <th class="hidden-phone">Date de naissance</th>
+                  <th>Rôle</th>
                   <th class="hidden-phone">E-mail</th>
-                  <th class="hidden-phone">N° téléphone</th>
                   <th class="hidden-phone">Poste</th>
-                  <th class="hidden-phone">Salaire</th>
                   <th class="hidden-phone">date d'embauche</th>
-                  <th class="hidden-phone">évaluation</th>
                   <th class="hidden-phone">Action</th>
                 </tr>
               </thead>
@@ -37,28 +56,27 @@
                 <tr class="gradeA" *ngFor="let user of users">
                   <td>{{user.nom| titlecase}}</td>
                   <td>{{user.nomUtilisateur}}</td>
-                  <td>{{user.role}}</td>
-                  <td class="hidden-phone">{{user.dateNaiss| date: 'dd/MM/yyyy'}}</td>
-                  <td class="center hidden-phone">{{user.emailPro}}</td>
-                  <td class="center hidden-phone">{{user.telPro}}</td>
-                  <td class="center hidden-phone">{{user.poste}}</td>
-                  <td class="center hidden-phone">{{user.salaire}}</td>
+                  <td>{{user.role| titlecase}}</td>
+                  <td class="hidden-phone">{{user.emailPro}}</td>
+                  <td class="hidden-phone">{{user.poste}}</td>
                   <td class="hidden-phone">{{user.dateEmb| date: 'dd/MM/yyyy'}}</td>
-                  <td class="center hidden-phone">
-                    <app-star-rating rating={{user.evaluation}}></app-star-rating>
-                  </td>
-                  <td>
+                  <td class="centered">
                     <a>
                       <button class="btn btn-primary btn-xs" title="voir détails utilisateur"
                         [routerLink]="['cv', user.id]"
                         style="padding-left: 4px!important; padding-right: 4px!important;">
                         <i class="fa fa-eye"></i></button>
                     </a>
-                    <a data-toggle="modal" href="#supp">
+                    <a data-toggle="modal" data-target="#supp">
                       <button class="btn btn-danger btn-xs" title="supprimer utilisateur" (click)="myUser = user">
                         <i class="fa fa-trash-o "></i></button>
                     </a>
                   </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="test" >
+                <tr>
+                  <td class="centered" colspan="10" style="background-color: #c4ffc4;font-size: small;padding: 15px;"> Aucun utilisateur correspond aux filtre de recherche spécifiés.</td>
                 </tr>
               </tbody>
             </table>
@@ -73,7 +91,7 @@
 
 
 <!-- Modal -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal fade">
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal">
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
@@ -96,6 +114,6 @@
 
 <!--js loader-->
 <!-- <app-base-js></app-base-js> -->
-<app-data-table-js ></app-data-table-js>
-<app-modal-js></app-modal-js>
+<!-- <app-data-table-js ></app-data-table-js> -->
+<!-- <app-modal-js></app-modal-js> -->
 <!--js loader-->

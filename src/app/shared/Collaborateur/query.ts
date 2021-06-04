@@ -95,6 +95,12 @@ const findEquipes = gql`
     findEquipes {
       id
       nom
+      teamleader{
+        nom
+      }
+      pole{
+        nom
+      }
     }
   }`;
 
@@ -140,9 +146,9 @@ const findFilterCols = gql`
   }
 `;
 
-const findFilterColsRole = gql`
-  query findFilterColsRole($selectedRoles: [UserRole!]!) {
-    findFilterColsRole(selectedRoles: $selectedRoles) {
+const findFilterUsers = gql`
+  query findFilterUsers($selectedPermissions: [UserPermission!],$selectedRoles: [UserRole!]) {
+    findFilterUsers(selectedRoles: $selectedRoles,selectedPermissions: $selectedPermissions) {
       id
       nom
       cin
@@ -309,6 +315,95 @@ const getUserAuth = gql`
   }
 `;
 
+const findRoles = gql`
+query findRoles
+{
+  findRoles
+  {
+    role
+  }
+}`;
+
+const findPermissions = gql`
+query findPermissions
+{
+  findPermissions
+  {
+    permission
+  }
+}`;
+
+const createCol = gql`
+  mutation createCol($createColInput: CreateColInput!)
+  {
+    createCol(createColInput: $createColInput){
+      id
+      nom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      permission
+      poste
+      dateEmb
+      salaire
+      evaluation
+    }
+  }`;
+
+const searchCol = gql`
+  query searchCol($mot: String!) {
+    searchCol(mot: $mot) {
+      id
+      nom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      permission
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+        }
+      }
+      cv {
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        langues
+        experiences
+        formations
+        projets
+        interets
+        competences {
+          nom
+        }
+      }
+    }
+  }
+`;
+
 export {
   findCols,
   findCol,
@@ -316,10 +411,14 @@ export {
   findEquipes,
   findEquipesPole,
   findFilterCols,
-  findFilterColsRole,
+  findFilterUsers,
   findPostes,
   updateCol,
   removeCol,
   login,
-  getUserAuth
+  getUserAuth,
+  findRoles,
+  findPermissions,
+  createCol,
+  searchCol
 }
