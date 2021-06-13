@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, gql } from 'apollo-angular';
 import {map} from 'rxjs/operators'
 import { Router } from '@angular/router';
 import { Cv } from 'src/app/Models/cv';
@@ -8,46 +8,27 @@ import { ToastrService } from 'ngx-toastr';
 import { findFilterCands, findPersonnes, removeCandidat, removePersonne, search, updateRecommande } from 'src/app/shared/Candidat/query';
 import { Personne } from './../../../Models/personne';
 import { Competence } from 'src/app/Models/competence';
-import { findAllCompetences, uploadSigleFile } from 'src/app/shared/Cv/query';
+import { findAllCompetences, uploadFile } from 'src/app/shared/Cv/query';
 import { createCol, findEquipes, findPermissions, findPoles, findRoles } from 'src/app/shared/Collaborateur/query';
 import { Equipe } from './../../../Models/equipe';
 import { Pole } from 'src/app/Models/pole';
 import { Collaborateur } from './../../../Models/collaborateur';
 import { NgForm } from '@angular/forms';
-// const { makeExecutableSchema } = require('@graphql-tools/schema');
-// const { GraphQLUpload } = require('graphql-upload');
+import { HttpClient } from '@angular/common/http';
 
 
-// const typeDefs = `
-//   scalar Upload
-//   type file {
-//     name: String
-//   }
-//   type Mutation {
-//     Upload(file:Upload!): file
-//   }
-// `
+export class Upload {
 
-// const resolvers = {
-//   Mutation: {
-//     Upload: async (root, { file }) => {
-//       const { filename, mimetype, createReadStream } = await image
-//       const stream = createReadStream()
-//       // Promisify the stream and store the file, then…
-//       return { name: filename }
-//     }
-//   }
-// }
+  filename: String;
 
-// const schema = makeExecutableSchema({
-//   typeDefs: /* GraphQL */ `
-//     scalar Upload
-//   `,
-//   resolvers: {
-//     Upload: GraphQLUpload,
-//   },
-// });
+  mimetype: string;
 
+  encoding: String;
+
+  // createReadStream :() => Stream;
+
+}
+const uri = 'http://localhost:3000/graphql';
 
 // export const schema = makeExecutableSchema({ typeDefs, resolvers })
 
@@ -59,6 +40,7 @@ import { NgForm } from '@angular/forms';
 export class CandidatsComponent implements OnInit {
 
   public file: File = null;
+  public fileupload= new Upload();
   candidats: Personne[];
   myUser: Personne;
   marked : boolean;
@@ -66,17 +48,8 @@ export class CandidatsComponent implements OnInit {
   public cvs: Cv[];
   equipes :Equipe[];
   poles: Pole[];
-  // public diplomes = [
-  //   {id: 1, nom: 'Licence'},
-  //   {id: 2, nom: 'Master'},
-  //   {id: 3, nom: 'Ingénieur'},
-  //   {id: 4, nom: 'Doctorat'}
-  // ];
   public competences: Competence[]=[];
 
-  // selectedDiplome: string;
-  // ids1:number[]=[];
-  // ids2:number[]=[];
   selectedComp: string[];
   selectedPole: string;
   selectedTL: string;
@@ -88,7 +61,8 @@ export class CandidatsComponent implements OnInit {
   constructor(
     private apollo: Apollo,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http: HttpClient
     ) { }
 
   ngOnInit(): void {
@@ -337,132 +311,48 @@ export class CandidatsComponent implements OnInit {
   upload(event) {
     this.file = event.target.files[0];
     console.log("event:",event.target.files[0]);
+    // this.fileupload.filename=this.file.name;
+    // this.fileupload.mimetype='text/plain';
+    // this.fileupload.encoding='utf-8';
+    var operations = {
+      query: `
+        mutation($file: Upload!) {
+          UploadFile(file: $file) {
+          }
+        }
+      `,
+      variables: {
+        file: null
+      }
+    }
+    var _map = {
+      file: ["variables.file"]
+    }
+    var fd = new FormData()
+    fd.append('operations', JSON.stringify(operations))
+    fd.append('map', JSON.stringify(_map))
+    fd.append('0', this.file, this.file.name)
+    this.http.post(uri, fd).subscribe();
+    // return await request(uri, post, fd, {
+    //   headers: { "Content-Type": "multipart/form-data" },
+    // });
   }
 
   saveFile(){
-    this.apollo.mutate({
-      mutation: uploadSigleFile,
-      variables: {
-        upload: this.file
-      },
-      // context: {
-      //   useMultipart: true
-      // }
-    }).subscribe(({ errors, context, data, extensions }) => {
-      console.log("data.upload:",data,errors,context,extensions);
-    });
+    // let upload :Upload=null;
+    console.log("this.file",this.fileupload)
+    let variable={file:this.fileupload};
+    // upload.filename=this.file.name;
+    console.log("upload:",variable);
+    // this.apollo.mutate({
+    //   mutation: uploadFile,
+    //   variables: variable,
+    //   // context: {
+    //   //   useMultipart: true
+    //   // }
+    // }).subscribe(({ data}) => {
+    //   console.log("data.upload:",data);
+    // });
   }
-
-//   async submitForm() {
-//     let formData = new FormData();
-//     formData.append('photo', this.file, this.file.name);
-// ​
-//     try {
-//       const response = await fetch('http://localhost:3000/photos/upload', {
-//         method: 'POST',
-//         body: formData,
-//       });
-// ​
-//       if (!response.ok) {
-//         throw new Error(response.statusText);
-//       }
-// ​
-//       console.log(response);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-  // upload(file){
-  //   var operations = {
-  //     query: `
-  //       mutation($file: Upload!) {
-  //         singleUpload(file: $file) {
-  //           id
-  //         }
-  //       }
-  //     `,
-  //     variables: {
-  //       file: null
-  //     }
-  // }
-
-  // this.apollo.mutate({
-
-  //   mutation: uploadFileMutation,
-
-  //   variables: {
-  //     file: this.file
-  //   },
-
-  //   context: {
-  //     useMultipart: true
-  //   }
-
-  // }).subscribe(({ data }) => {
-
-  //   this.response = data.upload
-
-  // });
-// }
-
-  // fileChangeEvent(fileInput: any) {
-  //   this.filesToUpload = <Array<File>>fileInput.target.files;
-  // }
-  // }
-  // async getCandidatsFormation(selectedDiplome: string){
-  //   await this.apollo
-  //   .query<any>({
-  //       query: searchFormation,
-  //       variables: {formation : selectedDiplome},
-  //     })
-  //     .subscribe(({ data }) => {
-  //       this.candidats = [];
-  //       this.ids2=[];
-  //       this.candidats = data.searchFormation;
-  //       this.candidats.forEach(candidat => {
-  //         this.ids2.push(candidat.id)
-  //       });
-  //       console.log("ids2:",this.ids2);
-  //       console.log('candidats formation :', this.candidats);
-  //     });
-  // }
-
-  // async FilterCands(selectedCompetence :string[],selectedDiplome: string){
-  //   let variables;
-  //   if(selectedCompetence){
-  //     await this.getFilterCands(selectedCompetence);
-  //     console.log("competences:",selectedCompetence)
-  //     console.log("ids1:",this.ids1)
-  //   }
-  //   if(selectedDiplome){
-  //     await this.getCandidatsFormation(selectedDiplome);
-  //     console.log("diplome:",selectedDiplome)
-  //     console.log("ids2:",this.ids2)
-  //   }
-  //   if(this.ids1.length==0 && this.ids2.length==0){
-  //     variables={};
-  //   }
-  //   else if(this.ids1.length!==0 && this.ids2.length==0){
-  //     variables={ids2: this.ids2};
-  //   }
-  //   else if(this.ids1.length==0 && this.ids2.length!==0){
-  //     variables={ids1: this.ids1};
-  //   }
-  //   else{
-  //     variables= {ids2: this.ids2,ids1: this.ids1}
-  //   }
-  //   console.log("variables:",variables);
-  //   await this.apollo
-  //   .query<any>({
-  //       query: findPersonnesId,
-  //       variables: variables,
-  //     })
-  //     .subscribe(({ data }) => {
-  //       this.candidats = [];
-  //       this.candidats = data.findPersonnesId;
-  //       console.log('candidats filtrés :', this.candidats);
-  //     });
-  // }
 
 }

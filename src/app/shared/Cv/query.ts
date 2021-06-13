@@ -1,37 +1,6 @@
 import gql from 'graphql-tag';
 import { NgModule } from '@angular/core';
 
-const findCvPersonne = gql`
-  query findCvPersonne($idPersonne: Int!) {
-    findCvPersonne(idPersonne: $idPersonne) {
-      id
-      cmptLinkedin
-      statutCV
-      activiteAssociatives
-      certificats
-      langues
-      experiences
-      formations
-      projets
-      interets
-      competences{
-        nom
-      }
-      personne {
-        id
-        nom
-        etatCivil
-        dateNaiss
-        adresse
-        tel
-        email
-        avatar
-        recommande
-      }
-    }
-  }
-`;
-
 const findAllCompetences = gql`
 query findAllCompetences
 {
@@ -41,14 +10,13 @@ query findAllCompetences
   }
 }`;
 
-const uploadSigleFile = gql`
-  mutation uploadSigleFile($upload: Upload!)
+const uploadFile = gql`
+  mutation uploadFile($file: Upload!)
   {
-    uploadSigleFile(upload: $upload)
+    uploadFile(file: $file)
   }`;
 
 export {
-  findCvPersonne,
   findAllCompetences,
-  uploadSigleFile
+  uploadFile
 }

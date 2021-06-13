@@ -12,23 +12,17 @@
               <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
                 <div class="col-md-6 mb" *ngIf="roles">
                   <ng-select [items]="roles" bindLabel="role" bindValue="role" placeholder="Selectionner le(s) rôle(s)"
-                    appendTo="body" multiple="true" [(ngModel)]="selectedRoles">
-                  </ng-select>
-                </div>
-                <div class="col-md-6 mb" *ngIf="permissions">
-                  <ng-select [items]="permissions" bindLabel="permission" bindValue="permission"
-                    placeholder="Selectionner le(s) permission(s)" appendTo="body" multiple="true"
-                    [(ngModel)]="selectedPermissions">
+                    appendTo="body" multiple="true" [(ngModel)]="selectedRoles" (change)="getFilterUsers(selectedRoles)">
                   </ng-select>
                 </div>
               </div>
-              <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
+              <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
                 <div class="col-md-11"></div>
                 <div class="col-md-1">
                   <button (click)="getFilterUsers(selectedRoles,selectedPermissions)" class="btn btn-danger mb"
                     style="float: right; margin-right: 60px;">Filtrer</button>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="col-md-4">
               <form class="form-inline md-form mr-auto mb-4" style="float: right;">

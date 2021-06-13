@@ -16,7 +16,7 @@ const routes: Routes = [
   // { path: '', component: AccueilComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},
   { path: 'accueil', component:AccueilComponent},
-  { path: 'ficheInfos', component:FicheInfosComponent},
+  { path: 'ficheInfos', component:FicheInfosComponent,canActivate: [AuthGuard]},
   { path: 'historique', component:HistoriqueComponent},
   { path: 'candidats', component:CandidatsComponent},
   { path: 'candidats/cv/:id', component: CvCandComponent},

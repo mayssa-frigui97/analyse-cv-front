@@ -147,8 +147,8 @@ const findFilterCols = gql`
 `;
 
 const findFilterUsers = gql`
-  query findFilterUsers($selectedPermissions: [UserPermission!],$selectedRoles: [UserRole!]) {
-    findFilterUsers(selectedRoles: $selectedRoles,selectedPermissions: $selectedPermissions) {
+  query findFilterUsers($selectedRoles: [UserRole!]) {
+    findFilterUsers(selectedRoles: $selectedRoles) {
       id
       nom
       cin

@@ -14,15 +14,23 @@ export class AuthGuard implements CanActivate{
   }
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const allowedRoles = next.data.allowedRoles;
-    if ((this.authService.isLoggednIn()) && (allowedRoles.includes(this.authService.getrole().toString()))) {
+    // const allowedRoles = next.data.allowedRoles;
+    if ((this.authService.isLoggednIn()) ) {
+      console.log("isLoggednIn:",this.authService.isLoggednIn())
+      // this.router.navigate(['accueil']);
       return true;
-    } else if ((this.authService.isLoggednIn()) && (allowedRoles.includes(this.authService.getrole().toString()) === false)) {
-      this.router.navigate(['accueil']);
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['/login']);
       return false;
     }
   }
 
+  // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  //   if (this.authService.isLoggednIn()) { return true; }
+  //   this.router.navigate([''], { queryParams: { redirect: state.url }, replaceUrl: true });
+  //   return false;
+  // }
+
 }
+//&& (allowedRoles.includes(this.authService.getrole().toString())) && (allowedRoles.includes(this.authService.getrole().toString()) === false)
+

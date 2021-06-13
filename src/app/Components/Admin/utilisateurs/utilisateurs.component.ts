@@ -55,11 +55,18 @@ export class UtilisateursComponent implements OnInit {
     });
   }
 
-  getFilterUsers(selectedRoles: UserRole[],selectedPermissions: UserPermission[]) {
+  getFilterUsers(selectedRoles: UserRole[]) {
+    let variables;
+    if(selectedRoles.length==0){
+      variables={};
+    }
+    else{
+      variables={selectedRoles};
+    }
     this.apollo
       .query<any>({
         query: findFilterUsers,
-        variables: { selectedRoles ,selectedPermissions}
+        variables: variables
       })
       .subscribe(({ data }) => {
         this.users = [];
