@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const findCols = gql`
-  query findCols {
-    findCols {
+  query findCols($equipe: Int, $pole: Int) {
+    findCols (equipe: $equipe, pole: $pole){
       id
       nom
       cin
@@ -179,9 +179,9 @@ const findFilterUsers = gql`
 `;
 
 const findPostes = gql`
-query findPostes
+query findPostes($equipe: Int, $pole: Int)
 {
-  findPostes
+  findPostes(equipe: $equipe, pole: $pole)
   {
     poste
   }
@@ -213,7 +213,7 @@ const updateCol = gql`
   }`;
 
 const login = gql`
-  mutation login($nomUtilisateur: String!, $motDePasse: String!) {
+  query login($nomUtilisateur: String!, $motDePasse: String!) {
     login(nomUtilisateur: $nomUtilisateur, motDePasse: $motDePasse) {
       access_token
       user {

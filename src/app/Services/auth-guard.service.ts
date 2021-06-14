@@ -14,23 +14,26 @@ export class AuthGuard implements CanActivate{
   }
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    // const allowedRoles = next.data.allowedRoles;
-    if ((this.authService.isLoggednIn()) ) {
+    const allowedRoles = next.data.allowedRoles;
+    console.log("next.data:",next.data)
+    console.log("allowedRoles:",allowedRoles)
+    if ((this.authService.isLoggednIn()) && (allowedRoles.includes(this.authService.getRole()))) {
       console.log("isLoggednIn:",this.authService.isLoggednIn())
+      console.log("role:",this.authService.getRole())
       // this.router.navigate(['accueil']);
       return true;
-    } else {
+    }
+    else if ((this.authService.isLoggednIn()) && (allowedRoles.includes(this.authService.getRole().toString()) === false)) {
+          this.router.navigate(['/login']);
+          console.log('*'.repeat(50),"erreur : role",this.authService.getRole().toString(),"il n'a pas l'accès pour cette page")
+        }
+    else {
       this.router.navigate(['/login']);
+      console.log('*'.repeat(50),"erreur: non authentifé");
       return false;
     }
   }
 
-  // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-  //   if (this.authService.isLoggednIn()) { return true; }
-  //   this.router.navigate([''], { queryParams: { redirect: state.url }, replaceUrl: true });
-  //   return false;
-  // }
-
 }
-//&& (allowedRoles.includes(this.authService.getrole().toString())) && (allowedRoles.includes(this.authService.getrole().toString()) === false)
+
 

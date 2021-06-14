@@ -15,6 +15,8 @@ import { Pole } from 'src/app/Models/pole';
 import { Collaborateur } from './../../../Models/collaborateur';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/Services/auth.service';
+import { UserRole } from 'src/app/Enums/UserRole';
 
 
 export class Upload {
@@ -41,6 +43,9 @@ export class CandidatsComponent implements OnInit {
 
   public file: File = null;
   public fileupload= new Upload();
+  public userRole: string;
+  public equipe : number;
+  public pole: number;
   candidats: Personne[];
   myUser: Personne;
   marked : boolean;
@@ -62,7 +67,8 @@ export class CandidatsComponent implements OnInit {
     private apollo: Apollo,
     private router: Router,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private auth: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -71,6 +77,13 @@ export class CandidatsComponent implements OnInit {
       pageLength: 5,
       lengthMenu : [5, 10, 25],
       processing: true
+    }
+    this.userRole=this.auth.getRole();
+    if(this.userRole==UserRole.RP){
+      this.pole=this.auth.getPole();
+    }
+    else if(this.userRole==UserRole.TEAMLEADER){
+      this.equipe=this.auth.getEquipe();
     }
     this.getCandidats();
     this.getCompetences();
@@ -104,7 +117,8 @@ export class CandidatsComponent implements OnInit {
   changeRecommande(e,idPersonne: number){
     if (e.target.checked) {
       this.marked=true;}
-    else{this.marked=false;}
+    else{
+      this.marked=false;}
     console.log("recommande:",this.marked)
     this.apollo.mutate({
       mutation: updateRecommande,

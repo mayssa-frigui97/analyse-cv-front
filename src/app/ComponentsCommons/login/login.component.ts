@@ -4,8 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
+import { UserRole } from 'src/app/Enums/UserRole';
+import { Pole } from 'src/app/Models/pole';
 import { AuthService } from 'src/app/Services/auth.service';
-import { login } from 'src/app/shared/Collaborateur/query';
+import { findPoles, login } from 'src/app/shared/Collaborateur/query';
 import { Collaborateur } from './../../Models/collaborateur';
 import { AlertService } from './../../Services/alert.service';
 
@@ -26,6 +29,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
+  poles: Pole[];
 
   constructor(private apollo: Apollo, private formBuilder: FormBuilder, private http: HttpClient,
               private router: Router,
@@ -41,6 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.poles=this.getPoles();
     this.loginForm = this.formBuilder.group({
       nomUtilisateur: ['', Validators.required],
       motDePasse: ['', Validators.required]
@@ -63,20 +68,24 @@ export class LoginComponent implements OnInit {
     this.nomUtilisateur = this.f.nomUtilisateur.value;
     this.motDePasse = this.f.motDePasse.value;
     console.log(this.nomUtilisateur);
-    this.apollo.mutate({
-      mutation: login,
-      // variables: {nomUtilisateur: this.loginForm.value.nomUtilisateur, motDePasse: this.loginForm.value.motDePasse}
+    this.apollo.query<any>({
+      query: login,
       variables: {nomUtilisateur: this.f.nomUtilisateur.value, motDePasse: this.f.motDePasse.value}
-
     })
-    .subscribe(({data}: any) => {
+    .subscribe(async ({data}: any) => {
       console.log(data);
         this.token = data.login.access_token;
         this.user = data.login.user;
-        // this.user.role = data.login.user.role;
         this.auth.sendToken(data.login.access_token);
-        // this.auth.sendRole(data.login.user.role);
+        this.auth.sendRole(data.login.user.role);
         this.auth.sendUser(this.user);
+        if(this.user.role== UserRole.RP){
+          let idPole =this.getPoleRp(this.user.id)
+          this.auth.sendPole(idPole);
+        }
+        if(this.user.role== UserRole.TEAMLEADER){
+          this.auth.sendEquipe(this.user.equipe.id);
+        }
         this.isLoggedIn=true;
         this.isLoginFailed = false;
         console.log("userAuth:",this.user,"token:",this.token);
@@ -90,6 +99,32 @@ export class LoginComponent implements OnInit {
       this.isLoginFailed = true;
     }
     );
+  }
+
+  getPoleRp(idRp: number):number{
+    let poleId :number;
+    this.poles=this.getPoles();
+    this.poles.forEach(pole => {
+      if(pole.rp.id === idRp)
+      {
+        console.log("pole:",pole.id,"de rp:",idRp)
+         poleId= pole.id;
+      }
+    });
+    return poleId;
+  }
+
+  getPoles() {
+    this.apollo
+      .watchQuery<any>({
+        query: findPoles,
+      })
+      .valueChanges.pipe(map((result) => result.data.findPoles))
+      .subscribe((data) => {
+        this.poles = data;
+      });
+    console.log('Poles :', this.poles);
+    return this.poles;
   }
 
   logout() {

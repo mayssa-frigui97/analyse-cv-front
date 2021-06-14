@@ -10,7 +10,6 @@ import { HistoriqueComponent } from './Components/Collaborateur/historique/histo
 import { CollaborateursComponent } from './Components/Rh/collaborateurs/collaborateurs.component';
 import { LoginComponent } from './ComponentsCommons/login/login.component';
 import { UtilisateursComponent } from './Components/Admin/utilisateurs/utilisateurs.component';
-import { CollaborateursPoleComponent } from './Components/Rp/collaborateurs-pole/collaborateurs-pole.component';
 import { AccueilComponent } from './Components/Rh/accueil/accueil.component';
 import { SharedModule } from './shared/shared.module';
 import { CvColComponent } from './Components/Rh/cv-col/cv-col.component';
@@ -44,7 +43,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AlertComponent } from './ComponentsCommons/alert/alert.component';
 import { CvCandComponent } from './Components/Rh/cv-cand/cv-cand.component';
-import { MultiSelectListComponent } from './ComponentsCommons/multi-select-list/multi-select-list.component';
 import { StarRatingComponent } from './ComponentsCommons/star-rating/star-rating.component';
 registerLocaleData(localeFr);
 
@@ -60,11 +58,9 @@ registerLocaleData(localeFr);
     CollaborateursComponent,
     LoginComponent,
     UtilisateursComponent,
-    CollaborateursPoleComponent,
     AccueilComponent,
     CvColComponent,
     StarRatingComponent,
-    MultiSelectListComponent,
     CollaborateursPipe,
     AlertComponent,
     CvCandComponent

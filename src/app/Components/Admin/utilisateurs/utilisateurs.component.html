@@ -16,13 +16,6 @@
                   </ng-select>
                 </div>
               </div>
-              <!-- <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-                <div class="col-md-11"></div>
-                <div class="col-md-1">
-                  <button (click)="getFilterUsers(selectedRoles,selectedPermissions)" class="btn btn-danger mb"
-                    style="float: right; margin-right: 60px;">Filtrer</button>
-                </div>
-              </div> -->
             </div>
             <div class="col-md-4">
               <form class="form-inline md-form mr-auto mb-4" style="float: right;">
@@ -55,7 +48,7 @@
                   <td class="hidden-phone">{{user.poste}}</td>
                   <td class="hidden-phone">{{user.dateEmb| date: 'dd/MM/yyyy'}}</td>
                   <td class="centered">
-                    <a>
+                    <!-- <a>
                       <button class="btn btn-primary btn-xs" title="voir détails utilisateur"
                         [routerLink]="['cv', user.id]"
                         style="padding-left: 4px!important; padding-right: 4px!important;">
@@ -64,6 +57,12 @@
                     <a data-toggle="modal" data-target="#supp">
                       <button class="btn btn-danger btn-xs" title="supprimer utilisateur" (click)="myUser = user">
                         <i class="fa fa-trash-o "></i></button>
+                    </a> -->
+                    <a [routerLink]="['cv', user.id]">
+                      <img src="../../../../assets/img/cv.png" width="24px" title="voir CV utilisateur">
+                    </a>
+                    <a data-toggle="modal" data-target="#supp" *ngIf="!equipe && !pole" (click)="myUser = user" title="supprimer utilisateur">
+                      <img src="../../../../assets/img/delete.png" width="20px">
                     </a>
                   </td>
                 </tr>

@@ -71,6 +71,9 @@ div.dataTables_length{
   border-radius: 4px;
 }
 
+a{
+  cursor: pointer;
+}
 
 
 

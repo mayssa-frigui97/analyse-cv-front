@@ -6,36 +6,36 @@
                         width="80"></a></p>
             <h5 class="centered">{{user.prenom | titlecase}} {{user.nom | uppercase}}</h5>
             <li class="mt">
-                <a routerLink="/accueil">
+                <a routerLink="/accueil" *ngIf="role">
                     <i class="fa fa-bar-chart"></i>
                     <span>Accueil</span>
                 </a>
             </li>
             <li class="mt">
-                <a routerLink="/ficheInfos">
+                <a routerLink="/ficheInfos" *ngIf="role">
                     <i class="fa fa-address-card"></i>
                     <span>Fiche d'informations</span>
                 </a>
             </li>
-            <li class="mt">
+            <li class="mt" *ngIf="role">
                 <a routerLink="/historique">
                     <i class="fa fa-history"></i>
                     <span>Historique</span>
                 </a>
             </li>
-            <li class="mt">
+            <li class="mt" *ngIf="role == 'RH'|| role == 'RP'|| role == 'TEAMLEADER'">
                 <a routerLink="/candidats">
                     <i class="fa fa-users"></i>
                     <span>Candidats</span>
                 </a>
             </li>
-            <li class="mt">
+            <li class="mt" *ngIf="role == 'RH'|| role == 'RP'|| role == 'TEAMLEADER'">
                 <a routerLink="/collaborateurs">
                     <i class="fa fa-users"></i>
                     <span>Collaborateurs</span>
                 </a>
             </li>
-            <li class="mt">
+            <li class="mt" *ngIf="role == 'RH'">
                 <a routerLink="/utilisateurs">
                     <i class="fa fa-users"></i>
                     <span>Utilisateurs</span>

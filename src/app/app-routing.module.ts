@@ -10,20 +10,21 @@ import { CollaborateursComponent } from './Components/Rh/collaborateurs/collabor
 import { LoginComponent } from './ComponentsCommons/login/login.component';
 import { AuthGuard } from './Services/auth-guard.service';
 import { CvCandComponent } from './Components/Rh/cv-cand/cv-cand.component';
+import { UserRole } from './Enums/UserRole';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: '', component: AccueilComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'accueil', component:AccueilComponent},
-  { path: 'ficheInfos', component:FicheInfosComponent,canActivate: [AuthGuard]},
-  { path: 'historique', component:HistoriqueComponent},
-  { path: 'candidats', component:CandidatsComponent},
-  { path: 'candidats/cv/:id', component: CvCandComponent},
-  { path: 'collaborateurs', component:CollaborateursComponent},
-  { path: 'collaborateurs/cv/:id', component: CvColComponent},
-  { path: 'utilisateurs', component:UtilisateursComponent},
-  { path: 'utilisateurs/cv/:id', component: CvColComponent},
+  { path: 'accueil', component:AccueilComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'ficheInfos', component:FicheInfosComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]} },
+  { path: 'historique', component:HistoriqueComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'candidats', component:CandidatsComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'candidats/cv/:id', component: CvCandComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'collaborateurs', component:CollaborateursComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'collaborateurs/cv/:id', component: CvColComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'utilisateurs', component:UtilisateursComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH]}},
+  { path: 'utilisateurs/cv/:id', component: CvColComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH]}},
 
   // { path: '**', redirectTo: '' }
 ];

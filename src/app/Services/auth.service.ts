@@ -10,6 +10,8 @@ export class AuthService {
 
   user: Collaborateur;
   role: string;
+  pole: number;
+  equipe: number;
 
   constructor(private myRoute: Router) { }
 
@@ -18,12 +20,36 @@ export class AuthService {
   }
 
   sendRole(role: UserRole) {
+    console.log("send role",role);
     localStorage.setItem('LoggedInUserROLE', role);
   }
 
-  getrole() {
+  getRole() {
     this.role = localStorage.getItem('LoggedInUserROLE');
-    return atob(this.role);
+    console.log("get role",this.role);
+    return this.role;
+  }
+
+  sendPole(pole: number) {
+    console.log("send pole",pole);
+    localStorage.setItem('LoggedInPOLE', pole.toString());
+  }
+
+  getPole() {
+    this.pole = parseInt(localStorage.getItem('LoggedInPOLE'));
+    console.log("get pole",this.pole);
+    return this.pole;
+  }
+
+  sendEquipe(equipe: number) {
+    console.log("send equipe",equipe);
+    localStorage.setItem('LoggedInEQUIPE', equipe.toString());
+  }
+
+  getEquipe() {
+    this.equipe = parseInt(localStorage.getItem('LoggedInEQUIPE'));
+    console.log("get role",this.equipe);
+    return this.equipe;
   }
 
   sendUser(user: Collaborateur) {

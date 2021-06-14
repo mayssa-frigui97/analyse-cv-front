@@ -3,6 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Collaborateur } from 'src/app/Models/collaborateur';
 import { findCol, getUserAuth } from 'src/app/shared/Collaborateur/query';
 import { AuthService } from 'src/app/Services/auth.service';
+import { UserRole } from 'src/app/Enums/UserRole';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,38 +13,18 @@ import { AuthService } from 'src/app/Services/auth.service';
 export class SidebarComponent implements OnInit {
 
   user: Collaborateur;
-  // idCol: number =2;
+  role: string;
+  roles= [UserRole.RP,UserRole.RH,UserRole.TEAMLEADER];
 
   constructor(
-    // private apollo : Apollo,
     private auth: AuthService) { }
 
   ngOnInit(): void {
     this.user=this.auth.getUser();
-    console.log("user sidebar:",this.user)
-    // this.getCol(this.idCol);
-    // this.getCol();
+    console.log("user sidebar:",this.user);
+    this.role=this.auth.getRole();
+    console.log("role sidebar:",this.role);
+    console.log("roles sidebar:",this.roles);
   }
-
-  // getCol(idCol: number) {
-  //   this.apollo.query<any>({
-  //     query: findCol,
-  //     variables: {idCol}
-  //   }).subscribe(({data}) => {
-  //     this.user = data.findCol;
-  //     console.log('user :', this.user);
-  //   });
-  // }
-
-  // getCol() {
-  //   this.apollo.query<any>({
-  //     query: getUserAuth
-  //   }).subscribe(({data}) => {
-  //     this.user = data.getUserAuth;
-  //     console.log('user :', this.user);
-  //   });
-  // }
-
-
 
 }

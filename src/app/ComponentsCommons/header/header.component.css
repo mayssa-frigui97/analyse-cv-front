@@ -16,3 +16,7 @@ display: block;
 line-height: 1.428571429;
 color: #999;
 }
+
+img:active{
+  border: 2px solid #666666;
+}

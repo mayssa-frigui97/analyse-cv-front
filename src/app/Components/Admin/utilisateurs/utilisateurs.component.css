@@ -72,3 +72,7 @@ div.dataTables_length{
 .form-control{
   width: auto;
 }
+
+a{
+  cursor: pointer;
+}

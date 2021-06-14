@@ -9,16 +9,49 @@ import { HttpHeaders } from '@angular/common/http';
 const token = localStorage.getItem('access_token');
 const uri = 'http://localhost:3000/graphql'; // <-- add the URL of the GraphQL server here
 
-export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
-  const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  const client ={
-    link: httpLink.create({uri}),
+// export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
+//   const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+//   const client ={
+//     link: httpLink.create({uri}),
+//     cache: new InMemoryCache(),
+//     headers: {Authorization: `Bearer ${token}`}
+//   };
+//   // console.log("client:",client)
+//   // console.log("headers:",header)
+//   return client;
+// }
+const auth = setContext((_, { headers }) => {
+    if (!token) {
+      return {};
+    } else {
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+    }
+});
+
+export function createApollo(httpLink: HttpLink) {
+  const defaultsOptions = {
+    watchQuery: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'network-only',
+      errorPolicy: 'all',
+    }
+  } ;
+  const http = httpLink.create({uri});
+  console.log("http:",http)
+  console.log("auth:",auth)
+  console.log("Tokenauth:",token)
+  return {
+    link: auth.concat((http as unknown) as ApolloLink),
     cache: new InMemoryCache(),
-    headers: {Authorization: `Bearer ${token}`}
+    defaultOptions: defaultsOptions,
   };
-  // console.log("client:",client)
-  // console.log("headers:",header)
-  return client;
 }
 
 // const middleware = new ApolloLink((operation, forward) => {
