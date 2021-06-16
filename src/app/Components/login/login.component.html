@@ -1,0 +1,50 @@
+<div class="container-fluid" style="background-image: url('../../../assets/img/back3.jpg');background-size: cover !important;">
+    <div class="row">
+        <div class="col-lg-3 col-md-2"></div>
+        <div class="col-lg-6 col-md-8 login-box">
+            <div class="col-lg-12 login-key" style="margin-left: 10px;">
+                <i class="fa fa-key" style="display: inline-grid!important;"></i>
+                <img src="../../../assets/img/proxym-logo.png" alt="Proxym" width="100px" height="25px" style="float: right; margin-top: 10px;">
+            </div>
+            <div class="col-lg-12 login-title">
+                 <strong style="color: #81ecec;">Plateforme d'analyse des CVs</strong>
+            </div>
+            <div class="col-lg-12 login-form">
+                <div class="col-lg-12 login-form">
+                    <form [formGroup]="loginForm"  class="form" (ngSubmit)="login()">
+                        <div class="form-group">
+                            <label class="form-control-label">Nom utilisateur</label>
+                            <input type="text" class="form-control" name="nomUtilisateur" id="nomUtilisateur" minlength="4"
+                            formControlName="nomUtilisateur" ngModel  required [ngClass]="{ 'is-invalid': submitted && f.nomUtilisateur.errors }">
+                            <div *ngIf="submitted && f.nomUtilisateur.errors" class="invalid-feedback alert alert-danger">
+                              <div *ngIf="f.nomUtilisateur.errors.required">Le nom utilisateur est manquant!</div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Mot de passe</label>
+                            <input type="password" class="form-control" name="motDePasse" id="motDePasse" minlength="4"
+                            formControlName="motDePasse" required [ngClass]="{ 'is-invalid': submitted && f.motDePasse.errors }">
+                            <!-- <div *ngIf="motDePasse">Le mot de passe ou le nom utilisateur est manquant!</div> -->
+                            <div *ngIf="submitted && f.motDePasse.errors" class="invalid-feedback alert alert-danger">
+                              <div *ngIf="f.motDePasse.errors.required">Le mot de passe est manquant!</div>
+                              <div *ngIf="f.motDePasse.errors.minlength">Le mot de passe doit avoir au minimum 4 caractéres!</div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12 loginbttm">
+                            <div class="col-lg-6 login-btm login-button centered">
+                              <button type="submit" class="btn btn-outline-primary centered">Se connecter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-2"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<app-base-js></app-base-js>
+<!-- /Js-loader -->

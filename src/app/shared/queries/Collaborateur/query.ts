@@ -403,6 +403,116 @@ const searchCol = gql`
     }
   }
 `;
+const searchEquipe = gql`
+  query searchEquipe($equipe: String!, $mot: String!) {
+    searchEquipe(mot: $mot, equipe: $equipe) {
+      id
+      nom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      permission
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+        }
+      }
+      cv {
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        langues
+        experiences
+        formations
+        projets
+        interets
+        competences {
+          nom
+        }
+      }
+    }
+  }
+`;
+const searchPole = gql`
+  query searchPole($pole: String!, $mot: String!) {
+    searchPole(mot: $mot, pole: $pole) {
+      id
+      nom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      permission
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+        }
+      }
+      cv {
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        langues
+        experiences
+        formations
+        projets
+        interets
+        competences {
+          nom
+        }
+      }
+    }
+  }
+`;
+
+const findPole = gql`
+query findPole($idPole: Int!)
+{
+  findPole(idPole: $idPole)
+  {
+    nom
+  }
+}`;
+
+const findEquipe = gql`
+query findEquipe($idEquipe: Int!)
+{
+  findEquipe(idEquipe: $idEquipe)
+  {
+    nom
+  }
+}`;
 
 export {
   findCols,
@@ -420,5 +530,9 @@ export {
   findRoles,
   findPermissions,
   createCol,
-  searchCol
+  searchCol,
+  searchPole,
+  searchEquipe,
+  findPole,
+  findEquipe
 }

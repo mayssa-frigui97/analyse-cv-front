@@ -1,22 +1,23 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import {map} from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Cv } from 'src/app/Models/cv';
 import { ToastrService } from 'ngx-toastr';
-import { findFilterCands, findPersonnes, removeCandidat, removePersonne, search, updateRecommande } from 'src/app/shared/Candidat/query';
-import { Personne } from './../../../Models/personne';
+import { findFilterCands, findPersonnes, removeCandidat, removePersonne, search, updateRecommande } from 'src/app/shared/queries/Candidat/query';
+import { Personne } from '../../../Models/personne';
 import { Competence } from 'src/app/Models/competence';
-import { findAllCompetences, uploadFile } from 'src/app/shared/Cv/query';
-import { createCol, findEquipes, findPermissions, findPoles, findRoles } from 'src/app/shared/Collaborateur/query';
-import { Equipe } from './../../../Models/equipe';
+import { findAllCompetences, uploadFile } from 'src/app/shared/queries/Cv/query';
+import { createCol, findEquipes, findPermissions, findPoles, findRoles } from 'src/app/shared/queries/Collaborateur/query';
+import { Equipe } from '../../../Models/equipe';
 import { Pole } from 'src/app/Models/pole';
-import { Collaborateur } from './../../../Models/collaborateur';
+import { Collaborateur } from '../../../Models/collaborateur';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/Services/auth.service';
 import { UserRole } from 'src/app/Enums/UserRole';
+import { Subscription } from 'rxjs';
 
 
 export class Upload {
@@ -30,7 +31,7 @@ export class Upload {
   // createReadStream :() => Stream;
 
 }
-const uri = 'http://localhost:3000/graphql';
+const uri = 'http://localhost:2000/graphql';
 
 // export const schema = makeExecutableSchema({ typeDefs, resolvers })
 
@@ -46,7 +47,7 @@ export class CandidatsComponent implements OnInit {
   public userRole: string;
   public equipe : number;
   public pole: number;
-  candidats: Personne[];
+  public candidats: Personne[];
   myUser: Personne;
   marked : boolean;
   public test: boolean;
@@ -54,6 +55,7 @@ export class CandidatsComponent implements OnInit {
   equipes :Equipe[];
   poles: Pole[];
   public competences: Competence[]=[];
+  public subscription : Subscription;
 
   selectedComp: string[];
   selectedPole: string;
@@ -85,12 +87,14 @@ export class CandidatsComponent implements OnInit {
     else if(this.userRole==UserRole.TEAMLEADER){
       this.equipe=this.auth.getEquipe();
     }
-    this.getCandidats();
     this.getCompetences();
     this.getEquipes();
     this.getPoles();
     this.getRoles();
     this.getPermissions();
+    if(!this.candidats){
+      console.log("*".repeat(10));
+      this.getAllCandidats();}
   }
 
   async resolve(parent, { image }) {
@@ -100,8 +104,10 @@ export class CandidatsComponent implements OnInit {
     return true;
   }
 
-  getCandidats() {
-    this.apollo.watchQuery<any>({
+  getAllCandidats() {
+    console.log("test".repeat(3))
+    if(!this.candidats){
+    this.subscription= this.apollo.watchQuery<any>({
       query: findPersonnes,
     })
       .valueChanges
@@ -109,10 +115,42 @@ export class CandidatsComponent implements OnInit {
         map(result => result.data.findPersonnes)
       ).subscribe(data => {
       this.candidats = data;
-      console.log("candidats :",this.candidats);
-    });
-
+      console.log("allcandidats :",this.candidats);
+      this.subscription.unsubscribe();
+    });}
+    else{console.log("-".repeat(10))}
   }
+
+  getFilterCands(selectedComp?: string[]) {
+    let variables;
+    if(selectedComp.length==0){
+      variables={};
+    }
+    else{
+      variables={selectedComp};
+    }
+    this.subscription=this.apollo
+    .query<any>({
+        query: findFilterCands,
+        variables: variables,
+      })
+      .subscribe(({data} ) => {
+        // this.candidats = [];
+        this.candidats=data.findFilterCands;
+        if(data == 0){
+          this.test = true;
+          // console.log("test",this.test,this.candidats.length)
+        }
+        else{
+          this.test = false;
+          // console.log("test",this.test,this.candidats.length)
+        }
+        console.log('candidats apres filter1:',this.candidats)
+        this.subscription.unsubscribe();
+      });
+      console.log("+".repeat(20))
+      console.log('candidats apres filter2:',this.candidats)
+    }
 
   changeRecommande(e,idPersonne: number){
     if (e.target.checked) {
@@ -120,7 +158,7 @@ export class CandidatsComponent implements OnInit {
     else{
       this.marked=false;}
     console.log("recommande:",this.marked)
-    this.apollo.mutate({
+    this.subscription=this.apollo.mutate({
       mutation: updateRecommande,
       variables: {idPersonne,value: this.marked}
     })
@@ -130,6 +168,7 @@ export class CandidatsComponent implements OnInit {
         console.log("candidats:",this.candidats);
         // this.getCandidats();
         console.log("candidats nv:",this.candidats);
+        this.subscription.unsubscribe();
     });
   }
 
@@ -137,21 +176,42 @@ export class CandidatsComponent implements OnInit {
   deleteCand(idPersonne: number) {
     console.log("myUser:",this.myUser);
     this.candidats = this.candidats.filter(candidat => candidat.id !== idPersonne);
-    // const deletedUser = this.candidats.filter(candidat => candidat.id === idCand)[0];
-    // if (confirm('Are you sure to delete this user?')) {
-    this.apollo.mutate({
+    this.subscription=this.apollo.mutate({
       mutation: removePersonne,
       variables: {idPersonne}
     }).subscribe(res => {
       this.toastr.success('Succès', 'Candidat supprimé');
       this.router.navigate(['candidats']);
-      // this.rerender({newData: deletedUser, deleteOper: true});
-
     }, error => {
       this.toastr.error("suppression impossible!!", 'Erreur');
       console.log("suppression impossible!!")
+      this.subscription.unsubscribe();
     });
-    // }
+  }
+
+  search(searchWord: string) {
+    console.log("searchWord:",searchWord);
+    if(searchWord){
+      this.subscription=this.apollo
+      .query<any>({
+        query: search,
+        variables: {mot: searchWord},
+      })
+      .subscribe(({ data }) => {
+        // this.candidats = [];
+        this.candidats = data.search;
+        if(data.search.length == 0){
+          this.test = true;
+          console.log("test",this.test,this.candidats.length)
+        }
+        else{
+          this.test = false;
+          console.log("test",this.test,this.candidats.length)
+        }
+        console.log('candidats apres recherche:',this.candidats)
+        this.subscription.unsubscribe();
+      });
+    }
   }
 
   getCompetences(): Competence[] {
@@ -165,60 +225,6 @@ export class CandidatsComponent implements OnInit {
         console.log('competences :', this.competences);
       });
     return this.competences;
-  }
-
-  async getFilterCands(selectedComp?: string[]) {
-    let variables;
-    if(selectedComp.length==0){
-      variables={};
-    }
-    else{
-      variables={selectedComp};
-    }
-    await this.apollo
-      .query<any>({
-        query: findFilterCands,
-        variables: variables,
-      })
-      .subscribe(({ data }) => {
-        this.candidats = [];
-        this.candidats=data.findFilterCands;
-        // this.dtOptions={...this.dtOptions}
-        if(data.findFilterCands.length == 0){
-          this.test = true;
-          console.log("test",this.test,this.candidats.length)
-        }
-        else{
-          this.test = false;
-          console.log("test",this.test,this.candidats.length)
-        }
-        // console.log('candsFilter:', data.findFilterCands);
-        console.log('candidats apres filter:',this.candidats)
-      });
-  }
-
-  search(searchWord: string) {
-    console.log("searchWord:",searchWord);
-    if(searchWord){
-      this.apollo
-      .query<any>({
-        query: search,
-        variables: {mot: searchWord},
-      })
-      .subscribe(({ data }) => {
-        this.candidats = [];
-        this.candidats = data.search;
-        if(data.search.length == 0){
-          this.test = true;
-          console.log("test",this.test,this.candidats.length)
-        }
-        else{
-          this.test = false;
-          console.log("test",this.test,this.candidats.length)
-        }
-        console.log('candidats apres recherche:',this.candidats)
-      });
-    }
   }
 
   getEquipes() {
@@ -282,7 +288,6 @@ export class CandidatsComponent implements OnInit {
       salaire: formulaire.salaire,
       dateEmb: formulaire.dateEmb,
       nomUtilisateur: formulaire.nomUtilisateur,
-      motDePasse: formulaire.motDePasse,
       role: formulaire.role,
       permission: formulaire.permission,
       equipeId: parseInt(formulaire.equipe),

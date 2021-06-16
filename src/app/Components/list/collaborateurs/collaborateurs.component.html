@@ -92,14 +92,6 @@
                   <td class="centered hidden-phone" *ngIf="!col.evaluation"></td>
 
                   <td class="centered" style="padding-right: 0;">
-                    <!-- <button class="btn btn-primary btn-xs" title="voir détails collaborateur"
-                      [routerLink]="['cv', col.id]" style="padding-left: 4px!important; padding-right: 4px!important;">
-                      <i class="fa fa-eye"></i></button>
-                    <a data-toggle="modal" data-target="#supp" *ngIf="!equipe && !pole">
-                      <button class="btn btn-danger btn-xs" title="supprimer collaborateur" (click)="myUser = col">
-                        <i class="fa fa-trash-o "></i>
-                      </button>
-                    </a> -->
                     <a [routerLink]="['cv', col.id]">
                       <img src="../../../../assets/img/cv.png" width="24px" title="voir CV collaborateur">
                     </a>

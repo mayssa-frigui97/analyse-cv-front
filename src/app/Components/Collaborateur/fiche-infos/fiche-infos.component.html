@@ -23,8 +23,6 @@
             <!-- /col-md-4 -->
             <div class="col-md-4 profile-text">
               <h3>{{user.nom| titlecase}}</h3>
-              <!-- <h6>Main Administrator</h6> -->
-              <!-- <p *ngIf="user.cv.description">{{user.cv.description}}</p> -->
               <h5>{{user.poste}}</h5>
               <br>
             </div>
@@ -42,17 +40,6 @@
         <!-- /col-lg-12 -->
         <div class="col-lg-12 mt">
           <div class="row content-panel">
-            <!-- <div class="panel-heading">
-                    <ul class="nav nav-tabs nav-justified">
-                        <li class="active">
-                            <a data-toggle="tab" href="#details">Détails du CV</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="#modifier">Modifier CV</a>
-                        </li>
-                    </ul>
-                </div> -->
-            <!-- /panel-heading -->
             <div class="panel-body">
               <div class="tab-content">
                 <div id="details" class="tab-pane active">
@@ -92,6 +79,17 @@
                         </div>
                       </div>
                       <!-- /detailed -->
+                      <div class="row">
+                        <div class="detailed mt" *ngIf="user.cv.activiteAssociatives">
+                          <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
+                          <div class="container-fluid" >
+                            <div class="row">
+                              <p>{{user.cv.activiteAssociatives}}</p>
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
                     </div>
                     <!-- /col-md-6 -->
                     <div class="col-md-6">
@@ -131,17 +129,6 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="detailed mt" *ngIf="user.cv.activiteAssociatives">
-                          <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
-                          <div class="container-fluid" >
-                            <div class="row">
-                              <p>{{user.cv.activiteAssociatives}}</p>
-                            </div>
-                          </div>
-                          <!-- /recent-activity -->
-                        </div>
-                      </div>
                       <div class="row" *ngIf="user.cv.interets">
                         <div class="detailed mt" >
                           <h4><i class="fa fa-heart"></i> Centre d'intérêt</h4>
@@ -160,353 +147,6 @@
                   <!-- /OVERVIEW -->
                 </div>
                 <!-- /tab-pane -->
-                <!-- <div id="modifier" class="tab-pane">
-                            <div class="row mt ">
-                                <div class="col-sm-3 ">
-                                    <div class="panel-heading" style="padding-top: 0px!important;">
-                                        <section class="panel">
-                                            <ul class="nav nav-pills nav-stacked mail-nav"
-                                                style="margin-top: 0px!important;">
-                                                <li class="active"><a data-toggle="tab" href="#info"> <i class="fa fa-address-book"></i>Informations personnelles</a></li>
-                                                <li><a data-toggle="tab" href="#formation"> <i class="fa fa-graduation-cap"></i>Formations</a></li>
-                                                <li><a data-toggle="tab" href="#experience"> <i class="fa fa-briefcase"></i>Expériences professionnelles</a></li>
-                                                <li><a data-toggle="tab" href="#competence"> <i class="fa fa-wrench"></i>Compétences</a></li>
-                                                <li><a data-toggle="tab" href="#certif"> <i class="fa fa-trophy"></i>Certifications</a></li>
-                                                <li><a data-toggle="tab" href="#langue"> <i class="fa fa-language"></i>Langues</a></li>
-                                                <li><a data-toggle="tab" href="#activite"> <i class="fa fa-handshake-o"></i>Activités associatives</a></li>
-                                            </ul>
-                                        </section>
-                                    </div>
-                                </div>
-                                <div class="col-sm-9 ">
-                                    <section class="panel">
-                                        <div class="panel-body minimal">
-                                            <div class="tab-content">
-                                                <div id="info" class="tab-pane active">
-                                                    <form #formulaire="ngForm" role="form" class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label class="col-lg-3 control-label">Photo de profil</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="file" id="exampleInputFile" class="file-pos" [(ngModel)]="user.avatar" name="avatar">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                          <label class="col-lg-3 control-label">Date naissance</label>
-                                                          <div class="col-lg-8">
-                                                            <input type="date" placeholder="Dates d'obtention" id="" class="form-control" [(ngModel)]="user.dateNaiss" name="dateNaiss">
-                                                          </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-3 control-label">E-mail</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="email" placeholder="exemple@gmail.com" id="" class="form-control" [(ngModel)]="user.emailPro" name="emailPro">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-3 control-label">Adresse</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder="" id=""
-                                                                    class="form-control" [(ngModel)]="user.adresse" name="adresse">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-3 control-label">N° Téléphone</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="number" placeholder="" id="" class="form-control" [(ngModel)]="user.telPro" name="telPro">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                          <div class="col-lg-offset-3 col-lg-10">
-                                                            <button class="btn btn-theme04 mr" type="button" (click)="retour()">Annuler</button>
-                                                            <button [disabled]="formulaire.invalid" type="submit" class="btn btn-theme" (click)="enregistrerInfos(formulaire.value)">Enregistrer</button>
-                                                          </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div id="experience" class="tab-pane">
-                                                  <div class="col-lg-12 col-lg-offset-2 detailed mt" style="margin-left: 40px!important;">
-                                                    <div class="row">
-                                                      <div class="col-lg-6 mb" *ngFor="let exp of user.cv.experiences">
-                                                        <form #formExp="ngForm" role="form" class="form-horizontal">
-                                                          <div class="row">
-                                                            <div class="col-lg-10"></div>
-                                                            <div class="col-lg-1">
-                                                              <a data-toggle="modal" href="#ModalSuppExp">
-                                                                <button type="button" class="btn btn-theme04 fermer mr mb" title="supprimer">
-                                                                  <i class="fa fa-times"></i>
-                                                                </button>
-                                                              </a>
-                                                            </div>
-                                                          </div>
-                                                          <div class="row">
-                                                            <div class="form-group">
-                                                              <label class="col-lg-3 control-label">Poste</label>
-                                                              <div class="col-lg-8">
-                                                                <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="exp.poste" name="poste">
-                                                              </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                              <label class="col-lg-3 control-label">Date de début</label>
-                                                              <div class="col-lg-8">
-                                                                <input type="date" placeholder="Dates de début" id="" class="form-control" [(ngModel)]="exp.dateDebut" name="dateDebut">
-                                                              </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                              <label class="col-lg-3 control-label">Date de fin</label>
-                                                              <div class="col-lg-8">
-                                                                <input type="date" placeholder="Dates de fin" id="" class="form-control" [(ngModel)]="exp.dateFin" name="dateFin">
-                                                              </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                              <label class="col-lg-3 control-label">Description</label>
-                                                              <div class="col-lg-8">
-                                                                <textarea rows="3" cols="20" class="form-control" id="" [(ngModel)]="exp.description" name="description"></textarea>
-                                                              </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                              <label class="col-lg-3 control-label">Mots clés</label>
-                                                              <div class="col-lg-8">
-                                                                <textarea rows="2" cols="20" class="form-control" id="" [(ngModel)]="exp.motCles" name="motCles"></textarea>
-                                                              </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                              <div class="col-lg-offset-2 col-lg-10">
-                                                                <button class="btn btn-theme04 mr" type="button" (click)="retour()">Annuler</button>
-                                                                <button class="btn btn-theme" type="submit" [disabled]="formExp.invalid" (click)="enregistrerExperience(exp.id,formExp.value)">Enregistrer</button>
-                                                              </div>
-                                                            </div>
-                                                          </div>
-                                                        </form>
-                                                      </div>
-                                                    </div>
-                                                    <div class="col text-center">
-                                                      <a data-toggle="modal" href="#ModalExp">
-                                                        <button type="button" class="btn btn-theme02 mr mb centered" title="ajouter expérience">
-                                                          <i class="fa fa-plus fa-x"></i> Ajouter
-                                                        </button>
-                                                      </a>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div id="formation" class="tab-pane">
-                                                    <div class="col-lg-12 col-lg-offset-2 detailed mt"
-                                                        style="margin-left: 40px!important;">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 mb" *ngFor="let formation of user.cv.formations">
-                                                                <form #formForm="ngForm" role="form" class="form-horizontal">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="col-lg-3 control-label">Niveau</label>
-                                                                        <div class="col-lg-9">
-                                                                            <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="formation.niveau" name="niveau">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="col-lg-3 control-label">Université</label>
-                                                                        <div class="col-lg-9">
-                                                                            <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="formation.universite" name="universite">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="col-lg-3 control-label">Spécialité</label>
-                                                                        <div class="col-lg-9">
-                                                                            <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="formation.specialite" name="specialite">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                      <label class="col-lg-3 control-label">Date de début</label>
-                                                                      <div class="col-lg-9">
-                                                                        <input type="date" placeholder="Dates de début" id="" class="form-control" [(ngModel)]="formation.dateDebut" name="dateDebut">
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                      <label class="col-lg-3 control-label">Date de fin</label>
-                                                                      <div class="col-lg-9">
-                                                                        <input type="date" placeholder="Dates de fin" id="" class="form-control" [(ngModel)]="formation.dateFin" name="dateFin">
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                      <label
-                                                                      class="col-lg-3 control-label">Mention</label>
-                                                                      <div class="col-lg-9">
-                                                                        <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="formation.mention" name="mention">
-                                                                      </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <div class="col-lg-offset-2 col-lg-10">
-                                                                            <button class="btn btn-theme04" type="button" (click)="retour()">Annuler</button>
-                                                                            <button class="btn btn-theme" type="submit" [disabled]="formForm.invalid" (click)="enregistrerFormation(formation.id,formForm.value)">Enregistrer</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="certif" class="tab-pane">
-                                                    <div class="col-lg-12 col-lg-offset-2 detailed mt" style="margin-left: 40px!important;">
-                                                        <div class="row" >
-                                                            <div class="col-lg-6 mb" *ngFor="let certif of user.cv.certificats">
-                                                                <form #formCertif="ngForm" role="form" class="form-horizontal">
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Certification</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="certif.nom" name="nom">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Date d'obtention</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="date" placeholder="Dates d'obtention" id="" class="form-control" [(ngModel)]="certif.dateObtention" name="dateObtention">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Date d'expiration</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="date" placeholder="Dates d'expiration" id="" class="form-control" [(ngModel)]="certif.dateExpiration" name="dateExpiration">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Niveau</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="certif.niveau" name="niveau">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <div class="col-lg-offset-3 col-lg-10">
-                                                                      <button class="btn btn-theme04 mr" type="button" (click)="retour()">Annuler</button>
-                                                                      <button [disabled]="formCertif.invalid" (click)="enregistrerCertif(certif.id,formCertif.value)" type="submit" class="btn btn-theme" >Enregistrer</button>
-                                                                    </div>
-                                                                  </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="competence" class="tab-pane">
-                                                  <div class="col-lg-12 col-lg-offset-2 detailed mt" style="margin-left: 40px!important;">
-                                                    <div class="row">
-                                                      <div class="col-lg-6 mb" *ngFor="let comp of user.cv.competences">
-                                                        <form #formComp="ngForm" role="form" class="form-horizontal">
-                                                          <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Compétence</label>
-                                                            <div class="col-lg-8">
-                                                              <input type="text" placeholder="" id="" class="form-control" [(ngModel)]="comp.nom" name="nom">
-                                                            </div>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Version</label>
-                                                            <div class="col-lg-8">
-                                                              <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="comp.version" name="version">
-                                                            </div>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Niveau</label>
-                                                            <div class="col-lg-8">
-                                                              <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="comp.niveau" name="niveau">
-                                                            </div>
-                                                          </div>
-                                                          <div class="form-group">
-                                                            <div class="col-lg-offset-2 col-lg-10">
-                                                              <button class="btn btn-theme04 mr" type="button" (click)="retour()">Annuler</button>
-                                                              <button class="btn btn-theme" type="submit" [disabled]="formComp.invalid" (click)="enregistrerCompetence(comp.id,formComp.value)">Enregistrer</button>
-                                                            </div>
-                                                          </div>
-                                                        </form>
-                                                      </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <div id="langue" class="tab-pane">
-                                                    <div class="col-lg-12 col-lg-offset-2 detailed mt" style="margin-left: 40px!important;">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 mb" *ngFor="let lang of user.cv.langues">
-                                                                <form #formLang="ngForm" role="form" class="form-horizontal">
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-4 control-label">Langue</label>
-                                                                    <div class="col-lg-8">
-                                                                      <input type="text" placeholder="" id="" class="form-control" [(ngModel)]="lang.nom" name="nom">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-4 control-label">Niveau</label>
-                                                                    <div class="col-lg-8">
-                                                                      <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="lang.niveau" name="niveau">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-4 control-label">Certification</label>
-                                                                    <div class="col-lg-8">
-                                                                      <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="lang.certifie" name="certifie">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <div class="col-lg-offset-2 col-lg-10">
-                                                                      <button class="btn btn-theme04 mr" type="button" (click)="retour()">Annuler</button>
-                                                                      <button class="btn btn-theme" type="submit" [disabled]="formLang.invalid" (click)="enregistrerLangue(lang.id,formLang.value)">Enregistrer</button>
-                                                                    </div>
-                                                                  </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="activite" class="tab-pane">
-                                                    <div class="col-lg-12 col-lg-offset-2 detailed mt"
-                                                        style="margin-left: 40px!important;">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 mb" *ngFor="let act of user.cv.activiteAssociatives">
-                                                                <form #formAct="ngForm" role="form" class="form-horizontal">
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Association</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="act.association" name="association">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Poste</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="text" placeholder=" " id="" class="form-control" [(ngModel)]="act.poste" name="poste">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Date de début</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="date" placeholder="Dates de début" id="" class="form-control" [(ngModel)]="act.dateDebut" name="dateDebut">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Date de fin</label>
-                                                                    <div class="col-lg-9">
-                                                                      <input type="date" placeholder="Dates de fin" id="" class="form-control" [(ngModel)]="act.dateFin" name="dateFin">
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <label class="col-lg-3 control-label">Description</label>
-                                                                    <div class="col-lg-9">
-                                                                      <textarea rows="3" cols="20" class="form-control" id="" [(ngModel)]="act.description" name="description"></textarea>
-                                                                    </div>
-                                                                  </div>
-                                                                  <div class="form-group">
-                                                                    <div class="col-lg-offset-2 col-lg-10">
-                                                                      <button class="btn btn-theme04 mr" type="button" (click)="retour()">Annuler</button>
-                                                                      <button class="btn btn-theme" type="submit" [disabled]="formAct.invalid" (click)="enregistrerAct(act.id,formAct.value)">Enregistrer</button>
-                                                                    </div>
-                                                                  </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div> -->
-                <!-- /tab-pane -->
               </div>
               <!-- /tab-content -->
             </div>
@@ -520,27 +160,3 @@
     <app-footer></app-footer>
   </section>
 </section>
-
-
-<!-- ModalSupp -->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="ModalSuppExp" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="fa fa-trash-o "></i> Supprimer un élément</h4>
-      </div>
-      <div class="modal-body" style="margin-bottom: 20px;">
-        <h5>Êtes-vous sûr de vouloir supprimer cet élément?
-        <!--: {{myUser.prenom}}{{myUser.nom}} -->
-
-      </h5>
-      </div>
-      <div class="modal-footer">
-        <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-        <button class="btn btn-theme" data-dismiss="modal" type="button"  >Confirmer</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- modalSupp (click)="deleteUser(myUser.id)"-->

@@ -8,9 +8,9 @@ import { map } from 'rxjs/operators';
 import { UserRole } from 'src/app/Enums/UserRole';
 import { Pole } from 'src/app/Models/pole';
 import { AuthService } from 'src/app/Services/auth.service';
-import { findPoles, login } from 'src/app/shared/Collaborateur/query';
-import { Collaborateur } from './../../Models/collaborateur';
-import { AlertService } from './../../Services/alert.service';
+import { findPoles, login } from 'src/app/shared/queries/Collaborateur/query';
+import { Collaborateur } from '../../Models/collaborateur';
+import { AlertService } from '../../Services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -75,28 +75,31 @@ export class LoginComponent implements OnInit {
     .subscribe(async ({data}: any) => {
       console.log(data);
         this.token = data.login.access_token;
-        this.user = data.login.user;
-        this.auth.sendToken(data.login.access_token);
-        this.auth.sendRole(data.login.user.role);
-        this.auth.sendUser(this.user);
-        if(this.user.role== UserRole.RP){
-          let idPole =this.getPoleRp(this.user.id)
-          this.auth.sendPole(idPole);
-        }
-        if(this.user.role== UserRole.TEAMLEADER){
-          this.auth.sendEquipe(this.user.equipe.id);
-        }
-        this.isLoggedIn=true;
-        this.isLoginFailed = false;
-        console.log("userAuth:",this.user,"token:",this.token);
-        this.toastr.success('Connexion approuvée');
-        this.router.navigate(['accueil']);
-    },
-    err => {
-      this.toastr.error('Nom utilisateur ou mot de passe invalide!');
-      this.alertService.error(err);
-      this.loading = false;
-      this.isLoginFailed = true;
+        if(this.token)
+        {
+          this.user = data.login.user;
+          this.auth.sendToken(data.login.access_token);
+          this.auth.sendRole(data.login.user.role);
+          this.auth.sendUser(this.user);
+          if(this.user.role== UserRole.RP){
+            let idPole =this.getPoleRp(this.user.id)
+            this.auth.sendPole(idPole);
+          }
+          if(this.user.role== UserRole.TEAMLEADER){
+            this.auth.sendEquipe(this.user.equipe.id);
+          }
+          this.isLoggedIn=true;
+          this.isLoginFailed = false;
+          console.log("userAuth:",this.user,"token:",this.token);
+          this.toastr.success('Connexion approuvée');
+          this.router.navigate(['accueil']);
+      }
+      else {
+        this.toastr.error('Nom utilisateur ou mot de passe invalide!');
+        // this.alertService.error(err);
+        this.loading = false;
+        this.isLoginFailed = true;
+      }
     }
     );
   }

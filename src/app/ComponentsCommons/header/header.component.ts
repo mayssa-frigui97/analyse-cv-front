@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { findCol, getUserAuth } from '../../shared/Collaborateur/query';
+import { findCol, getUserAuth } from '../../shared/queries/Collaborateur/query';
 import { Collaborateur } from '../../Models/collaborateur';
 import { AuthService } from 'src/app/Services/auth.service';
 

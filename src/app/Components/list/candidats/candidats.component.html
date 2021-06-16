@@ -4,7 +4,7 @@
   <section id="main-content">
     <section class="wrapper">
       <h3><i class="fa fa-angle-right"></i> La liste des candidats</h3>
-      <div class="row mb" *ngIf="candidats" style="margin-bottom: 60px;">
+      <div class="row mb" style="margin-bottom: 60px;">
         <div class="content-panel">
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <div class="col-md-11">
@@ -32,7 +32,7 @@
               </div>
             </div>
           </div><br>
-          <div class="adv-table" style="margin-left: 10px!important;">
+          <div class="adv-table" style="margin-left: 10px!important;" *ngIf="this.candidats && this.candidats.length >0">
             <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
               <thead>
                 <tr>
@@ -152,22 +152,14 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="col-lg-3 control-label">Mot de passe</label>
-                  <div class="col-lg-6">
-                    <input required type="password" placeholder="" id="motDePasse" class="form-control" ngModel name="motDePasse">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
                   <label class="col-lg-3 control-label">CIN</label>
                   <div class="col-lg-6">
                     <input required type="number" id="cin" class="form-control" ngModel name="cin">
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Poste</label>
@@ -176,8 +168,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Date d'embauche</label>
@@ -186,6 +176,8 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Salaire</label>
@@ -194,8 +186,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">E-mail</label>
@@ -204,6 +194,8 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">N° Téléphone</label>
@@ -212,8 +204,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Pôle</label>
@@ -225,6 +215,8 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Chef d'équipe</label>
@@ -237,8 +229,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Rôle</label>
@@ -250,18 +240,20 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-lg-3 control-label">Permission</label>
-                  <div class="col-lg-6">
-                    <select required class="custom-select custom-select-md" ngModel name="permission" id="permission">
-                      <!-- <option disabled selected>Selectionner la permission</option> -->
-                      <option [value]="p.permission" *ngFor="let p of permissions">{{p.permission | titlecase}}</option>
-                    </select>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="col-lg-3 control-label">Permission</label>
+                    <div class="col-lg-6">
+                      <select required class="custom-select custom-select-md" ngModel name="permission" id="permission">
+                        <!-- <option disabled selected>Selectionner la permission</option> -->
+                        <option [value]="p.permission" *ngFor="let p of permissions">{{p.permission | titlecase}}</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </form>
         </div>
       </div>

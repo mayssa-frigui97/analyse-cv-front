@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Collaborateur } from 'src/app/Models/collaborateur';
-import { findCol, getUserAuth } from 'src/app/shared/Collaborateur/query';
+import { findCol, getUserAuth } from 'src/app/shared/queries/Collaborateur/query';
 import { AuthService } from 'src/app/Services/auth.service';
 import { UserRole } from 'src/app/Enums/UserRole';
 

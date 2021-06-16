@@ -1,8 +1,8 @@
-import { Collaborateur } from './../../../Models/collaborateur';
+import { Collaborateur } from '../../../Models/collaborateur';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { findCols, findFilterUsers, findPermissions, findRoles, removeCol, searchCol } from '../../../shared/Collaborateur/query';
+import { findCols, findFilterUsers, findPermissions, findRoles, removeCol, searchCol } from '../../../shared/queries/Collaborateur/query';
 import { map } from 'rxjs/operators';
 import { UserRole } from 'src/app/Enums/UserRole';
 import { Router } from '@angular/router';

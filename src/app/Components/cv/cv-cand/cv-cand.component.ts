@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { Personne } from 'src/app/Models/personne';
-import { findPersonne} from 'src/app/shared/Candidat/query';
+import { findPersonne} from 'src/app/shared/queries/Candidat/query';
 import { Location } from '@angular/common';
 
 @Component({

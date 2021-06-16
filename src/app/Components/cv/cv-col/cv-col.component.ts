@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { findCol} from 'src/app/shared/Collaborateur';
+import { findCol} from 'src/app/shared/queries/Collaborateur';
 import { Collaborateur } from 'src/app/Models/collaborateur';
 
 @Component({

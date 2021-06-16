@@ -1,15 +1,15 @@
-import { CvColComponent } from './Components/Rh/cv-col/cv-col.component';
-import { AccueilComponent } from './Components/Rh/accueil/accueil.component';
-import { UtilisateursComponent } from './Components/Admin/utilisateurs/utilisateurs.component';
-import { CandidatsComponent } from './Components/Rh/candidats/candidats.component';
+import { CvColComponent } from './Components/cv/cv-col/cv-col.component';
+import { AccueilComponent } from './Components/accueil/accueil.component';
+import { UtilisateursComponent } from './Components/list/utilisateurs/utilisateurs.component';
+import { CandidatsComponent } from './Components/list/candidats/candidats.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HistoriqueComponent } from './Components/Collaborateur/historique/historique.component';
 import { FicheInfosComponent } from './Components/Collaborateur/fiche-infos/fiche-infos.component';
-import { CollaborateursComponent } from './Components/Rh/collaborateurs/collaborateurs.component';
-import { LoginComponent } from './ComponentsCommons/login/login.component';
+import { CollaborateursComponent } from './Components/list/collaborateurs/collaborateurs.component';
+import { LoginComponent } from './Components/login/login.component';
 import { AuthGuard } from './Services/auth-guard.service';
-import { CvCandComponent } from './Components/Rh/cv-cand/cv-cand.component';
+import { CvCandComponent } from './Components/cv/cv-cand/cv-cand.component';
 import { UserRole } from './Enums/UserRole';
 
 const routes: Routes = [
