@@ -32,7 +32,7 @@
               </div>
             </div>
           </div><br>
-          <div class="adv-table" style="margin-left: 10px!important;" *ngIf="this.candidats && this.candidats.length >0">
+          <div class="adv-table" style="margin-left: 10px!important;" *ngIf=" candidats">
             <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
               <thead>
                 <tr>
@@ -62,7 +62,7 @@
                   </td>
                 </tr>
               </tbody>
-              <tbody *ngIf="test" >
+              <tbody *ngIf="test  && candidats.length == 0" >
                 <tr>
                   <td class="centered" colspan="10" style="background-color: #c4ffc4;font-size: small;padding: 15px;"> Aucun candidat correspond aux filtre de recherche spécifiés.</td>
                 </tr>

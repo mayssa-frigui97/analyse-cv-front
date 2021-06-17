@@ -1,28 +1,27 @@
 <section id="container">
-  <!-- && nivFormation && specialites && universites && cvs && competences -->
   <app-header></app-header>
   <app-sidebar></app-sidebar>
   <section id="main-content">
     <section class="wrapper">
       <h3><i class="fa fa-angle-right"></i> La liste des collaborateurs</h3>
-      <div class="row" *ngIf="poles && equipes" style="margin-bottom: 60px;">
+      <div class="row" *ngIf="equipes || (!equipe || !pole)" style="margin-bottom: 60px;">
         <div class="content-panel">
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <div class="col-md-8">
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-            <div class="col-md-6 mb">
-              <ng-select [items]="poles" bindLabel="nom" bindValue="id" placeholder="Selectionner le département"
-                appendTo="body" multiple="true" [(ngModel)]="selectedPoles" (change)="getEquipesPoles(selectedPoles)">
-              </ng-select>
-            </div>
-            <div class="col-md-6 mb">
+            <div class="col-md-6 mb" *ngIf="pole">
               <ng-select [items]="equipes" bindLabel="nom" bindValue="id" placeholder="Selectionner l'équipe"
                 appendTo="body" multiple="true" [(ngModel)]="selectedEquipes">
               </ng-select>
             </div>
+            <div class="col-md-6 mb" *ngIf="pole">
+              <ng-select [items]="postes" bindLabel="poste" bindValue="poste" placeholder="Selectionner les postes"
+                appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
+              </ng-select>
+            </div>
           </div>
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
-            <div class="col-md-6 mb">
+            <div class="col-md-6 mb" *ngIf="!pole">
               <ng-select [items]="postes" bindLabel="poste" bindValue="poste" placeholder="Selectionner les postes"
                 appendTo="body" multiple="true" [(ngModel)]="selectedPoste">
               </ng-select>
@@ -36,7 +35,7 @@
           </div>
           <div class="row" style="margin-right: 0px!important;margin-left: 10px!important">
             <button
-              (click)="getFilterCols(selectedPoles,selectedEquipes,selectedCompetence,selectedPoste)"
+              (click)="getFilterCols(selectedEquipes,selectedCompetence,selectedPoste)"
               class="btn btn-danger mb" style="float: right; margin-right: 60px;">Filtrer</button>
           </div>
         </div>
@@ -56,8 +55,7 @@
                   <th class="hidden-phone">E-mail</th>
                   <th class="hidden-phone">Poste</th>
                   <th class="hidden-phone">date d'embauche</th>
-                  <th class="hidden-phone">Pôle</th>
-                  <th class="hidden-phone">Equipe</th>
+                  <th class="hidden-phone" *ngIf="!equipe">Equipe</th>
                   <th class="hidden-phone">évaluation</th>
                   <th class="hidden-phone">Action</th>
                 </tr>
@@ -69,12 +67,8 @@
                   <td>{{col.poste}}</td>
                   <td>{{col.dateEmb | date: 'dd/MM/yyyy'}}</td>
 
-                  <td *ngIf="col.equipe">{{col.equipe.pole.nom}}</td>
-                  <td class="hidden-phone" *ngIf="col.role==='RH' && !col.equipe"> </td>
-                  <td class="hidden-phone" *ngIf="!col.equipe && col.role === 'RP'">{{col.id | getPole:poles}}</td>
-
-                  <td class="hidden-phone" *ngIf="col.equipe">{{col.equipe.nom}}</td>
-                  <td class="hidden-phone" *ngIf="!col.equipe"> </td>
+                  <td class="hidden-phone" *ngIf="col.equipe && !equipe">{{col.equipe.nom}}</td>
+                  <td class="hidden-phone" *ngIf="!col.equipe && !equipe"> </td>
 
                   <td class="centered hidden-phone" *ngIf="col.evaluation">
                     <app-star-rating rating={{col.evaluation}}></app-star-rating>
@@ -84,9 +78,6 @@
                   <td class="centered" style="padding-right: 0;">
                     <a [routerLink]="['cv', col.id]">
                       <img src="../../../../assets/img/cv.png" width="24px" title="voir CV collaborateur">
-                    </a>
-                    <a data-toggle="modal" data-target="#supp" (click)="myUser = col" title="supprimer collaborateur">
-                      <img src="../../../../assets/img/delete.png" width="20px">
                     </a>
                   </td>
                 </tr>
@@ -105,27 +96,6 @@
     <app-footer></app-footer>
   </section>
 </section>
-
-<!-- Modal supp-->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="supp" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><i class="fa fa-user-times "></i> Supprimer un collaborateur</h4>
-      </div>
-      <div class="modal-body" style="margin-bottom: 20px;">
-        Êtes-vous sûr de vouloir supprimer ce collaborateur ?
-      </div>
-      <div class="modal-footer">
-        <button data-dismiss="modal" class="btn btn-default" type="button">Annuler</button>
-        <button class="btn btn-theme" data-dismiss="modal" type="button"
-          (click)="deleteUser(myUser.id)">Confirmer</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- modal supp-->
 
 
 

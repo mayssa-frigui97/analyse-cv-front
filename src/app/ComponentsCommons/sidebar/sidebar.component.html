@@ -29,8 +29,14 @@
                     <span>Candidats</span>
                 </a>
             </li>
-            <li class="mt" *ngIf="role == 'RH'|| role == 'RP'|| role == 'TEAMLEADER'">
+            <li class="mt" *ngIf="role == 'RH'">
                 <a routerLink="/collaborateurs">
+                    <i class="fa fa-users"></i>
+                    <span>Collaborateurs</span>
+                </a>
+            </li>
+            <li class="mt" *ngIf="role == 'RP'|| role == 'TEAMLEADER'">
+                <a routerLink="/collaborateur-pole">
                     <i class="fa fa-users"></i>
                     <span>Collaborateurs</span>
                 </a>

@@ -44,6 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AlertComponent } from './ComponentsCommons/alert/alert.component';
 import { CvCandComponent } from './Components/cv/cv-cand/cv-cand.component';
 import { StarRatingComponent } from './ComponentsCommons/star-rating/star-rating.component';
+import { CollaborateurPoleComponent } from './components/list/collaborateur-pole/collaborateur-pole.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -63,7 +64,8 @@ registerLocaleData(localeFr);
     StarRatingComponent,
     CollaborateursPipe,
     AlertComponent,
-    CvCandComponent
+    CvCandComponent,
+    CollaborateurPoleComponent
   ],
   imports: [
     BrowserModule,

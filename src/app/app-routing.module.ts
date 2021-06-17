@@ -1,3 +1,4 @@
+import { CollaborateurPoleComponent } from './Components/list/collaborateur-pole/collaborateur-pole.component';
 import { CvColComponent } from './Components/cv/cv-col/cv-col.component';
 import { AccueilComponent } from './Components/accueil/accueil.component';
 import { UtilisateursComponent } from './Components/list/utilisateurs/utilisateurs.component';
@@ -21,7 +22,9 @@ const routes: Routes = [
   { path: 'historique', component:HistoriqueComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.COLLABORATEUR, UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
   { path: 'candidats', component:CandidatsComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
   { path: 'candidats/cv/:id', component: CvCandComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
-  { path: 'collaborateurs', component:CollaborateursComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'collaborateurs', component:CollaborateursComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH]}},
+  { path: 'collaborateur-pole', component:CollaborateurPoleComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RP, UserRole.TEAMLEADER]}},
+  { path: 'collaborateur-pole/cv/:id', component:CvColComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RP, UserRole.TEAMLEADER]}},
   { path: 'collaborateurs/cv/:id', component: CvColComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH, UserRole.RP, UserRole.TEAMLEADER]}},
   { path: 'utilisateurs', component:UtilisateursComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH]}},
   { path: 'utilisateurs/cv/:id', component: CvColComponent,canActivate: [AuthGuard],data: { allowedRoles: [UserRole.RH]}},
@@ -31,6 +34,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class AppRoutingModule { }
