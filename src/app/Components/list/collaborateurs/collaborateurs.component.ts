@@ -96,7 +96,7 @@ export class CollaborateursComponent implements OnInit{
     //   variables={}
     // }
     // console.log("variables:",variables);
-    this.subscription= this.apollo
+    this.apollo
     .query<any>({
         query: findCols
       })
@@ -262,7 +262,6 @@ export class CollaborateursComponent implements OnInit{
       .valueChanges.pipe(map((result) => result.data.findPoles))
       .subscribe((data) => {
         this.poles = data;
-        this.subscription.unsubscribe();
       });
     console.log('Poles :', this.poles);
   }

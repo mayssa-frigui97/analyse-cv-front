@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit {
         {
           this.user = data.login.user;
           this.auth.sendToken(data.login.access_token);
+          this.auth.sendRefreshToken(data.login.refresh_token);
           this.auth.sendRole(data.login.user.role);
           this.auth.sendUser(this.user);
           if(this.user.role== UserRole.RP){

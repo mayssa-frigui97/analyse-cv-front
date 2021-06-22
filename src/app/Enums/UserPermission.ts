@@ -1,5 +1,0 @@
-export enum UserPermission {
-  SUPER = 'SUPER',
-  ADMINISTRATEUR = 'ADMINISTRATEUR',
-  UTILISATEUR = 'UTILISATEUR'
-}

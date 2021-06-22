@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Collaborateur } from './../Models/collaborateur';
 import { UserRole } from 'src/app/Enums/UserRole';
+import { Apollo } from 'apollo-angular';
+import { refreshToken } from '../shared/queries/Collaborateur/query';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +15,15 @@ export class AuthService {
   pole: number;
   equipe: number;
 
-  constructor(private myRoute: Router) { }
+  constructor(private myRoute: Router,
+    private apollo: Apollo) { }
 
   sendToken(token: string) {
     localStorage.setItem('access_token', token);
+  }
+
+  sendRefreshToken(token: string) {
+    localStorage.setItem('refresh_token', token);
   }
 
   sendRole(role: UserRole) {
@@ -66,6 +73,10 @@ export class AuthService {
     return localStorage.getItem('access_token');
   }
 
+  getrefreshToken() {
+    return localStorage.getItem('refresh_token');
+  }
+
   isLoggednIn() {
     return this.getToken() !== null;
   }
@@ -77,44 +88,19 @@ export class AuthService {
     this.myRoute.navigate(['']);
   }
 
-  // public isAdmin(){
-  //   if(this.user){
-  //     if(this.user.role==UserRole.ADMIN)
-  //       return true;
-  //   }
-  //   return false;
-  // }
-
-  public isCol(){
-    if(this.user){
-      if(this.user.role==UserRole.COLLABORATEUR)
-        return true;
-    }
-    return false;
-  }
-
-  public isRH(){
-    if(this.user){
-      if(this.user.role==UserRole.RH)
-      return true;
-    }
-    return false;
-  }
-
-  public isRP(){
-    if(this.user){
-      if(this.user.role===UserRole.RP)
-        return true;
-    }
-    return false;
-  }
-
-  public isTeamLeader(){
-    if(this.user){
-      if(this.user.role===UserRole.TEAMLEADER)
-        return true;
-    }
-    return false;
+  refreshToken(){
+    const refresh = {refreshToken:  this.getrefreshToken()};
+    this.apollo
+    .mutate({
+        mutation: refreshToken,
+        variables: {input: refresh}
+      })
+      .subscribe(({data}: any)=> {
+        console.log(data)
+        this.sendUser(data.refreshToken.user);
+        this.sendToken(data.refreshToken.accessToken);
+      });
+    return this.getToken();
   }
 
 }

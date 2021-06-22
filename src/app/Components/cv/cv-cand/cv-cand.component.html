@@ -97,6 +97,17 @@
                           <!-- /recent-activity -->
                         </div>
                       </div>
+                      <div class="row" *ngIf="candidat.cv.activiteAssociatives">
+                        <div class="detailed mt" >
+                          <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
+                          <div class="container-fluid">
+                            <div class="row">
+                              <p>{{candidat.cv.activiteAssociatives}}</p>
+                            </div>
+                          </div>
+                          <!-- /recent-activity -->
+                        </div>
+                      </div>
                       <!-- /detailed -->
                     </div>
                     <!-- /col-md-6 -->
@@ -134,17 +145,6 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="row" *ngIf="candidat.cv.activiteAssociatives">
-                        <div class="detailed mt" >
-                          <h4><i class="fa fa-handshake-o"></i> Activités associatives</h4>
-                          <div class="container-fluid">
-                            <div class="row">
-                              <p>{{candidat.cv.activiteAssociatives}}</p>
-                            </div>
-                          </div>
-                          <!-- /recent-activity -->
                         </div>
                       </div>
                       <div class="row" *ngIf="candidat.cv.interets">

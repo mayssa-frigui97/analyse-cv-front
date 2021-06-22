@@ -2,12 +2,11 @@ import { Collaborateur } from '../../../Models/collaborateur';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { findCols, findFilterUsers, findPermissions, findRoles, removeCol, searchCol } from '../../../shared/queries/Collaborateur/query';
+import { findCols, findFilterUsers, findRoles, removeCol, searchCol } from '../../../shared/queries/Collaborateur/query';
 import { map } from 'rxjs/operators';
 import { UserRole } from 'src/app/Enums/UserRole';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserPermission } from 'src/app/Enums/UserPermission';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -19,9 +18,7 @@ export class UtilisateursComponent implements OnInit {
   users: Collaborateur[];
   public myUser: Collaborateur;
   roles :Collaborateur[];
-  permissions :Collaborateur[];
   selectedRoles = [];
-  selectedPermissions = [];
   test : boolean;
 
   dtOptions: DataTables.Settings = {};
@@ -39,7 +36,6 @@ export class UtilisateursComponent implements OnInit {
     }
     this.getUsers();
     this.getRoles();
-    this.getPermissions();
   }
 
   getUsers(){
@@ -114,19 +110,6 @@ export class UtilisateursComponent implements OnInit {
         console.log('postes data:', data);
       });
       console.log('postes :', this.roles);
-  }
-
-  getPermissions(){
-    this.apollo
-      .watchQuery<any>({
-        query: findPermissions,
-      })
-      .valueChanges.pipe(map((result) => result.data.findPermissions))
-      .subscribe((data) => {
-        this.permissions = data;
-        console.log('postes data:', data);
-      });
-      console.log('postes :', this.permissions);
   }
 
   search(searchWord: string) {

@@ -9,7 +9,7 @@ import { findFilterCands, findPersonnes, removeCandidat, removePersonne, search,
 import { Personne } from '../../../Models/personne';
 import { Competence } from 'src/app/Models/competence';
 import { findAllCompetences, uploadFile } from 'src/app/shared/queries/Cv/query';
-import { createCol, findEquipes, findPermissions, findPoles, findRoles } from 'src/app/shared/queries/Collaborateur/query';
+import { createCol, findEquipes, findPoles, findRoles } from 'src/app/shared/queries/Collaborateur/query';
 import { Equipe } from '../../../Models/equipe';
 import { Pole } from 'src/app/Models/pole';
 import { Collaborateur } from '../../../Models/collaborateur';
@@ -62,7 +62,6 @@ export class CandidatsComponent implements OnInit {
   selectedTL: string;
   searchWord: string;
   roles: Collaborateur[];
-  permissions: Collaborateur[];
   dtOptions: DataTables.Settings = {};
 
   constructor(
@@ -91,7 +90,6 @@ export class CandidatsComponent implements OnInit {
     this.getEquipes();
     this.getPoles();
     this.getRoles();
-    this.getPermissions();
     if(!this.candidats){
       console.log("*".repeat(10));
       this.getAllCandidats();}
@@ -264,19 +262,6 @@ export class CandidatsComponent implements OnInit {
       console.log('postes :', this.roles);
   }
 
-  getPermissions(){
-    this.apollo
-      .watchQuery<any>({
-        query: findPermissions,
-      })
-      .valueChanges.pipe(map((result) => result.data.findPermissions))
-      .subscribe((data) => {
-        this.permissions = data;
-        console.log('postes data:', data);
-      });
-      console.log('postes :', this.permissions);
-  }
-
   affecterCandidat(formulaire, cand: Personne){
     console.log("candidat:",cand)
     console.log("formulaire: ",formulaire);
@@ -289,7 +274,6 @@ export class CandidatsComponent implements OnInit {
       dateEmb: formulaire.dateEmb,
       nomUtilisateur: formulaire.nomUtilisateur,
       role: formulaire.role,
-      permission: formulaire.permission,
       equipeId: parseInt(formulaire.equipe),
       nom: cand.nom,
       etatCivil: cand.etatCivil,

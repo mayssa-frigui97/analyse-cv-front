@@ -15,7 +15,6 @@ const findCols = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -47,7 +46,6 @@ const findCol = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -129,7 +127,6 @@ const findFilterCols = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -161,7 +158,6 @@ const findFilterUsers = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -204,7 +200,6 @@ const updateCol = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -215,6 +210,7 @@ const updateCol = gql`
 const login = gql`
   query login($nomUtilisateur: String!, $motDePasse: String!) {
     login(nomUtilisateur: $nomUtilisateur, motDePasse: $motDePasse) {
+      refresh_token
       access_token
       user {
         id
@@ -229,7 +225,6 @@ const login = gql`
         telPro
         emailPro
         role
-        permission
         poste
         dateEmb
         salaire
@@ -283,7 +278,6 @@ const getUserAuth = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -324,15 +318,6 @@ query findRoles
   }
 }`;
 
-const findPermissions = gql`
-query findPermissions
-{
-  findPermissions
-  {
-    permission
-  }
-}`;
-
 const createCol = gql`
   mutation createCol($createColInput: CreateColInput!)
   {
@@ -349,7 +334,6 @@ const createCol = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -372,7 +356,6 @@ const searchCol = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -418,7 +401,6 @@ const searchEquipe = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -464,7 +446,6 @@ const searchPole = gql`
       telPro
       emailPro
       role
-      permission
       poste
       dateEmb
       salaire
@@ -514,6 +495,59 @@ query findEquipe($idEquipe: Int!)
   }
 }`;
 
+const refreshToken = gql`
+mutation refreshToken($input: RefreshTokenInput!)
+{
+  refreshToken(input: $input)
+  {
+    user
+    {
+      id
+      nom
+      cin
+      dateNaiss
+      adresse
+      tel
+      email
+      avatar
+      nomUtilisateur
+      telPro
+      emailPro
+      role
+      poste
+      dateEmb
+      salaire
+      evaluation
+      equipe {
+        id
+        nom
+        pole {
+          id
+          nom
+        }
+      }
+      cv {
+        id
+        cmptLinkedin
+        statutCV
+        activiteAssociatives
+        certificats
+        langues
+        experiences
+        formations
+        projets
+        interets
+        competences {
+          nom
+        }
+      }
+    },
+    accessToken
+  }
+}`;
+
+
+
 export {
   findCols,
   findCol,
@@ -528,11 +562,11 @@ export {
   login,
   getUserAuth,
   findRoles,
-  findPermissions,
   createCol,
   searchCol,
   searchPole,
   searchEquipe,
   findPole,
-  findEquipe
+  findEquipe,
+  refreshToken
 }
