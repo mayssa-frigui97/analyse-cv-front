@@ -178,13 +178,12 @@
                             </div>
                           </form>
                         </div>
-                        <div class="room-desk">
+                        <div class="room-desk" *ngFor="let cand of candidat.candidatures">
                           <div class="room-box">
-                            <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 17:30 20/02/2022</a></h5>
-                            <p>Vous avez passé un deuxième entretien concernant l'offre de recrutement d'un ingénieur
-                              web Full Stack.</p>
+                            <h5 class="text-primary"><a><i class="fa fa-calendar"></i> {{cand.date | date:'dd/MM/yyyy , h:mm a'}}</a></h5>
+                            <p>Envoi du CV à l'adresse e-mail : analysecvtest@gmail.com</p>
                           </div>
-                          <div class="room-box">
+                          <!-- <div class="room-box">
                             <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 17:30 15/01/2022</a></h5>
                             <p>Vous avez passé un premier entretien concernant l'offre de recrutement d'un ingénieur web
                               Full Stack.</p>
@@ -193,7 +192,7 @@
                             <h5 class="text-primary"><a href=""><i class="fa fa-calendar"></i> 10:35 05/01/2022</a></h5>
                             <p>Vous avez postuler dans la plateforme de recrutement de Proxym-IT concernant l'offre de
                               recrutement d'un ingénieur web Full Stack.</p>
-                          </div>
+                          </div> -->
                         </div>
                       </aside>
                     </div>

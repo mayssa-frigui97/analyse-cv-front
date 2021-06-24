@@ -12,12 +12,13 @@ import { getRefreshTokenLink} from 'apollo-link-refresh-token';
 import jwt_decode from "jwt-decode";
 
 
+// const refreshtoken = localStorage.getItem('refresh_token');
 declare type FetchNewAccessToken = (refreshToken: string) => Promise<string | undefined>;
 const token = localStorage.getItem('access_token');
 const uri = 'http://localhost:2000/graphql'; // <-- add the URL of the GraphQL server here
-
 const auth = setContext((_, { headers }) => {
     if (!token) {
+      console.log("***********pas token")
       return {};
     } else {
       return {
@@ -26,10 +27,10 @@ const auth = setContext((_, { headers }) => {
         }
       };
     }
-});
+  });
 
+export function createApollo(httpLink: HttpLink) {
 
-export function createApollo(httpLink: HttpLink, authService: AuthService) {
   const defaultsOptions = {
     watchQuery: {
       fetchPolicy: 'network-only',
@@ -43,12 +44,18 @@ export function createApollo(httpLink: HttpLink, authService: AuthService) {
   const http = httpLink.create({uri});
   // const errorLink = onError(({ forward, graphQLErrors, networkError, operation }) => {
   //   if (graphQLErrors) {
-  //     if (graphQLErrors[0].message.toLowerCase() === 'unauthorized') {
-  //       return authService.refreshToken()
-  //       .pipe(
-  //         switchMap(() => forward(operation))
-  //       );
-  //     }
+  //     graphQLErrors.map(({ message, locations, path }) =>
+  //       {
+  //        if (message.toLowerCase() === 'unauthorized') {
+  //         authService.refreshToken().then((token) => {
+  //           console.log("token:",token)
+  //           return forward(operation).subscribe(result => {
+  //             console.log(result);
+  //           });
+  //         });
+  //           // console.log("token after:",authService.getToken())
+  //         }
+  //       });
   //   }
   // });
 
@@ -69,8 +76,9 @@ export function createApollo(httpLink: HttpLink, authService: AuthService) {
         'URL must be set to use refresh token link'
       );
     }
-
+    console.log("access token before:",localStorage.getItem('access_token'));
     try {
+      const refreshtoken = localStorage.getItem('refresh_token');
       const fetchResult = await fetch(uri, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,7 +86,7 @@ export function createApollo(httpLink: HttpLink, authService: AuthService) {
           query: `
             mutation {
               refreshToken(input: {
-                refreshToken: "${refreshToken}"
+                refreshToken: "${refreshtoken}"
               }) {
                 user
                   {
@@ -98,29 +106,6 @@ export function createApollo(httpLink: HttpLink, authService: AuthService) {
                     dateEmb
                     salaire
                     evaluation
-                    equipe {
-                      id
-                      nom
-                      pole {
-                        id
-                        nom
-                      }
-                    }
-                    cv {
-                      id
-                      cmptLinkedin
-                      statutCV
-                      activiteAssociatives
-                      certificats
-                      langues
-                      experiences
-                      formations
-                      projets
-                      interets
-                      competences {
-                        nom
-                      }
-                    }
                   },
                 accessToken
               }
@@ -131,22 +116,24 @@ export function createApollo(httpLink: HttpLink, authService: AuthService) {
       console.log("fetchResult",fetchResult)
 
       const refreshResponse = await fetchResult.json();
+
       console.log("refreshResponse",refreshResponse)
       if (
         !refreshResponse ||
         !refreshResponse.data ||
-        !refreshResponse.data.refreshTokens ||
-        !refreshResponse.data.refreshTokens.accessToken
+        !refreshResponse.data.refreshToken ||
+        !refreshResponse.data.refreshToken.accessToken
       ) {
         return undefined;
       }
-
-      return refreshResponse.data.refreshTokens.accessToken;
+      console.log("token after:",refreshResponse.data.refreshToken.accessToken)
+      localStorage.setItem('access_token',refreshResponse.data.refreshToken.accessToken)
+      console.log("token now:",localStorage.getItem('access_token'));
+      return refreshResponse.data.refreshToken.accessToken;
     } catch (e) {
       throw new Error('Failed to fetch fresh access token');
     }
   };
-
   const refreshTokenLink = getRefreshTokenLink({
     authorizationHeaderKey: 'Authorization',
     fetchNewAccessToken,

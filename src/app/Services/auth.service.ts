@@ -88,7 +88,8 @@ export class AuthService {
     this.myRoute.navigate(['']);
   }
 
-  refreshToken(){
+  async refreshToken(){
+    const result = new Promise((resolve, reject) =>  {
     const refresh = {refreshToken:  this.getrefreshToken()};
     this.apollo
     .mutate({
@@ -100,7 +101,8 @@ export class AuthService {
         this.sendUser(data.refreshToken.user);
         this.sendToken(data.refreshToken.accessToken);
       });
-    return this.getToken();
+    resolve(this.getToken);
+    return;
+  });
   }
-
 }

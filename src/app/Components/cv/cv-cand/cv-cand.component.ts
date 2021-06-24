@@ -4,6 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { Personne } from 'src/app/Models/personne';
 import { findPersonne} from 'src/app/shared/queries/Candidat/query';
 import { Location } from '@angular/common';
+import { Candidature } from './../../../Models/candidature';
 
 @Component({
   selector: 'app-cv-cand',
@@ -22,7 +23,6 @@ export class CvCandComponent implements OnInit {
   ngOnInit(): void {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
     this.getCand(id);
-    console.log("candidat:",this.candidat);
   }
 
   getCand(idPersonne: number) {
@@ -31,8 +31,7 @@ export class CvCandComponent implements OnInit {
       variables: {idPersonne}
     }).subscribe(({data}) => {
       this.candidat = data.findPersonne;
-      console.log("data:",this.candidat.dateNaiss);
-      console.log("date:",this.date);
+      console.log("candidat:",this.candidat);
     });
   }
 

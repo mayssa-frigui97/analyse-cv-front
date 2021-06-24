@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit {
           }
           this.isLoggedIn=true;
           this.isLoginFailed = false;
-          console.log("userAuth:",this.user,"token:",this.token);
+          console.log("token:",this.token);
           this.toastr.success('Connexion approuvée');
           this.router.navigate(['accueil']);
       }

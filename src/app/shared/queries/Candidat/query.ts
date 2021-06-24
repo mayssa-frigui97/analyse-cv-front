@@ -56,6 +56,10 @@ const findPersonne = gql`
           nom
         }
       }
+      candidatures{
+        id
+        date
+      }
     }
   }
 `;
@@ -137,7 +141,26 @@ const removeCandidat = gql`
     removeCandidat(idCand: $idCand)
   }`;
 
-
+const findCandidature = gql`
+  query findCandidature($idCandidature: Int!) {
+    findCandidature(idCandidature: $idCandidature)
+    {
+      id
+      date
+      personne{
+        id
+        nom
+        etatCivil
+        dateNaiss
+        adresse
+        tel
+        email
+        avatar
+        recommande
+      }
+    }
+  }
+`;
 
 export {
   findPersonnes,
@@ -146,5 +169,6 @@ export {
   updateRecommande,
   findFilterCands,
   search,
-  removeCandidat
+  removeCandidat,
+  findCandidature
 }
